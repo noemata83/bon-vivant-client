@@ -1,27 +1,41 @@
 {
-  "name": "client",
-  "version": "0.0.1",
-  "private": true,
+  "name": "bon-vivant-client",
+  "version": "1.0.0",
+  "description": "Web client for the Bon Vivant cocktail api",
+  "main": "index.js",
   "scripts": {
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noemata83/bon-vivant-client.git"
+  },
+  "author": "T. McKinney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noemata83/bon-vivant-client/issues"
+  },
+  "homepage": "https://github.com/noemata83/bon-vivant-client#readme",
   "dependencies": {
-    "react": "16.8.6",
-    "react-native": "0.60.4"
+    "@apollo/react-hooks": "^3.0.0",
+    "apollo-boost": "^0.4.3",
+    "apollo-cache-inmemory": "^1.6.2",
+    "apollo-link-context": "^1.0.18",
+    "apollo-link-http": "^1.5.15",
+    "cookie": "^0.4.0",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.0.3",
+    "react": "^16.9.0",
+    "react-apollo": "^3.0.0",
+    "react-dom": "^16.9.0",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/runtime": "^7.5.5",
-    "@react-native-community/eslint-config": "^0.0.5",
-    "babel-jest": "^24.8.0",
-    "eslint": "^6.1.0",
-    "jest": "^24.8.0",
-    "metro-react-native-babel-preset": "^0.55.0",
-    "react-test-renderer": "16.8.6"
-  },
-  "jest": {
-    "preset": "react-native"
+    "babel-plugin-styled-components": "^1.10.6"
   }
 }
