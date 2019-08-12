@@ -1,10 +1,12 @@
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
+import Link from 'next/link';
 
 const GET_SPECS = gql`
   {
     specs {
       id
+      slug
       name
       description
       ingredients {
@@ -30,7 +32,7 @@ export default () => {
     <div>
     {data.specs.map(spec => (
       <div key={spec.id}>
-        <h1>{spec.name}</h1>
+        <Link href="/cocktails/[slug]" as={`/cocktails/${spec.slug}`}><h1>{spec.name}</h1></Link>
         <p>{spec.description}</p>
       </div>))}
     </div>
