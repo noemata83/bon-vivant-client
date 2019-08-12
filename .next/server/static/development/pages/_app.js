@@ -130,6 +130,134 @@ if (false) {} else {
 
 /***/ }),
 
+/***/ "./global/globalStyles.js":
+/*!********************************!*\
+  !*** ./global/globalStyles.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./theme */ "./global/theme.js");
+/* harmony import */ var _mediaTemplates__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mediaTemplates */ "./global/mediaTemplates.js");
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (styled_components__WEBPACK_IMPORTED_MODULE_0__["createGlobalStyle"]`
+  @import url('https://fonts.googleapis.com/css?family=Arimo|Dancing+Script&display=swap');
+
+  html {
+    font-size: 50%;
+    ${_mediaTemplates__WEBPACK_IMPORTED_MODULE_2__["default"].landscapeTablet`
+      font-size: 56.25%;
+    `};
+    ${_mediaTemplates__WEBPACK_IMPORTED_MODULE_2__["default"].desktop`
+      font-size: 62.5%;
+    `};
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    background: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].color.background};
+    font-size: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.body.fontSize};
+    font-family: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.body.fontFamily};
+  }
+
+  h1 {
+    font-family: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.heading.fontFamily};
+    font-size: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.heading.h1.fontSize};
+    margin: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.heading.h1.margin};
+    padding: ${_theme__WEBPACK_IMPORTED_MODULE_1__["default"].type.heading.h1.padding};
+  }
+`);
+
+/***/ }),
+
+/***/ "./global/mediaTemplates.js":
+/*!**********************************!*\
+  !*** ./global/mediaTemplates.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/object/keys */ "./node_modules/@babel/runtime-corejs2/core-js/object/keys.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_1__);
+
+
+const sizes = {
+  largeDesktop: 1800,
+  desktop: 1260,
+  landscapeTablet: 980,
+  tablet: 576,
+  phone: 360,
+  smallPhone: 320 // Iterate through the sizes and create a media template
+
+};
+
+const media = _babel_runtime_corejs2_core_js_object_keys__WEBPACK_IMPORTED_MODULE_0___default()(sizes).reduce((acc, label) => {
+  acc[label] = (...args) => Object(styled_components__WEBPACK_IMPORTED_MODULE_1__["css"])(["@media (min-width:", "em){", "}"], sizes[label] / 16, Object(styled_components__WEBPACK_IMPORTED_MODULE_1__["css"])(...args));
+
+  return acc;
+}, {});
+
+/* harmony default export */ __webpack_exports__["default"] = (media);
+
+/***/ }),
+
+/***/ "./global/theme.js":
+/*!*************************!*\
+  !*** ./global/theme.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  color: {
+    background: "#ECE1D6",
+    primary: "#2F195F",
+    secondary: "#5A352A",
+    accentLight: "#845A6D",
+    accentDark: "#3E1929"
+  },
+  type: {
+    heading: {
+      fontFamily: `'Dancing Script', Helvetica, sans-serif`,
+      h1: {
+        fontSize: `4rem`,
+        margin: `1rem 0 2rem`,
+        padding: `1.2rem`,
+        boxShadow: `4px 0px 8px rgba(0, 0, 0, .3), 4px 0px 20px rgba(0,0,0,0.2)`
+      },
+      h2: {
+        fontSize: `3.6rem`,
+        margin: `1rem 0 1rem`
+      },
+      h3: {
+        fontSize: `2.8rem`,
+        margin: `1rem 0 1rem`
+      }
+    },
+    body: {
+      fontFamily: `'Arimo', Helvetica, sans-serif`,
+      fontSize: '1.8rem'
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./lib/initApollo.js":
 /*!***************************!*\
   !*** ./lib/initApollo.js ***!
@@ -1040,8 +1168,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-apollo */ "react-apollo");
 /* harmony import */ var react_apollo__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_apollo__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _lib_withApollo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../lib/withApollo */ "./lib/withApollo.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "styled-components");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(styled_components__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _global_theme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../global/theme */ "./global/theme.js");
+/* harmony import */ var _global_globalStyles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../global/globalStyles */ "./global/globalStyles.js");
 
 var _jsxFileName = "/home/tucker/projects/bon-vivant-cocktails/client/pages/_app.js";
+
+
+
 
 
 
@@ -1057,23 +1192,36 @@ class BonVivantApp extends next_app__WEBPACK_IMPORTED_MODULE_1___default.a {
     return react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(next_app__WEBPACK_IMPORTED_MODULE_1__["Container"], {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 10
+        lineNumber: 14
+      },
+      __self: this
+    }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(_global_globalStyles__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 15
+      },
+      __self: this
+    }), react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(styled_components__WEBPACK_IMPORTED_MODULE_5__["ThemeProvider"], {
+      theme: _global_theme__WEBPACK_IMPORTED_MODULE_6__["default"],
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 17
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(react_apollo__WEBPACK_IMPORTED_MODULE_3__["ApolloProvider"], {
       client: apolloClient,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 11
+        lineNumber: 18
       },
       __self: this
     }, react__WEBPACK_IMPORTED_MODULE_2___default.a.createElement(Component, Object(_babel_runtime_corejs2_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, pageProps, {
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 12
+        lineNumber: 19
       },
       __self: this
-    }))));
+    })))));
   }
 
 }
@@ -1289,6 +1437,17 @@ module.exports = require("react");
 /***/ (function(module, exports) {
 
 module.exports = require("react-apollo");
+
+/***/ }),
+
+/***/ "styled-components":
+/*!************************************!*\
+  !*** external "styled-components" ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("styled-components");
 
 /***/ })
 

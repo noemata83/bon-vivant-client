@@ -72,6 +72,199 @@ var GET_SPECS = graphql_tag__WEBPACK_IMPORTED_MODULE_2___default()(_templateObje
 
 /***/ }),
 
+/***/ "./components/layout/container.js":
+/*!****************************************!*\
+  !*** ./components/layout/container.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div.withConfig({
+  displayName: "container",
+  componentId: "sc-19omr2y-0"
+})(["max-width:120rem;width:95%;margin-left:auto;margin-right:auto;"]));
+
+/***/ }),
+
+/***/ "./layouts/footer/footer.js":
+/*!**********************************!*\
+  !*** ./layouts/footer/footer.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/core-js/date/now */ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js");
+/* harmony import */ var _babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _components_layout_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/layout/container */ "./components/layout/container.js");
+
+var _jsxFileName = "/home/tucker/projects/bon-vivant-cocktails/client/layouts/footer/footer.js";
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (props) {
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Footer, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 5
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_layout_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, "Developed by the Lazy Libertine, \xA9", new Date(_babel_runtime_corejs2_core_js_date_now__WEBPACK_IMPORTED_MODULE_0___default()()).getFullYear()));
+});
+var Footer = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].footer.withConfig({
+  displayName: "footer__Footer",
+  componentId: "sc-17cy4aa-0"
+})(["padding:2rem;background-color:", ";color:", ";display:flex;font-size:1.6rem;"], function (_ref) {
+  var theme = _ref.theme;
+  return theme.color.primary;
+}, function (_ref2) {
+  var theme = _ref2.theme;
+  return theme.color.background;
+});
+
+/***/ }),
+
+/***/ "./layouts/header/header.js":
+/*!**********************************!*\
+  !*** ./layouts/header/header.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+/* harmony import */ var _components_layout_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/layout/container */ "./components/layout/container.js");
+var _jsxFileName = "/home/tucker/projects/bon-vivant-cocktails/client/layouts/header/header.js";
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (props) {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Header, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 5
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_layout_container__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Title, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 7
+    },
+    __self: this
+  }, "Bon Vivant Cocktails")));
+});
+var Header = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].header.withConfig({
+  displayName: "header__Header",
+  componentId: "sc-1c1oak-0"
+})(["background-color:", ";color:#fff;padding:1rem 2rem 2rem;box-shadow:2px 2px 8px rgba(0,0,0,0.4),4px 0px 10px rgba(0,0,0,0.1);letter-spacing:0.5ch;"], function (_ref) {
+  var theme = _ref.theme;
+  return theme.color.primary;
+});
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].h1.withConfig({
+  displayName: "header__Title",
+  componentId: "sc-1c1oak-1"
+})(["padding:0;margin:0;"]);
+
+/***/ }),
+
+/***/ "./layouts/main.js":
+/*!*************************!*\
+  !*** ./layouts/main.js ***!
+  \*************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral */ "./node_modules/@babel/runtime-corejs2/helpers/esm/taggedTemplateLiteral.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _header_header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./header/header */ "./layouts/header/header.js");
+/* harmony import */ var _footer_footer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./footer/footer */ "./layouts/footer/footer.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+
+var _jsxFileName = "/home/tucker/projects/bon-vivant-cocktails/client/layouts/main.js";
+
+
+function _templateObject2() {
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  max-width: 120rem;\n  width: 90%;\n  margin: 0 auto 2rem;\n  flex-grow: 1;\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = Object(_babel_runtime_corejs2_helpers_esm_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n  min-height: 100vh;\n  display: flex;\n  flex-direction: column;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function (_ref) {
+  var children = _ref.children;
+  return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Main, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 6
+    },
+    __self: this
+  }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_header_header__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 7
+    },
+    __self: this
+  }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Container, {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 8
+    },
+    __self: this
+  }, children), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_footer_footer__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 11
+    },
+    __self: this
+  }));
+});
+var Main = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].main(_templateObject());
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div(_templateObject2());
+
+/***/ }),
+
 /***/ "./node_modules/@apollo/react-common/lib/react-common.esm.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@apollo/react-common/lib/react-common.esm.js ***!
@@ -920,6 +1113,17 @@ var RenderPromises = (function () {
 
 //# sourceMappingURL=react-hooks.esm.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime-corejs2/core-js/date/now.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@babel/runtime-corejs2/core-js/date/now.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! core-js/library/fn/date/now */ "./node_modules/core-js/library/fn/date/now.js");
 
 /***/ }),
 
@@ -4575,6 +4779,19 @@ function stripSymbols(data) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/fn/date/now.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/core-js/library/fn/date/now.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es6.date.now */ "./node_modules/core-js/library/modules/es6.date.now.js");
+module.exports = __webpack_require__(/*! ../../modules/_core */ "./node_modules/core-js/library/modules/_core.js").Date.now;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/fn/object/define-properties.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/core-js/library/fn/object/define-properties.js ***!
@@ -5336,6 +5553,21 @@ var px = Math.random();
 module.exports = function (key) {
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/modules/es6.date.now.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/es6.date.now.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 20.3.3.1 / 15.9.4.4 Date.now()
+var $export = __webpack_require__(/*! ./_export */ "./node_modules/core-js/library/modules/_export.js");
+
+$export($export.S, 'Date', { now: function () { return new Date().getTime(); } });
 
 
 /***/ }),
@@ -14366,37 +14598,42 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _components_SpecList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/SpecList */ "./components/SpecList.js");
+/* harmony import */ var _layouts_main__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../layouts/main */ "./layouts/main.js");
 var _jsxFileName = "/home/tucker/projects/bon-vivant-cocktails/client/pages/index.js";
 
 
 
 
+
 var Index = function Index() {
-  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 6
-    },
-    __self: this
-  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", {
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_layouts_main__WEBPACK_IMPORTED_MODULE_3__["default"], {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 7
     },
     __self: this
-  }, "Hi from Bon Vivant Cocktails!"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_SpecList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Main, {
     __source: {
       fileName: _jsxFileName,
       lineNumber: 8
     },
     __self: this
-  }));
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_SpecList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 9
+    },
+    __self: this
+  })));
 };
 
-var Main = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].main.withConfig({
+var Main = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
   displayName: "pages__Main",
   componentId: "sc-1wainzd-0"
-})(["background-color:#333;color:white;"]);
+})(["background-color:", ";color:#333;flex-grow:1;"], function (_ref) {
+  var theme = _ref.theme;
+  return theme.color.background;
+});
 /* harmony default export */ __webpack_exports__["default"] = (Index);
 
 /***/ }),
