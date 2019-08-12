@@ -28,6 +28,9 @@ export default createGlobalStyle`
   h1 {
     font-family: ${theme.type.heading.fontFamily};
     font-size: ${theme.type.heading.h1.fontSize};
+    ${media.landscapeTablet`
+      font-size: ${theme.type.heading.h1.fullFontSize};
+    `}; 
     margin: ${theme.type.heading.h1.margin};
     padding: ${theme.type.heading.h1.padding};
   }

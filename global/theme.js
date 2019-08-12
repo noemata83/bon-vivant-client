@@ -10,7 +10,8 @@ export default {
     heading: {
       fontFamily: `'Dancing Script', Helvetica, sans-serif`,
       h1: {
-        fontSize: `4rem`,
+        fontSize: `3.2rem`,
+        fullFontSize: `4.8rem`,
         margin: `1rem 0 2rem`,
         padding: `1.2rem`, 
         boxShadow: `4px 0px 8px rgba(0, 0, 0, .3), 4px 0px 20px rgba(0,0,0,0.2)`
