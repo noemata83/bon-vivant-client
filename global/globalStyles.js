@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
-import theme from './theme'
-import media from './mediaTemplates';
+import { createGlobalStyle } from "styled-components"
+import theme from "./theme"
+import media from "./mediaTemplates"
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Arimo|Dancing+Script&display=swap');
+  @import url('https://fonts.googleapis.com/css?family=Poiret+One|Raleway&display=swap');
 
   html {
     font-size: 50%;
@@ -34,4 +34,4 @@ export default createGlobalStyle`
     margin: ${theme.type.heading.h1.margin};
     padding: ${theme.type.heading.h1.padding};
   }
-`;
+`

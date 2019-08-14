@@ -26,6 +26,8 @@ const Header = styled.header`
 	padding: 1rem 2rem 2rem;
 	box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4), 4px 0px 10px rgba(0, 0, 0, 0.1);
 	letter-spacing: 0.5ch;
+  position: relative;
+  z-index: 100;
 `
 
 const Title = styled.h1`

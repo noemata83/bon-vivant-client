@@ -8,12 +8,12 @@ export default {
   },
   type: {
     heading: {
-      fontFamily: `'Dancing Script', Helvetica, sans-serif`,
+      fontFamily: `'Poiret One', Helvetica, sans-serif`,
       h1: {
         fontSize: `3.2rem`,
         fullFontSize: `4.8rem`,
         margin: `1rem 0 2rem`,
-        padding: `1.2rem`, 
+        padding: `1.2rem`,
         boxShadow: `4px 0px 8px rgba(0, 0, 0, .3), 4px 0px 20px rgba(0,0,0,0.2)`
       },
       h2: {
@@ -26,8 +26,14 @@ export default {
       }
     },
     body: {
-      fontFamily: `'Arimo', Helvetica, sans-serif`,
-      fontSize: '1.8rem',
+      fontFamily: `'Raleway', Helvetica, sans-serif`,
+      fontSize: "1.8rem"
+    }
+  },
+  button: {
+    standard: {
+      foreground: "#ECE1D6",
+      background: "#845A6D"
     }
   }
 }
