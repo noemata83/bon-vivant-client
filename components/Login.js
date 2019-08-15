@@ -26,12 +26,14 @@ export default ({ props }) => {
       <LoginInput
         type="text"
         name="username"
+        placeholder="Username"
         value={username}
         onChange={e => setUsername(e.target.value)}
       />
       <LoginInput
         type="password"
         name="password"
+        placeholder="Password"
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
@@ -43,13 +45,18 @@ export default ({ props }) => {
 const LoginForm = styled.form`
   border: 1px solid #ccc;
   background-color: #707070;
-  padding: 1rem;
+  padding: 2rem;
+  width: 50rem;
 `
 
 const LoginInput = styled.input`
+  display: block;
   border: 1px solid #333;
   background-color: white;
   font-family: "Raleway", sans-serif;
+  padding: 0.5rem;
+  width: 30rem;
+  margin-bottom: 2rem;
   font-size: 1.8rem;
 `
 
@@ -57,6 +64,6 @@ const SubmitButton = styled.input`
   background-color: ${({ theme }) => theme.button.standard.background};
   color: ${({ theme }) => theme.button.standard.foreground};
   padding: 1.2rem 3rem;
-  border-radius: 50%;
+  border-radius: 10px;
   border: none;
 `
