@@ -4,9 +4,8 @@ import SpecList from "../components/SpecList"
 import Login from "../components/Login"
 import Page from "../layouts/main"
 import { connect } from "react-redux"
-import { getLoggedInState } from "../store/actions/"
 
-const Index = ({ isLoggedIn, getAuthState }) => (
+const Index = ({ isLoggedIn }) => (
   <Page>
     <Main>
       <SpecList />
@@ -24,11 +23,4 @@ const mapStateToProps = state => ({
   isLoggedIn: state.auth.isLoggedIn
 })
 
-const mapDispatchToProps = dispatch => ({
-  getAuthState: () => dispatch(getLoggedInState())
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Index)
+export default connect(mapStateToProps)(Index)
