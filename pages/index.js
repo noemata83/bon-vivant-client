@@ -6,22 +6,14 @@ import Page from "../layouts/main"
 import { connect } from "react-redux"
 import { getLoggedInState } from "../store/actions/"
 
-const Index = ({ isLoggedIn, getAuthState }) => {
-  const [initialized, setInitialized] = useState(false)
-  if (!initialized) {
-    getAuthState()
-    setInitialized(true)
-  }
-  return (
-    <Page>
-      <Main>
-        <SpecList />
-        {isLoggedIn ? <div>You are logged in.</div> : <Login />}
-      </Main>
-    </Page>
-  )
-}
-
+const Index = ({ isLoggedIn, getAuthState }) => (
+  <Page>
+    <Main>
+      <SpecList />
+      {isLoggedIn ? <div>You are logged in.</div> : <Login />}
+    </Main>
+  </Page>
+)
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color.background};
   color: #333;

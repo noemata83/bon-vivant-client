@@ -6,27 +6,36 @@ import { ThemeProvider } from "styled-components"
 import theme from "../global/theme"
 import GlobalStyle from "../global/globalStyles"
 import { Provider } from "react-redux"
-import { createStore, compose } from "redux"
-import reducers from "../store/reducers/"
+import withReduxStore from "../lib/withRedux"
+// import { createStore, compose } from "redux"
+// import reducers from "../store/reducers/"
+import { getLoggedInState } from "../store/actions/"
 
+// const composeEnhancers =
+//   (typeof window !== "undefined" &&
+//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+//   compose
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose
-
-const store = createStore(reducers, composeEnhancers())
+// const store = createStore(reducers, composeEnhancers())
 
 class BonVivantApp extends App {
-  static getInitialProps()
+  static async getInitialProps({ Component, router, ctx }) {
+    let pageProps = {}
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
+    }
+    ctx.reduxStore.dispatch(getLoggedInState())
+    return { ...pageProps }
+  }
+
   render() {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps, apolloClient, reduxStore } = this.props
     return (
       <Container>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
-            <Provider store={store}>
+            <Provider store={reduxStore}>
               <Component {...pageProps} />
             </Provider>
           </ApolloProvider>
@@ -36,4 +45,4 @@ class BonVivantApp extends App {
   }
 }
 
-export default withApollo(BonVivantApp)
+export default withApollo(withReduxStore(BonVivantApp))
