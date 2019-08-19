@@ -7,16 +7,7 @@ import theme from "../global/theme"
 import GlobalStyle from "../global/globalStyles"
 import { Provider } from "react-redux"
 import withReduxStore from "../lib/withRedux"
-// import { createStore, compose } from "redux"
-// import reducers from "../store/reducers/"
 import { getLoggedInState } from "../store/actions/"
-
-// const composeEnhancers =
-//   (typeof window !== "undefined" &&
-//     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-//   compose
-
-// const store = createStore(reducers, composeEnhancers())
 
 class BonVivantApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
@@ -24,7 +15,7 @@ class BonVivantApp extends App {
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
     }
-    ctx.reduxStore.dispatch(getLoggedInState())
+    ctx.reduxStore.dispatch(getLoggedInState({ ctx }))
     return { ...pageProps }
   }
 

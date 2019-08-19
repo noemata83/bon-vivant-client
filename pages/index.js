@@ -6,7 +6,7 @@ import Page from "../layouts/main"
 import { connect } from "react-redux"
 
 const Index = ({ isLoggedIn }) => (
-  <Page>
+  <Page isLoggedIn={isLoggedIn}>
     <Main>
       <SpecList />
       {isLoggedIn ? <div>You are logged in.</div> : <Login />}

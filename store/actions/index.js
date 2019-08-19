@@ -1,1 +1,1 @@
-export { getLoggedInState } from "./auth"
+export { getLoggedInState, setLoggedIn, setLoggedOut } from "./auth"

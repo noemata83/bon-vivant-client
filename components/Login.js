@@ -2,6 +2,8 @@ import { useState } from "react"
 import gql from "graphql-tag"
 import styled from "styled-components"
 import { useMutation } from "@apollo/react-hooks"
+import { connect } from "react-redux"
+import { setLoggedIn } from "../store/actions/"
 
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -11,15 +13,34 @@ const LOGIN = gql`
   }
 `
 
-export default ({ props }) => {
+const LoginComponent = ({ updateLoggedInState }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [login, { data }] = useMutation(LOGIN)
-  const onSubmit = e => {
+  const [error, setError] = useState("")
+  const [
+    login,
+    { error: mutationError, loading: mutationLoading }
+  ] = useMutation(LOGIN, {
+    onCompleted: () => {
+      setUsername("")
+      setPassword("")
+      updateLoggedInState()
+    },
+    onError: error => {
+      console.log(error)
+      setError(error.message)
+    }
+  })
+  const onSubmit = async e => {
     e.preventDefault()
-    login({ variables: { username, password } })
-    setUsername("")
-    setPassword("")
+    login({
+      variables: { username, password }
+    })
+    // setUsername("")
+    // setPassword("")
+    // // if (!loading && !error) {
+    // //   updateLoggedInState()
+    // // }
   }
   return (
     <LoginForm onSubmit={onSubmit}>
@@ -37,6 +58,7 @@ export default ({ props }) => {
         value={password}
         onChange={e => setPassword(e.target.value)}
       />
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <SubmitButton type="submit" value="Login" />
     </LoginForm>
   )
@@ -67,3 +89,11 @@ const SubmitButton = styled.input`
   border-radius: 10px;
   border: none;
 `
+const mapDispatchToProps = dispatch => ({
+  updateLoggedInState: () => dispatch(setLoggedIn())
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(LoginComponent)

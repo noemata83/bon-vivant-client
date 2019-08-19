@@ -10,7 +10,7 @@ export default {
     heading: {
       fontFamily: `'Poiret One', Helvetica, sans-serif`,
       h1: {
-        fontSize: `3.2rem`,
+        fontSize: `2.8rem`,
         fullFontSize: `4.8rem`,
         margin: `1rem 0 2rem`,
         padding: `1.2rem`,

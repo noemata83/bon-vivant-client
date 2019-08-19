@@ -26,7 +26,6 @@ const myCocktailBook = props => {
   if (loading) return `Loading...`
   const { me } = data
   const { book, shelf, username } = me
-  console.log(book)
   return (
     <div>
       <h1>Welcome back, {username}!</h1>
