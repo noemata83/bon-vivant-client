@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { useMutation } from "@apollo/react-hooks"
 import { connect } from "react-redux"
 import { setLoggedIn } from "../store/actions/"
+import Router from "next/router"
 
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -25,6 +26,7 @@ const LoginComponent = ({ updateLoggedInState }) => {
       setUsername("")
       setPassword("")
       updateLoggedInState()
+      Router.push("/my-cocktail-book")
     },
     onError: error => {
       console.log(error)
@@ -36,11 +38,6 @@ const LoginComponent = ({ updateLoggedInState }) => {
     login({
       variables: { username, password }
     })
-    // setUsername("")
-    // setPassword("")
-    // // if (!loading && !error) {
-    // //   updateLoggedInState()
-    // // }
   }
   return (
     <LoginForm onSubmit={onSubmit}>

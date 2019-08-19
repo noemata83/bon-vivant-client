@@ -34,7 +34,7 @@ const myCocktailBook = props => {
         {book.map(spec => (
           <li key={spec.id}>
             <Link href={`/cocktails/[slug]`} as={`/cocktails/${spec.slug}`}>
-              {spec.name}
+              <a>{spec.name}</a>
             </Link>
           </li>
         ))}

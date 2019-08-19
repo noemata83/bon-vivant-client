@@ -19,14 +19,10 @@ const User = ({ toggleUserMenu }) => {
 }
 
 const UserButton = styled.button`
-  font-family: ${({ theme }) => theme.type.body.fontFamily};
-  font-size: ${({ theme }) => theme.type.body.fontSize};
   outline: none;
   background: transparent;
   border: none;
   margin-left: auto;
-  padding: 0;
-  margin: 0;
   path {
     fill: white;
   }

@@ -13,7 +13,7 @@ export default {
         fontSize: `2.8rem`,
         fullFontSize: `4.8rem`,
         margin: `1rem 0 2rem`,
-        padding: `1.2rem`,
+        padding: `0rem`,
         boxShadow: `4px 0px 8px rgba(0, 0, 0, .3), 4px 0px 20px rgba(0,0,0,0.2)`
       },
       h2: {

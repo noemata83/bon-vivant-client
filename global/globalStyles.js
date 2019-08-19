@@ -34,4 +34,10 @@ export default createGlobalStyle`
     margin: ${theme.type.heading.h1.margin};
     padding: ${theme.type.heading.h1.padding};
   }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
 `

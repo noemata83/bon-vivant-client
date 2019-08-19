@@ -31,23 +31,28 @@ export default () => {
   if (error) return `Error! ${error.message}`
 
   return (
-    <div>
+    <ul>
       {data.specs.map(spec => (
-        <div key={spec.id}>
+        <li key={spec.id}>
           <Link href="/cocktails/[slug]" as={`/cocktails/${spec.slug}`}>
             <SpecLink>{spec.name}</SpecLink>
           </Link>
-          <p>{spec.description}</p>
-        </div>
+          <ShortDescription>{spec.description}</ShortDescription>
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }
 
 const SpecLink = styled.a`
   cursor: pointer;
-  font-size: 3.2rem;
+  font-size: 2rem;
   ${media.landscapeTablet`
-    font-size: 4.8rem;
+    font-size: 2.8rem;
   `};
+`
+
+const ShortDescription = styled.p`
+  font-size: 1.4rem;
+  margin-top: 0;
 `

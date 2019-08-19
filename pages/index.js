@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import media from "../global/mediaTemplates"
 import SpecList from "../components/SpecList"
 import Login from "../components/Login"
 import Page from "../layouts/main"
@@ -8,15 +9,34 @@ import { connect } from "react-redux"
 const Index = ({ isLoggedIn }) => (
   <Page isLoggedIn={isLoggedIn}>
     <Main>
-      <SpecList />
-      {isLoggedIn ? <div>You are logged in.</div> : <Login />}
+      <Column>
+        <h2>From our Cocktail Library: </h2>
+        <SpecList />
+      </Column>
+      <Column>{isLoggedIn ? <div>You are logged in.</div> : <Login />}</Column>
     </Main>
   </Page>
 )
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color.background};
+  padding-top: 2rem;
   color: #333;
   flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+  ${media.landscapeTablet`
+    flex-wrap: nowrap;
+  `};
+`
+
+const Column = styled.div`
+  flex-basis: 100%;
+  ${media.landscapeTablet`
+    flex-basis: 49.25%;
+    &:not(:last-child) {
+      margin-right: 1.5%;
+    }
+  `};
 `
 
 const mapStateToProps = state => ({
