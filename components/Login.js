@@ -5,6 +5,7 @@ import { useMutation } from "@apollo/react-hooks"
 import { connect } from "react-redux"
 import { setLoggedIn } from "../store/actions/"
 import Router from "next/router"
+import TextInput from "./UI/form/textInput"
 
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -41,19 +42,19 @@ const LoginComponent = ({ updateLoggedInState }) => {
   }
   return (
     <LoginForm onSubmit={onSubmit}>
-      <LoginInput
+      <TextInput
         type="text"
         name="username"
         placeholder="Username"
         value={username}
-        onChange={e => setUsername(e.target.value)}
+        update={e => setUsername(e.target.value)}
       />
-      <LoginInput
+      <TextInput
         type="password"
         name="password"
         placeholder="Password"
         value={password}
-        onChange={e => setPassword(e.target.value)}
+        update={e => setPassword(e.target.value)}
       />
       {error && <div style={{ color: "red" }}>{error}</div>}
       <SubmitButton type="submit" value="Login" />
