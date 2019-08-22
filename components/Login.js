@@ -69,17 +69,6 @@ const LoginForm = styled.form`
   width: 50rem;
 `
 
-const LoginInput = styled.input`
-  display: block;
-  border: 1px solid #333;
-  background-color: white;
-  font-family: "Raleway", sans-serif;
-  padding: 0.5rem;
-  width: 30rem;
-  margin-bottom: 2rem;
-  font-size: 1.8rem;
-`
-
 const SubmitButton = styled.input`
   background-color: ${({ theme }) => theme.button.standard.background};
   color: ${({ theme }) => theme.button.standard.foreground};
