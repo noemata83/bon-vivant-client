@@ -8,20 +8,34 @@ export default ({
   name,
   placeholder,
   style,
-  className
-}) => (
-  <TextInput
-    type={type ? type : "text"}
-    value={value}
-    onChange={update}
-    name={name}
-    placeholder={placeholder}
-    style={style}
-    className={className}
-  />
-)
+  className,
+  input,
+  ...props
+}) => {
+  return update ? (
+    <TextInput
+      type={type ? type : "text"}
+      value={value}
+      onChange={update}
+      name={name}
+      placeholder={placeholder}
+      style={style}
+      className={className}
+      {...props}
+    />
+  ) : (
+    <TextInput
+      type={type ? type : "text"}
+      name={name}
+      placeholder={placeholder}
+      style={style}
+      className={className}
+      {...props}
+    />
+  )
+}
 
-const TextInput = styled.input`
+export const TextInput = styled.input`
   display: block;
   border: 1px solid #333;
   background-color: white;

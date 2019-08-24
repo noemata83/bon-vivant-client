@@ -23,11 +23,15 @@ const LoginComponent = ({ updateLoggedInState }) => {
     login,
     { error: mutationError, loading: mutationLoading }
   ] = useMutation(LOGIN, {
-    onCompleted: () => {
+    onCompleted: data => {
       setUsername("")
       setPassword("")
-      updateLoggedInState()
-      Router.push("/my-cocktail-book")
+      if (data.login) {
+        updateLoggedInState()
+        Router.push("/my-cocktail-book")
+      } else {
+        setError("Login unsuccessful")
+      }
     },
     onError: error => {
       console.log(error)
