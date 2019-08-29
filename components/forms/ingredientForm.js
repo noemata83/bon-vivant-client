@@ -1,6 +1,8 @@
-import React, { Fragment } from "react"
-import { Field } from "redux-form"
-import TextInput from "../UI/form/textInput"
+import React, { Fragment } from 'react'
+import { Field } from 'redux-form'
+import TextInput from '../UI/form/textInput'
+import Button from '../UI/buttons/Button'
+import styled from 'styled-components'
 
 const ingredientForm = props => {
   const { fields } = props
@@ -9,43 +11,61 @@ const ingredientForm = props => {
     <div>
       <h3>Ingredients:</h3>
       {fields.map((ingredient, index) => {
-        console.log(ingredient)
         return (
-          <Fragment key={`ingredient-${index}`}>
+          <IngredientRow key={`ingredient-${index}`}>
             <Field
               name={`${ingredient}.quantity`}
               key={`${ingredient}.quantity`}
               label="Qty"
-              component="input"
+              component={props => (
+                <IngredientInput {...props.input} label="Quantity" />
+              )}
               type="text"
             />
             <Field
               name={`${ingredient}.measure`}
               key={`${ingredient}.measure`}
-              component="input"
+              component={props => (
+                <IngredientInput {...props.input} label="Measure" />
+              )}
               label="Measure"
             />
             <Field
               name={`${ingredient}.name`}
               key={`${ingredient}.name`}
-              component="input"
+              component={props => (
+                <IngredientInput {...props.input} label="Name" />
+              )}
               label="Name"
             />
             <div>
-              <button type="button" onClick={() => fields.remove(index)}>
+              <Button type="button" onClick={() => fields.remove(index)}>
                 -
-              </button>
+              </Button>
             </div>
-          </Fragment>
+          </IngredientRow>
         )
       })}
       <div>
-        <button type="button" onClick={() => fields.push({})}>
+        <Button
+          style={{ marginLeft: 'auto' }}
+          type="button"
+          onClick={() => fields.push({})}
+        >
           Add an Ingredient
-        </button>
+        </Button>
       </div>
     </div>
   )
 }
 
 export default ingredientForm
+
+const IngredientInput = styled(TextInput)`
+  width: 30rem;
+`
+const IngredientRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+`

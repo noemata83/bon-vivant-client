@@ -15,9 +15,8 @@ export default ({
 }) => {
   return update ? (
     <div>
-      <Label htmlFor={name}>{label}:</Label>
-      <TextInput
-        type={type ? type : 'text'}
+      <Label htmlFor={name}>{label}</Label>
+      <Textarea
         value={value}
         onChange={update}
         name={name}
@@ -30,7 +29,7 @@ export default ({
   ) : (
     <div>
       <Label htmlFor={name}>{label}:</Label>
-      <TextInput
+      <Textarea
         type={type ? type : 'text'}
         name={name}
         placeholder={placeholder}
@@ -42,13 +41,13 @@ export default ({
   )
 }
 
-export const TextInput = styled.input`
+const Textarea = styled.textarea`
   display: block;
   border: 1px solid #333;
   background-color: white;
   font-family: 'Raleway', sans-serif;
   padding: 0.5rem;
-  width: 30rem;
+  width: 40rem;
   margin-bottom: 2rem;
   font-size: 1.8rem;
 `
