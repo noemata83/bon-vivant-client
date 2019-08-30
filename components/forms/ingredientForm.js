@@ -3,6 +3,7 @@ import { Field } from 'redux-form'
 import TextInput from '../UI/form/textInput'
 import Button from '../UI/buttons/Button'
 import styled from 'styled-components'
+import IngredientNameInput from '../UI/form/IngredientNameInput'
 
 const ingredientForm = props => {
   const { fields } = props
@@ -34,7 +35,7 @@ const ingredientForm = props => {
               name={`${ingredient}.name`}
               key={`${ingredient}.name`}
               component={props => (
-                <IngredientInput {...props.input} label="Name" />
+                <IngredientNameInput {...props.input} label="name" />
               )}
               label="Name"
             />
