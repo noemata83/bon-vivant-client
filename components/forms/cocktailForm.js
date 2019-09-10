@@ -11,7 +11,7 @@ const cocktailForm = ({ initialValues, handleSubmit }) => {
       <h2>
         {initialValues ? 'Edit Cocktail Spec' : 'Create a New Cocktail Spec'}
       </h2>
-      <form onSubmit={handleSubmit(values => console.log(values))}>
+      <form onSubmit={handleSubmit}>
         <Field
           component={props => <TextInput {...props.input} label="Name" />}
           label="Name"
@@ -30,11 +30,7 @@ const cocktailForm = ({ initialValues, handleSubmit }) => {
           label="Directions:"
           name="directions"
         />
-        <SubmitButton
-          type="button"
-          onClick={handleSubmit(values => console.log(values))}
-          value="Submit"
-        />
+        <SubmitButton type="submit" onClick={handleSubmit} value="Submit" />
       </form>
     </div>
   )

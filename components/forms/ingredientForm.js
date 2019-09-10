@@ -19,7 +19,11 @@ const ingredientForm = props => {
               key={`${ingredient}.quantity`}
               label="Qty"
               component={props => (
-                <IngredientInput {...props.input} label="Quantity" />
+                <IngredientInput
+                  type="number"
+                  {...props.input}
+                  label="Quantity"
+                />
               )}
               type="text"
             />
