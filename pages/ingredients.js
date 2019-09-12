@@ -29,9 +29,9 @@ flex-wrap: nowrap;
 const Column = styled.div`
   flex-basis: 100%;
   ${media.landscapeTablet`
-flex-basis: 49.25%;
-&:not(:last-child) {
-  margin-right: 1.5%;
-}
-`};
+    flex-basis: 49.25%;
+    &:not(:last-child) {
+      margin-right: 1.5%;
+    }
+  `};
 `

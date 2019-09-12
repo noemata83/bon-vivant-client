@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery } from '@apollo/react-hooks'
+import styled from 'styled-components'
 import gql from 'graphql-tag'
 
 const INGREDIENT_LIST_QUERY = gql`
@@ -40,21 +41,21 @@ export default ({ props }) => {
   const sortedIngredients = sortIngredients(ingredients, ingredientTypes)
   return (
     <div>
-      Hi
       <ul>
         {Object.keys(sortedIngredients).map(type => {
           if (sortedIngredients[type].length === 0) {
-            console.log('No results for ', type)
             return
           }
           return (
             <li key={type}>
-              <strong>{type}</strong>
-              <ul>
+              <TypeHeader>{type}</TypeHeader>
+              <ListOfIngredientsByType>
                 {sortedIngredients[type].map(ingredient => (
-                  <li key={ingredient.name}>{ingredient.name}</li>
+                  <IndividualIngredient key={ingredient.name}>
+                    {ingredient.name}
+                  </IndividualIngredient>
                 ))}
-              </ul>
+              </ListOfIngredientsByType>
             </li>
           )
         })}
@@ -62,3 +63,16 @@ export default ({ props }) => {
     </div>
   )
 }
+
+const TypeHeader = styled.h3`
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+`
+
+const ListOfIngredientsByType = styled.ul`
+  padding-left: 2rem;
+`
+
+const IndividualIngredient = styled.li`
+  margin-bottom: 0.5rem;
+`

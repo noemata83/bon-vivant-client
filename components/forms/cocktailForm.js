@@ -5,6 +5,9 @@ import Textarea from '../UI/form/textarea'
 import SubmitButton from '../UI/form/submitButton'
 import ingredientForm from './ingredientForm'
 
+const renderInput = props => <TextInput {...props.input} {...props} />
+const renderTextArea = props => <Textarea {...props.input} {...props} />
+
 const cocktailForm = ({ initialValues, handleSubmit }) => {
   return (
     <div>
@@ -12,21 +15,15 @@ const cocktailForm = ({ initialValues, handleSubmit }) => {
         {initialValues ? 'Edit Cocktail Spec' : 'Create a New Cocktail Spec'}
       </h2>
       <form onSubmit={handleSubmit}>
+        <Field component={renderInput} label="Name" name="name" />
         <Field
-          component={props => <TextInput {...props.input} label="Name" />}
-          label="Name"
-          name="name"
-        />
-        <Field
-          component={props => <Textarea {...props.input} label="Description" />}
+          component={renderTextArea}
           label="Description"
           name="description"
         />
         <FieldArray name="ingredients" component={ingredientForm} />
         <Field
-          component={props => (
-            <Textarea {...props.input} label="Directions: " />
-          )}
+          component={renderTextArea}
           label="Directions:"
           name="directions"
         />

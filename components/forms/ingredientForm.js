@@ -5,6 +5,19 @@ import Button from '../UI/buttons/Button'
 import styled from 'styled-components'
 import IngredientNameInput from '../UI/form/IngredientNameInput'
 
+const generateInput = props => (
+  <IngredientInput
+    type={props.type}
+    {...props.input}
+    label={props.label}
+    {...props}
+  />
+)
+
+const renderIngredientNameInput = props => (
+  <IngredientNameInput {...props.input} />
+)
+
 const ingredientForm = props => {
   const { fields } = props
 
@@ -18,29 +31,21 @@ const ingredientForm = props => {
               name={`${ingredient}.quantity`}
               key={`${ingredient}.quantity`}
               label="Qty"
-              component={props => (
-                <IngredientInput
-                  type="number"
-                  {...props.input}
-                  label="Quantity"
-                />
-              )}
-              type="text"
+              component={generateInput}
+              type="number"
+              step="0.25"
             />
             <Field
               name={`${ingredient}.measure`}
               key={`${ingredient}.measure`}
-              component={props => (
-                <IngredientInput {...props.input} label="Measure" />
-              )}
+              component={generateInput}
               label="Measure"
+              type="text"
             />
             <Field
               name={`${ingredient}.name`}
               key={`${ingredient}.name`}
-              component={props => (
-                <IngredientNameInput {...props.input} label="name" />
-              )}
+              component={renderIngredientNameInput}
               label="Name"
             />
             <div>
