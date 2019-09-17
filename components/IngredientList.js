@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 import { useQuery } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
@@ -52,7 +53,12 @@ export default ({ props }) => {
               <ListOfIngredientsByType>
                 {sortedIngredients[type].map(ingredient => (
                   <IndividualIngredient key={ingredient.name}>
-                    {ingredient.name}
+                    <Link
+                      href="/ingredients/[slug]"
+                      as={`/ingredients/${ingredient.slug}`}
+                    >
+                      <a>{ingredient.name}</a>
+                    </Link>
                   </IndividualIngredient>
                 ))}
               </ListOfIngredientsByType>
