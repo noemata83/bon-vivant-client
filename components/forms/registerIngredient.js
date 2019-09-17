@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Field, reduxForm } from 'redux-form'
 import TextInput from '../UI/form/textInput'
 import Textarea from '../UI/form/textarea'
 import Button from '../UI/buttons/Button'
-import Select from 'react-select'
-import { useQuery } from '@apollo/react-hooks'
+import CreatableSelect from 'react-select/creatable'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import styled from 'styled-components'
 import gql from 'graphql-tag'
 
@@ -20,19 +20,57 @@ const ING_FAMILY_QUERY = gql`
   }
 `
 
+const REGISTER_ING_FAMILY = gql`
+  mutation createIngredienType($name: String!) {
+    registerIngredientType(name: $name) {
+      name
+      id
+    }
+  }
+`
+
 const IngredientFamilySelect = props => {
+  const [options, setOptions] = useState([{}])
+  const [loaded, setLoaded] = useState(false)
   const { input } = props
   const { data, error, loading } = useQuery(ING_FAMILY_QUERY)
   if (error) return 'Oops!'
   if (loading) return '...'
   const { ingredientTypes } = data
-  const options = ingredientTypes.map(type => ({
-    label: type.name,
-    value: type.id
-  }))
+  if (!loaded) {
+    setOptions(
+      ingredientTypes.map(type => ({
+        label: type.name,
+        value: type.id
+      }))
+    )
+    setLoaded(true)
+  }
+  // console.log(options)
+  const [registerIngredientType, response] = useMutation(REGISTER_ING_FAMILY)
+
+  const handleCreate = async inputValue => {
+    const result = await registerIngredientType({
+      variables: { name: inputValue }
+    })
+    if (result.data) {
+      const { name, id } = result.data.registerIngredientType
+      console.log(name)
+      setOptions([
+        ...options,
+        {
+          value: id,
+          label: name
+        }
+      ])
+    }
+  }
+
   return (
-    <Select
+    <CreatableSelect
+      isClearable
       {...input}
+      onCreateOption={handleCreate}
       onChange={option => input.onChange(option)}
       onBlur={() => input.onBlur(input.value)}
       options={options}
