@@ -24,7 +24,7 @@ const newIngredient = props => {
   const handleSubmit = values => {
     const parsedValues = {
       ...values,
-      family: [values.family.value]
+      family: values.family.map(fam => fam.value)
     }
     try {
       addIngredient({ variables: parsedValues })

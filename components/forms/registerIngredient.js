@@ -69,6 +69,7 @@ const IngredientFamilySelect = props => {
   return (
     <CreatableSelect
       isClearable
+      isMulti
       {...input}
       onCreateOption={handleCreate}
       onChange={option => input.onChange(option)}
