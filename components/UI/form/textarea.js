@@ -35,6 +35,7 @@ export default ({
         placeholder={placeholder}
         style={style}
         className={className}
+        value={value}
         {...props}
       />
     </div>
