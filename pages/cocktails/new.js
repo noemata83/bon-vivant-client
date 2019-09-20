@@ -2,26 +2,7 @@ import React from 'react'
 import Page from '../../layouts/main'
 import CocktailForm from '../../components/forms/cocktailForm'
 import { useMutation } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
-
-const ADD_SPEC = gql`
-  mutation addSpec(
-    $name: String!
-    $description: String
-    $ingredients: [Spec_Ingredient_Input]!
-    $directions: String!
-  ) {
-    createSpec(
-      name: $name
-      description: $description
-      ingredients: $ingredients
-      directions: $directions
-    ) {
-      name
-      id
-    }
-  }
-`
+import { ADD_SPEC } from '../../queries/'
 
 const NewCocktail = ({ isLoggedIn }) => {
   const [addSpec, { error, loading, data }] = useMutation(ADD_SPEC, {
