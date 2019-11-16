@@ -23,7 +23,6 @@ export default ({ slug }) => {
   if (loading) return 'Loading...'
   if (error) return `Error: ${error.message}`
   const { ingredient } = data
-  console.log(ingredient)
   return (
     <div>
       <h1>{ingredient.name}</h1>
