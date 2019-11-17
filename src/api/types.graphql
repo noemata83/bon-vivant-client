@@ -1,0 +1,86 @@
+scalar Date
+
+enum Measurement {
+  OZ
+  ML
+  TSP
+  TBSP
+  DS
+  DR
+  PN
+  BSP
+  SPL
+  RINSE
+  TWIST
+  SPG
+  SLI
+  WDG
+  CUBE
+}
+
+type MeasureList {
+  abbreviation: String
+  plural: String
+  singular: String
+}
+
+type IngredientFamily {
+  type: String
+  name: String
+  slug: String
+  description: String
+  parent: IngredientFamily
+}
+
+type Ingredient {
+  id: String
+  name: String
+  slug: String
+  family: [IngredientFamily]
+  description: String
+  spec: Spec
+}
+
+type Review {
+  rating: Float
+  authr: User
+  comment: String
+  createdAt: Date
+}
+
+type SpecIngredient {
+  quantity: Float
+  measure: Measurement
+  ingredient: Ingredient
+  canSub: Boolean
+  subWith: String
+}
+
+type Spec {
+  id: String
+  author: String
+  name: String
+  description: String
+  ingredients: [SpecIngredient]
+  directions: String
+  riffOn: Spec
+  reviews: [Review]
+}
+
+input SpecIngredientInput {
+  quantity: Float
+  measure: Measurement
+  name: String!
+  slug: String
+  canSub: Boolean
+  subWith: String
+}
+
+type User {
+  id: String
+  username: String
+  email: String
+  token: String
+  book: [Spec]
+  shelf: [Ingredient]
+}
