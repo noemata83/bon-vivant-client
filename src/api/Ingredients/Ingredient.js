@@ -1,6 +1,7 @@
 import Sequelize from "sequelize"
 import sequelize from "../../../lib/sequelize"
 import IngredientFamily from "./IngredientFamily"
+import slugify from "slugify"
 const { Model } = Sequelize
 
 class Ingredient extends Model {}
@@ -34,9 +35,25 @@ export const initIngredient = () => {
       modelName: "ingredients"
     }
   )
-
-  IngFamily.init({}, { sequelize, modelName: "ingFamilies" })
-
+  IngFamily.init(
+    {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      ingredientId: {
+        type: Sequelize.INTEGER
+      },
+      familyId: {
+        type: Sequelize.INTEGER
+      }
+    },
+    {
+      sequelize,
+      modelName: "ingFamilies"
+    }
+  )
   SpecIngredient.init(
     {
       quantity: {

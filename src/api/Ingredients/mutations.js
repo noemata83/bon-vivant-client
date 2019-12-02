@@ -1,3 +1,11 @@
+import {
+  registerIngredientType,
+  deleteIngredientType,
+  createIngredient,
+  editIngredient,
+  deleteIngredient
+} from "./controller"
+
 export default {
   Mutation: {
     registerIngredientType(_, args) {

@@ -1,7 +1,5 @@
 {
-  "presets": [
-    "next/babel"
-  ],
+  "presets": ["next/babel"],
   "plugins": [
     [
       "babel-plugin-styled-components",
@@ -10,6 +8,7 @@
         "displayName": true,
         "preprocess": false
       }
-    ]
+    ],
+    "import-graphql"
   ]
 }

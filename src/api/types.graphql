@@ -25,20 +25,35 @@ type MeasureList {
 }
 
 type IngredientFamily {
-  type: String
+  id: Int
   name: String
   slug: String
   description: String
   parent: IngredientFamily
 }
 
+input IngredientFamilyInput {
+  name: String!
+  slug: String
+  description: String
+  parent: Int
+}
+
 type Ingredient {
-  id: String
+  id: Int
   name: String
   slug: String
   family: [IngredientFamily]
   description: String
   spec: Spec
+}
+
+input IngredientInput {
+  name: String!
+  slug: String
+  family: [Int]
+  description: String
+  spec: Int
 }
 
 type Review {
@@ -83,4 +98,18 @@ type User {
   token: String
   book: [Spec]
   shelf: [Ingredient]
+}
+
+type Mutation {
+  editIngredient(ingredient: IngredientInput): Ingredient
+  registerIngredientType(family: IngredientFamilyInput): IngredientFamily
+  deleteIngredientType(id: Int): IngredientFamily
+  addIngredient(ingredient: IngredientInput): Ingredient
+  deleteIngredient(id: Int!): Ingredient
+}
+
+type Query {
+  ingredient: Ingredient
+  ingredients: [Ingredient]
+  ingredientFamilies: [IngredientFamily]
 }
