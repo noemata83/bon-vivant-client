@@ -2,26 +2,17 @@ import { ApolloServer, gql } from "apollo-server-micro"
 import { mergeResolvers } from "graphql-toolkit"
 import ingredientsResolvers from "../../src/api/Ingredients/resolvers"
 import ingredientsMutations from "../../src/api/Ingredients/mutations"
+import specResolvers from "../../src/api/Specs/resolvers"
+import specMutations from "../../src/api/Specs/mutations"
 import typeDefs from "../../src/api/types.graphql"
 import { syncDB } from "../../src/api/syncDB"
 
-// const fakeTypeDefs = gql`
-//   type Query {
-//     sayHello: String
-//   }
-// `
-
-// const fakeResolvers = {
-//   Query: {
-//     sayHello: () => {
-//       return "Hello, World!"
-//     }
-//   }
-// }
-
-console.log(JSON.stringify(typeDefs, null, 4))
-
-const resolvers = mergeResolvers([ingredientsResolvers, ingredientsMutations])
+const resolvers = mergeResolvers([
+  ingredientsResolvers,
+  specResolvers,
+  specMutations,
+  ingredientsMutations
+])
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers })
 

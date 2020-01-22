@@ -1,6 +1,6 @@
 import Sequelize from "sequelize"
-import sequelize from "../../../lib/sequelize"
-import User from "../Users/User"
+import sequelize from "../../../lib/sequelize.mjs"
+import User from "../Users/User.mjs"
 const { Model } = Sequelize
 
 class Review extends Model {}

@@ -1,6 +1,6 @@
 import Sequelize from "sequelize"
-import sequelize from "../../../lib/sequelize"
-import IngredientFamily from "./IngredientFamily"
+import sequelize from "../../../lib/sequelize.mjs"
+import IngredientFamily from "./IngredientFamily.mjs"
 import slugify from "slugify"
 const { Model } = Sequelize
 
@@ -60,7 +60,23 @@ export const initIngredient = () => {
         type: Sequelize.FLOAT
       },
       measure: {
-        type: Sequelize.INTEGER
+        type: Sequelize.ENUM([
+          "OZ",
+          "ML",
+          "TSP",
+          "TBSP",
+          "DS",
+          "DR",
+          "PN",
+          "BSP",
+          "SPL",
+          "RINSE",
+          "TWIST",
+          "SPG",
+          "SLI",
+          "WDG",
+          "CUBE"
+        ])
       },
       canSub: {
         type: Sequelize.BOOLEAN

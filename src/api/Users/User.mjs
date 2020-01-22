@@ -1,5 +1,5 @@
 import Sequelize from "sequelize"
-import sequelize from "../../../lib/sequelize"
+import sequelize from "../../../lib/sequelize.mjs"
 import bcrypt from "bcrypt"
 const { Model } = Sequelize
 

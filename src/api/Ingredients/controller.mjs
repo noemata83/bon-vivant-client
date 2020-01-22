@@ -62,8 +62,20 @@ export const createIngredient = async ({ ingredient }) => {
   return createdIngredient
 }
 
-export const fetchAllIngredients = () => {
-  return Ingredient.findAll({}, { include: {} })
+export const fetchAllIngredients = async () => {
+  const allIngredients = await Ingredient.findAll({
+    include: [
+      {
+        model: IngredientFamily,
+        as: "family",
+        through: {
+          model: IngFamily,
+          as: "ingFamilies"
+        }
+      }
+    ]
+  })
+  return allIngredients
 }
 
 export const findIngredient = args => {
@@ -72,7 +84,18 @@ export const findIngredient = args => {
   }
   return Ingredient.findOne(
     { where },
-    { include: [{ model: IngredientFamily, as: "family" }] }
+    {
+      include: [
+        {
+          model: IngredientFamily,
+          as: "family",
+          through: {
+            model: IngFamily,
+            as: "ingFamilies"
+          }
+        }
+      ]
+    }
   )
 }
 

@@ -1,18 +1,14 @@
 import Sequelize from "sequelize"
-import sequelize from "../../../lib/sequelize"
+import sequelize from "../../../lib/sequelize.mjs"
 import slugify from "slugify"
-import Ingredient from "../Ingredients/Ingredient"
-import Review from "./Review"
+// import Ingredient from "./Ingredient"
 const { Model } = Sequelize
 
-class Spec extends Model {}
+class IngredientFamily extends Model {}
 
-export const initSpecs = () => {
-  Spec.init(
+export const initFamilies = () => {
+  IngredientFamily.init(
     {
-      createdAt: {
-        type: Sequelize.DATE
-      },
       name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -22,13 +18,9 @@ export const initSpecs = () => {
       },
       description: {
         type: Sequelize.TEXT
-      },
-      directions: {
-        type: Sequelize.TEXT
       }
     },
     {
-      sequelize,
       hooks: {
         beforeCreate: (family, options) => {
           if (!family.slug) {
@@ -37,9 +29,11 @@ export const initSpecs = () => {
           }
         }
       },
-      modelName: "specs"
+      sequelize,
+      modelName: "ingredientFamilies"
     }
   )
+  return IngredientFamily
 }
 
-export default Spec
+export default IngredientFamily

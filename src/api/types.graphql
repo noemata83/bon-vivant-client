@@ -91,6 +91,14 @@ input SpecIngredientInput {
   subWith: String
 }
 
+input SpecInput {
+  name: String!
+  description: String
+  ingredients: [SpecIngredientInput]
+  directions: String!
+  riffOn: String
+}
+
 type User {
   id: String
   username: String
@@ -106,10 +114,15 @@ type Mutation {
   deleteIngredientType(id: Int): IngredientFamily
   addIngredient(ingredient: IngredientInput): Ingredient
   deleteIngredient(id: Int!): Ingredient
+  createSpec(spec: SpecInput): Spec
+  editSpec(id: Int!, spec: SpecInput): Spec
+  deleteSpec(id: Int!): Spec
 }
 
 type Query {
-  ingredient: Ingredient
+  ingredient(id: Int, name: String, slug: String): Ingredient
   ingredients: [Ingredient]
   ingredientFamilies: [IngredientFamily]
+  specs: [Spec]
+  spec(id: Int, name: String, slug: String): Spec
 }

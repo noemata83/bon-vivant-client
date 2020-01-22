@@ -1,3 +1,5 @@
+import { createSpec, editSpec, deleteSpec } from "./controller"
+
 export default {
   Mutation: {
     async createSpec(parentValue, args) {

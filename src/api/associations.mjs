@@ -1,8 +1,8 @@
-import Ingredient, { SpecIngredient } from "./Ingredients/Ingredient"
-import IngredientFamily from "./Ingredients/IngredientFamily"
-import Spec from "./Specs/Spec"
-import User from "./Users/User"
-import Review from "./Specs/Review"
+import Ingredient, { SpecIngredient } from "./Ingredients/Ingredient.mjs"
+import IngredientFamily from "./Ingredients/IngredientFamily.mjs"
+import Spec from "./Specs/Spec.mjs"
+import User from "./Users/User.mjs"
+import Review from "./Specs/Review.mjs"
 
 export default () => {
   Ingredient.belongsToMany(IngredientFamily, {
@@ -15,6 +15,7 @@ export default () => {
   Ingredient.belongsToMany(Spec, {
     through: "specIngredients",
     constraints: false,
+    as: "ingredients",
     onDelete: "cascade",
     foreignKey: "ingredientId",
     otherKey: "specId"

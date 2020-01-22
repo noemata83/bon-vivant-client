@@ -10,7 +10,6 @@ const connection = {}
 
 export const syncDB = handler => async (req, res) => {
   if (connection.isConnected) {
-    console.log("=> Using an existing connection.")
     return handler(req, res)
   }
   initIngredient()

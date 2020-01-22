@@ -4,7 +4,7 @@ import {
   createIngredient,
   editIngredient,
   deleteIngredient
-} from "./controller"
+} from "./controller.mjs"
 
 export default {
   Mutation: {
