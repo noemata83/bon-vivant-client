@@ -9,11 +9,13 @@ export const initUser = () => {
     {
       username: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       password: {
         type: Sequelize.STRING,
@@ -25,6 +27,11 @@ export const initUser = () => {
       modelName: "users"
     }
   )
+
+  User.addHook("beforeCreate", async (user, options) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10)
+    user.password = hashedPassword
+  })
 
   User.prototype.isValidPassword = async function(password) {
     const user = this

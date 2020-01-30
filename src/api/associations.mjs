@@ -52,6 +52,6 @@ export default () => {
     as: "riffOn",
     useJunctionTable: false
   })
-  User.belongsToMany(Spec, { as: "book", through: "userBooks" })
-  User.belongsToMany(Ingredient, { as: "shelf", through: "userShelf" })
+  User.belongsToMany(Spec, { as: "book", through: "bookSpecs" })
+  User.belongsToMany(Ingredient, { as: "shelf", through: "shelfIngredients" })
 }

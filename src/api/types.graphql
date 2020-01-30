@@ -108,6 +108,16 @@ type User {
   shelf: [Ingredient]
 }
 
+input UserInput {
+  username: String!
+  password: String!
+  email: String!
+}
+
+type UserToken {
+  token: String
+}
+
 type Mutation {
   editIngredient(ingredient: IngredientInput): Ingredient
   registerIngredientType(family: IngredientFamilyInput): IngredientFamily
@@ -117,6 +127,11 @@ type Mutation {
   createSpec(spec: SpecInput): Spec
   editSpec(id: Int!, spec: SpecInput): Spec
   deleteSpec(id: Int!): Spec
+  addIngredientToShelf(id: Int!): User
+  addSpecToBook(id: Int!): User
+  signUp(username: String!, password: String!, email: String!): User
+  login(username: String!, password: String!): UserToken
+  deleteUser(id: Int!): User
 }
 
 type Query {
@@ -125,4 +140,6 @@ type Query {
   ingredientFamilies: [IngredientFamily]
   specs: [Spec]
   spec(id: Int, name: String, slug: String): Spec
+  users: [User]
+  me: User
 }
