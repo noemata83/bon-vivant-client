@@ -16,7 +16,7 @@ const specs = [
       {
         quantity: 0.5,
         measure: "OZ",
-        name: "Martino Rossi Sweet Vermouth",
+        name: "Martini Rosso Sweet Vermouth",
         canSub: true,
         subWith: "Sweet Vermouth"
       },

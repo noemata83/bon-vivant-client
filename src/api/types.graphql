@@ -73,6 +73,7 @@ type SpecIngredient {
 
 type Spec {
   id: String
+  slug: String
   author: String
   name: String
   description: String
@@ -128,7 +129,9 @@ type Mutation {
   editSpec(id: Int!, spec: SpecInput): Spec
   deleteSpec(id: Int!): Spec
   addIngredientToShelf(id: Int!): User
+  removeIngredientFromShelf(id: Int!): User
   addSpecToBook(id: Int!): User
+  removeSpecFromBook(id: Int!): User
   signUp(username: String!, password: String!, email: String!): User
   login(username: String!, password: String!): UserToken
   deleteUser(id: Int!): User

@@ -31,8 +31,7 @@ export const initIngredient = () => {
           }
         }
       },
-      sequelize,
-      modelName: "ingredients"
+      sequelize
     }
   )
   IngFamily.init(

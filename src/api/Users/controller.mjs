@@ -1,12 +1,36 @@
 import User from "./User.mjs"
 import Ingredient from "../Ingredients/Ingredient.mjs"
 import Spec from "../Specs/Spec.mjs"
+import { formatSpec } from "../Specs/controller.mjs"
 import jwt from "jsonwebtoken"
 import config from "../../../config/keys.mjs"
 
 export const isDuplicate = (arr, id) => {
-  const found = arr.findIndex(item => item == id)
-  return found != -1
+  const values = arr.map(item => item.dataValues)
+  const found = values.findIndex(item => item == id)
+  return found !== -1
+}
+
+const standardInclude = {
+  include: [
+    {
+      model: Ingredient,
+      as: "shelf",
+      through: "shelfIngredients"
+    },
+    {
+      model: Spec,
+      as: "book",
+      through: "bookSpecs",
+      include: [
+        {
+          model: Ingredient,
+          through: "specIngredients",
+          as: "ingredients"
+        }
+      ]
+    }
+  ]
 }
 
 const setTokenCookie = (res, token) => {
@@ -14,22 +38,31 @@ const setTokenCookie = (res, token) => {
     "Set-Cookie",
     `appToken=${token}; ${
       process.env.NODE_ENV === "production" ? "Secure; " : ""
-    }; Max-Age: ${1000 * 60 * 60 * 24 * 7}`
+    }; Max-Age: ${1000 * 60 * 60 * 24 * 7}; Path=/`
   )
 }
 
 export const getUserById = async id => {
   try {
-    const user = await User.findByPk(id)
+    const user = await User.findByPk(id, {
+      ...standardInclude
+    })
+    user.book = user.book.map(formatSpec)
     return user
   } catch (e) {
-    throw new Error("User not found.")
+    throw new Error(`There was a problem: ${e}`)
   }
 }
 
 export const getAllUsers = async () => {
-  const users = await User.find({})
-  return users
+  const users = await User.findAll({
+    ...standardInclude
+  })
+
+  return users.map(user => {
+    user.book = user.book.map(formatSpec)
+    return user
+  })
 }
 
 export const deleteUser = async id => {
@@ -37,44 +70,83 @@ export const deleteUser = async id => {
 }
 
 export const addIngredientToShelf = async (userId, ingredientId) => {
-  const user = await User.findByPk(userId)
+  const user = await User.findOne({
+    where: {
+      id: userId
+    },
+    include: [
+      {
+        model: Ingredient,
+        as: "shelf",
+        through: "shelfIngredients"
+      }
+    ]
+  })
   if (isDuplicate(user.shelf, ingredientId))
     throw new Error("Ingredient is already on your shelf.")
-  const ingredient = await Ingredient.findByPk(ingredientId)
   try {
-    user.addShelfIngredient(ingredient)
-    return user
+    await user.addShelf(ingredientId)
+    const updatedUser = await await User.findOne({
+      where: {
+        id: userId
+      },
+      ...standardInclude
+    })
+    updatedUser.book = user.book.map(formatSpec)
+    return updatedUser
   } catch (e) {
-    throw new Error("Error updating ingredient shelf.")
+    throw new Error(`Error updating ingredient shelf: ${e}`)
   }
 }
 
 export const removeIngredientFromShelf = async (userId, ingredientId) => {
   try {
     const user = await User.findByPk(userId)
-    const associatedIngredients = await user.getShelfIngredients()
+    const associatedIngredients = await user.getShelf()
     const filteredIngredients = associatedIngredients.filter(
       ingredient => ingredient.id !== ingredientId
     )
-    await user.setShelfIngredients(filteredIngredients)
-    return user
+    await user.setShelf(filteredIngredients)
+    const updatedUser = await User.findByPk(userId, {
+      ...standardInclude
+    })
+    return updatedUser
   } catch (e) {
-    throw new Error("Error updating ingredient shelf.")
+    throw new Error(`1Error updating ingredient shelf: ${e}`)
   }
 }
 
 export const addSpecToBook = async (userId, specId) => {
   try {
     const user = await User.findByPk(userId)
-    const book = await user.getBookSpecs()
+    const book = await user.getBook()
     if (isDuplicate(book, specId)) {
       throw new Error("Spec is already in your cocktail book.")
     }
-    const specToAdd = await Spec.findByPk(specId)
-    book.push(specToAdd)
-    user.setBookSpecs(book)
+    await user.addBook(specId)
+    const updatedUser = await User.findByPk(userId, {
+      ...standardInclude
+    })
+    updatedUser.book = updatedUser.book.map(formatSpec)
+    return updatedUser
   } catch (e) {
-    throw new Error("Error updating cocktail book.")
+    throw new Error(`Error updating cocktail book: ${e}`)
+  }
+}
+
+export const removeSpecFromBook = async (userId, specId) => {
+  try {
+    const user = await User.findByPk(userId)
+    const book = await user.getBook()
+    const updatedBook = book.filter(spec => spec.id !== specId)
+    await user.setBook(updatedBook)
+    const updatedUser = await User.findByPk(userId, {
+      ...standardInclude
+    })
+    updatedUser.book = updatedUser.book.map(formatSpec)
+    return updatedUser
+  } catch (e) {
+    throw new Error(`Error updating cocktail book: ${e}`)
   }
 }
 

@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from 'react'
-import { Field, reduxForm } from 'redux-form'
-import TextInput from '../UI/form/textInput'
-import Textarea from '../UI/form/textarea'
-import Button from '../UI/buttons/Button'
-import CreatableSelect from 'react-select/creatable'
-import { useQuery, useMutation } from '@apollo/react-hooks'
-import styled from 'styled-components'
-import gql from 'graphql-tag'
+import React, { Fragment, useState } from "react"
+import { Field, reduxForm } from "redux-form"
+import TextInput from "../UI/form/textInput"
+import Textarea from "../UI/form/textarea"
+import Button from "../UI/buttons/Button"
+import CreatableSelect from "react-select/creatable"
+import { useQuery, useMutation } from "@apollo/react-hooks"
+import styled from "styled-components"
+import gql from "graphql-tag"
 
 const renderInput = props => <TextInput {...props.input} {...props} />
 const renderTextArea = props => <Textarea {...props.input} {...props} />
@@ -34,8 +34,8 @@ const IngredientFamilySelect = props => {
   const [loaded, setLoaded] = useState(false)
   const { input } = props
   const { data, error, loading } = useQuery(ING_FAMILY_QUERY)
-  if (error) return 'Oops!'
-  if (loading) return '...'
+  if (error) return "Oops!"
+  if (loading) return "..."
   const { ingredientTypes } = data
   if (!loaded) {
     setOptions(
@@ -55,7 +55,6 @@ const IngredientFamilySelect = props => {
     })
     if (result.data) {
       const { name, id } = result.data.registerIngredientType
-      console.log(name)
       setOptions([
         ...options,
         {

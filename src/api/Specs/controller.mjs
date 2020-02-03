@@ -17,8 +17,9 @@ const formatSpecIngredients = ingredient => ({
   }
 })
 
-const formatSpec = spec => ({
+export const formatSpec = spec => ({
   name: spec.name,
+  slug: spec.slug,
   description: spec.description,
   directions: spec.directions,
   id: spec.id,
@@ -33,6 +34,7 @@ export const fetchAllSpecs = async (filter, limit) => {
     include: [
       {
         model: Ingredient,
+        through: "specIngredients",
         as: "ingredients"
       }
     ]
@@ -128,7 +130,6 @@ export const deleteSpec = async id => {
   const SpecToDelete = await Spec.findByPk(id)
   try {
     const result = await Spec.destroy({ where: { id } })
-    console.log(result)
     return SpecToDelete
   } catch (err) {
     throw Error("Could not delete that spec.")

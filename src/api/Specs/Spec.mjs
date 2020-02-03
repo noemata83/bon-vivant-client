@@ -29,10 +29,11 @@ export const initSpecs = () => {
     {
       sequelize,
       hooks: {
-        beforeCreate: (family, options) => {
-          if (!family.slug) {
-            const slug = slugify(family.name.toLowerCase())
-            family.slug = slug
+        beforeCreate: (spec, options) => {
+          if (!spec.slug) {
+            const slug = slugify(spec.name.toLowerCase())
+            spec.slug = slug
+            console.log(spec)
           }
         }
       },

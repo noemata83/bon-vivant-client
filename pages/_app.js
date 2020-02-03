@@ -1,5 +1,5 @@
-import App, { Container } from "next/app"
-import React from "react"
+import App from "next/app"
+import React, { Fragment } from "react"
 import { ApolloProvider } from "react-apollo"
 import withApollo from "../lib/withApollo"
 import { ThemeProvider } from "styled-components"
@@ -11,6 +11,7 @@ import { getLoggedInState } from "../store/actions/"
 
 class BonVivantApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
+    console.log(ctx)
     let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
@@ -22,7 +23,7 @@ class BonVivantApp extends App {
   render() {
     const { Component, pageProps, apolloClient, reduxStore } = this.props
     return (
-      <Container>
+      <>
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
@@ -31,7 +32,7 @@ class BonVivantApp extends App {
             </Provider>
           </ApolloProvider>
         </ThemeProvider>
-      </Container>
+      </>
     )
   }
 }

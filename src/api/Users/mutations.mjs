@@ -3,8 +3,10 @@ import {
   addSpecToBook,
   signUp,
   login,
-  deleteUser
+  deleteUser,
+  removeIngredientFromShelf
 } from "./controller.mjs"
+import { removeSpecFromBook } from "./controller.mjs"
 
 export default {
   Mutation: {
@@ -12,13 +14,25 @@ export default {
       if (!user) {
         throw new Error("You are not logged in.")
       }
-      return addIngredientToShelf(user.id, args.id)
+      return addIngredientToShelf(user, args.id)
+    },
+    removeIngredientFromShelf(_, args, { user }) {
+      if (!user) {
+        throw new Error("You are not logged in.")
+      }
+      return removeIngredientFromShelf(user, args.id)
     },
     addSpecToBook(_, args, { user }) {
       if (!user) {
         throw new Error("You are not logged in.")
       }
-      return addSpecToBook(user.id, args.id)
+      return addSpecToBook(user, args.id)
+    },
+    removeSpecFromBook(_, args, { user }) {
+      if (!user) {
+        throw new Error("You are not logged in.")
+      }
+      return removeSpecFromBook(user, args.id)
     },
     signUp(_, args, { res }) {
       return signUp(args.username, args.password, args.email, res)

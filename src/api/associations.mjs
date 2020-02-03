@@ -15,7 +15,7 @@ export default () => {
   Ingredient.belongsToMany(Spec, {
     through: "specIngredients",
     constraints: false,
-    as: "ingredients",
+    as: "specs",
     onDelete: "cascade",
     foreignKey: "ingredientId",
     otherKey: "specId"
@@ -52,6 +52,14 @@ export default () => {
     as: "riffOn",
     useJunctionTable: false
   })
-  User.belongsToMany(Spec, { as: "book", through: "bookSpecs" })
-  User.belongsToMany(Ingredient, { as: "shelf", through: "shelfIngredients" })
+  User.belongsToMany(Spec, { as: "book", through: "bookSpec" })
+  Spec.belongsToMany(User, { as: "users_liked", through: "bookSpec" })
+  User.belongsToMany(Ingredient, {
+    as: "shelf",
+    through: "shelfIngredient"
+  })
+  Ingredient.belongsToMany(User, {
+    as: "shelf_users",
+    through: "shelfIngredient"
+  })
 }
