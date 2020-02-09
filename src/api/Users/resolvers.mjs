@@ -10,12 +10,12 @@ export default {
         throw new Error("You are not authenticated!")
       }
       return getUserById(user)
+    },
+    async whatICanMake(_, args, { user }) {
+      if (!user) {
+        throw new Error("You are not authenticated!")
+      }
+      return getAvailableSpecs(user.id)
     }
-    // async whatICanMake(_, args, { user }) {
-    //   if (!user) {
-    //     throw new Error("You are not authenticated!")
-    //   }
-    //   return getAvailableSpecs(user.id)
-    // }
   }
 }

@@ -1,5 +1,6 @@
 import Spec from "./Spec.mjs"
 import Ingredient from "../Ingredients/Ingredient.mjs"
+import IngredientFamily from "../Ingredients/IngredientFamily.mjs"
 import { SpecIngredient } from "../Ingredients/Ingredient.mjs"
 
 const formatSpecIngredients = ingredient => ({
@@ -28,14 +29,21 @@ export const formatSpec = spec => ({
 })
 
 export const fetchAllSpecs = async (filter, limit) => {
+  const recordFilter = formatFilter(filter)
   const specs = await Spec.findAll({
-    where: filter,
+    where: recordFilter,
     limit,
     include: [
       {
         model: Ingredient,
         through: "specIngredients",
-        as: "ingredients"
+        as: "ingredients",
+        include: [
+          {
+            model: IngredientFamily,
+            as: "family"
+          }
+        ]
       }
     ]
   })
@@ -134,4 +142,18 @@ export const deleteSpec = async id => {
   } catch (err) {
     throw Error("Could not delete that spec.")
   }
+}
+
+const formatFilter = rawFilter => {
+  const filter = {}
+  if (rawFilter.name) {
+    filter.name = rawFilter.name
+  }
+  if (rawFilter.ingredients && rawFilter.ingredients.name) {
+    filter["$ingredients.name$"] = rawFilter.ingredients.name
+  }
+  if (rawFilter.ingredients && rawFilter.ingredients.family) {
+    filter["$ingredients.family.name$"] = rawFilter.ingredients.family
+  }
+  return filter
 }

@@ -119,6 +119,27 @@ type UserToken {
   token: String
 }
 
+input StringFilterInput {
+  lt: String
+  gt: String
+  eq: String
+  ne: String
+  contains: String
+  like: String
+  notLike: String
+}
+
+input IngredientFilterInput {
+  name: StringFilterInput
+  family: StringFilterInput
+}
+
+input SpecFilterInput {
+  name: StringFilterInput
+  riffOn: StringFilterInput
+  ingredients: IngredientFilterInput
+}
+
 type Mutation {
   editIngredient(ingredient: IngredientInput): Ingredient
   registerIngredientType(family: IngredientFamilyInput): IngredientFamily
@@ -141,8 +162,9 @@ type Query {
   ingredient(id: Int, name: String, slug: String): Ingredient
   ingredients: [Ingredient]
   ingredientFamilies: [IngredientFamily]
-  specs: [Spec]
+  specs(filter: SpecFilterInput): [Spec]
   spec(id: Int, name: String, slug: String): Spec
   users: [User]
   me: User
+  whatICanMake: [Spec]
 }
