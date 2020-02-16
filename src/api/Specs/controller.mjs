@@ -146,6 +146,9 @@ export const deleteSpec = async id => {
 
 const formatFilter = rawFilter => {
   const filter = {}
+  if (!rawFilter) {
+    return
+  }
   if (rawFilter.name) {
     filter.name = rawFilter.name
   }

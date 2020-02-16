@@ -26,7 +26,9 @@ const GET_SPECS = gql`
 `
 
 export default () => {
-  const { loading, error, data } = useQuery(GET_SPECS)
+  const { loading, error, data } = useQuery(GET_SPECS, {
+    fetchPolicy: "no-cache"
+  })
   if (loading) return "Loading..."
   if (error) return `Error! ${error.message}`
 

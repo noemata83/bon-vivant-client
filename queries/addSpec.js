@@ -1,10 +1,10 @@
-import gql from 'graphql-tag'
+import gql from "graphql-tag"
 
 export const ADD_SPEC = gql`
   mutation addSpec(
     $name: String!
     $description: String
-    $ingredients: [Spec_Ingredient_Input]!
+    $ingredients: [SpecIngredientInput]!
     $directions: String!
   ) {
     createSpec(

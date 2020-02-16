@@ -11,7 +11,7 @@ import { getLoggedInState } from "../store/actions/"
 
 class BonVivantApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
-    console.log(ctx)
+    // console.log(ctx)
     let pageProps = {}
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx)
