@@ -5,9 +5,13 @@ import SpecList from "../components/SpecList"
 import Login from "../components/Login"
 import Page from "../layouts/main"
 import { connect } from "react-redux"
+import Head from "next/head"
 
 const Index = ({ isLoggedIn }) => (
   <Page isLoggedIn={isLoggedIn}>
+    <Head>
+      <title>Bon Vivant Cocktails</title>
+    </Head>
     <Main>
       <Column>
         <h2>From our Cocktail Library: </h2>

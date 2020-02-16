@@ -3,8 +3,6 @@ import theme from "./theme"
 import media from "./mediaTemplates"
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Poiret+One|Raleway&display=swap');
-
   html {
     font-size: 50%;
     ${media.landscapeTablet`

@@ -79,24 +79,28 @@ export const fetchAllIngredients = async () => {
 }
 
 export const findIngredient = args => {
-  const where = {
-    args
+  const where = {}
+  if (args.id) {
+    where.id = args.id
   }
-  return Ingredient.findOne(
-    { where },
-    {
-      include: [
-        {
-          model: IngredientFamily,
-          as: "family",
-          through: {
-            model: IngFamily,
-            as: "ingFamilies"
-          }
-        }
-      ]
+  if (args.slug) {
+    where.slug = {
+      eq: args.slug
     }
-  )
+  }
+  return Ingredient.findOne({
+    where,
+    include: [
+      {
+        model: IngredientFamily,
+        as: "family",
+        through: {
+          model: IngFamily,
+          as: "ingFamilies"
+        }
+      }
+    ]
+  })
 }
 
 export const editIngredient = async (id, update) => {

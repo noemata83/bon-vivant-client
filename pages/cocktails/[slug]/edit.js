@@ -5,6 +5,7 @@ import CocktailForm from "../../../components/forms/cocktailForm"
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import gql from "graphql-tag"
 import { GET_SPEC, EDIT_SPEC } from "../../../queries"
+import Head from "next/head"
 
 const editIngredient = props => {
   const router = useRouter()
@@ -46,6 +47,9 @@ const editIngredient = props => {
 
   return (
     <Page>
+      <Head>
+        <title>Bon Vivant Cocktails: Edit {spec.name}</title>
+      </Head>
       <main>
         <CocktailForm onSubmit={handleSubmit} initialValues={spec} />
       </main>
