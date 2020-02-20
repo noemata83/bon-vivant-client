@@ -13,7 +13,7 @@ const renderTextArea = props => <Textarea {...props.input} {...props} />
 
 const ING_FAMILY_QUERY = gql`
   query {
-    ingredientTypes {
+    ingredientFamilies {
       name
       id
     }
@@ -22,7 +22,7 @@ const ING_FAMILY_QUERY = gql`
 
 const REGISTER_ING_FAMILY = gql`
   mutation createIngredienType($name: String!) {
-    registerIngredientType(name: $name) {
+    registerIngredientType(family: { name: $name }) {
       name
       id
     }
@@ -36,10 +36,10 @@ const IngredientFamilySelect = props => {
   const { data, error, loading } = useQuery(ING_FAMILY_QUERY)
   if (error) return "Oops!"
   if (loading) return "..."
-  const { ingredientTypes } = data
+  const { ingredientFamilies } = data
   if (!loaded) {
     setOptions(
-      ingredientTypes.map(type => ({
+      ingredientFamilies.map(type => ({
         label: type.name,
         value: type.id
       }))

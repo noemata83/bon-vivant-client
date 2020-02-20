@@ -2,8 +2,12 @@ import IngredientFamily from "./IngredientFamily"
 import Ingredient, { IngFamily } from "./Ingredient"
 
 export const registerIngredientType = async ({ family }) => {
-  const newIngredientFamily = await IngredientFamily.create(family)
-  return newIngredientFamily
+  try {
+    const newIngredientFamily = await IngredientFamily.create(family)
+    return newIngredientFamily
+  } catch (err) {
+    console.log(err)
+  }
 }
 export const fetchAllIngredientTypes = () => {
   return IngredientFamily.findAll()

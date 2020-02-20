@@ -1,29 +1,10 @@
-import React from 'react'
-import Link from 'next/link'
-import { useQuery } from '@apollo/react-hooks'
-import styled from 'styled-components'
-import gql from 'graphql-tag'
+import React from "react"
+import Link from "next/link"
+import { useQuery } from "@apollo/react-hooks"
+import styled from "styled-components"
 
-const INGREDIENT_LIST_QUERY = gql`
-  query {
-    ingredientTypes {
-      name
-      id
-    }
-    ingredients {
-      name
-      slug
-      id
-      family {
-        name
-        id
-      }
-    }
-  }
-`
-
-const sortIngredients = (ingredients, ingredientTypes) => {
-  return ingredientTypes.reduce((acc, type) => {
+const sortIngredients = (ingredients, ingredientFamilies) => {
+  return ingredientFamilies.reduce((acc, type) => {
     return {
       ...acc,
       [type.name]: ingredients.filter(ingredient => {
@@ -34,12 +15,12 @@ const sortIngredients = (ingredients, ingredientTypes) => {
   }, {})
 }
 
-export default ({ props }) => {
-  const { loading, error, data } = useQuery(INGREDIENT_LIST_QUERY)
-  if (loading) return 'Loading ...'
+export default ({ query }) => {
+  const { loading, error, data } = useQuery(query)
+  if (loading) return "Loading ..."
   if (error) return `Oh noes! An error! ${error}`
-  const { ingredients, ingredientTypes } = data
-  const sortedIngredients = sortIngredients(ingredients, ingredientTypes)
+  const { ingredients, ingredientFamilies } = data
+  const sortedIngredients = sortIngredients(ingredients, ingredientFamilies)
   return (
     <div>
       <ul>

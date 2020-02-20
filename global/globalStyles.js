@@ -3,6 +3,9 @@ import theme from "./theme"
 import media from "./mediaTemplates"
 
 export default createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
   html {
     font-size: 50%;
     ${media.landscapeTablet`

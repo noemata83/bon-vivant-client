@@ -1,7 +1,8 @@
 import gql from "graphql-tag"
-export const GET_INGREDIENTS = gql`
+
+export const INGREDIENT_LIST_QUERY = gql`
   query {
-    ingredientTypes {
+    ingredientFamilies {
       name
       id
     }

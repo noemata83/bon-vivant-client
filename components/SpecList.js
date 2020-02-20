@@ -1,57 +1,33 @@
-import gql from "graphql-tag"
 import { useQuery } from "@apollo/react-hooks"
 import Link from "next/link"
 import styled from "styled-components"
 import media from "../global/mediaTemplates"
+import SpecCard from "./SpecCard"
 
-const GET_SPECS = gql`
-  {
-    specs {
-      id
-      slug
-      name
-      description
-      ingredients {
-        quantity
-        measure
-        ingredient {
-          name
-        }
-        canSub
-        subWith
-      }
-      directions
-    }
-  }
-`
-
-export default () => {
-  const { loading, error, data } = useQuery(GET_SPECS, {
+export default ({ query }) => {
+  const { loading, error, data } = useQuery(query, {
     fetchPolicy: "no-cache"
   })
   if (loading) return "Loading..."
   if (error) return `Error! ${error.message}`
 
   return (
-    <ul>
+    <SpecGrid>
       {data.specs.map(spec => (
         <li key={spec.id}>
-          <Link href="/cocktails/[slug]" as={`/cocktails/${spec.slug}`}>
-            <SpecLink>{spec.name}</SpecLink>
-          </Link>
-          <ShortDescription>{spec.description}</ShortDescription>
+          <SpecCard spec={spec} />
         </li>
       ))}
-    </ul>
+    </SpecGrid>
   )
 }
 
-const SpecLink = styled.a`
-  cursor: pointer;
-  font-size: 2rem;
-  ${media.landscapeTablet`
-    font-size: 2.8rem;
-  `};
+const SpecGrid = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 2rem;
+  grid-row-gap: 3rem;
+  margin-bottom: 4rem;
 `
 
 const ShortDescription = styled.p`

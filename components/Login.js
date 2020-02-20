@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import gql from 'graphql-tag'
-import styled from 'styled-components'
-import { useMutation } from '@apollo/react-hooks'
-import { connect } from 'react-redux'
-import { setLoggedIn } from '../store/actions/'
-import Router from 'next/router'
-import TextInput from './UI/form/textInput'
+import { useState } from "react"
+import gql from "graphql-tag"
+import styled from "styled-components"
+import { useMutation } from "@apollo/react-hooks"
+import { connect } from "react-redux"
+import { setLoggedIn } from "../store/actions/"
+import Router from "next/router"
+import TextInput from "./UI/form/textInput"
 
 const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -16,21 +16,21 @@ const LOGIN = gql`
 `
 
 const LoginComponent = ({ updateLoggedInState }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
   const [
     login,
     { error: mutationError, loading: mutationLoading }
   ] = useMutation(LOGIN, {
     onCompleted: data => {
-      setUsername('')
-      setPassword('')
+      setUsername("")
+      setPassword("")
       if (data.login) {
         updateLoggedInState()
-        Router.push('/my-cocktail-book')
+        Router.push("/my-cocktail-book")
       } else {
-        setError('Login unsuccessful')
+        setError("Login unsuccessful")
       }
     },
     onError: error => {
@@ -50,19 +50,19 @@ const LoginComponent = ({ updateLoggedInState }) => {
         type="text"
         name="username"
         placeholder="Username"
-        label="Username: "
+        label="Username"
         value={username}
         update={e => setUsername(e.target.value)}
       />
       <TextInput
-        label="Username: "
+        label="Password"
         type="password"
         name="password"
         placeholder="Password"
         value={password}
         update={e => setPassword(e.target.value)}
       />
-      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {error && <div style={{ color: "red" }}>{error}</div>}
       <SubmitButton type="submit" value="Login" />
     </LoginForm>
   )
@@ -71,8 +71,10 @@ const LoginComponent = ({ updateLoggedInState }) => {
 const LoginForm = styled.form`
   border: 1px solid #ccc;
   background-color: #707070;
+  color: white;
   padding: 2rem;
   width: 50rem;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 `
 
 const SubmitButton = styled.input`
@@ -86,7 +88,4 @@ const mapDispatchToProps = dispatch => ({
   updateLoggedInState: () => dispatch(setLoggedIn())
 })
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(LoginComponent)
+export default connect(null, mapDispatchToProps)(LoginComponent)

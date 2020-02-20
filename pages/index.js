@@ -6,6 +6,28 @@ import Login from "../components/Login"
 import Page from "../layouts/main"
 import { connect } from "react-redux"
 import Head from "next/head"
+import gql from "graphql-tag"
+
+const GET_SPECS = gql`
+  {
+    specs {
+      id
+      slug
+      name
+      description
+      ingredients {
+        quantity
+        measure
+        ingredient {
+          name
+        }
+        canSub
+        subWith
+      }
+      directions
+    }
+  }
+`
 
 const Index = ({ isLoggedIn }) => (
   <Page isLoggedIn={isLoggedIn}>
@@ -15,7 +37,7 @@ const Index = ({ isLoggedIn }) => (
     <Main>
       <Column>
         <h2>From our Cocktail Library: </h2>
-        <SpecList />
+        <SpecList query={GET_SPECS} />
       </Column>
       <Column>{isLoggedIn ? <div>You are logged in.</div> : <Login />}</Column>
     </Main>
@@ -26,7 +48,8 @@ const Main = styled.div`
   padding-top: 2rem;
   color: #333;
   flex-grow: 1;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   flex-wrap: wrap;
   ${media.landscapeTablet`
     flex-wrap: nowrap;

@@ -1,15 +1,16 @@
-import React from 'react'
-import Page from '../layouts/main'
-import IngredientList from '../components/IngredientList'
-import styled from 'styled-components'
-import media from '../global/mediaTemplates'
+import React from "react"
+import Page from "../layouts/main"
+import IngredientList from "../components/IngredientList"
+import styled from "styled-components"
+import media from "../global/mediaTemplates"
+import { INGREDIENT_LIST_QUERY } from "../queries/listAllIngredients"
 
 export default ({ props }) => (
   <Page>
     <Main>
       <Column>
         <h2>Ingredients</h2>
-        <IngredientList />
+        <IngredientList query={INGREDIENT_LIST_QUERY} />
       </Column>
     </Main>
   </Page>
