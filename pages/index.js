@@ -7,6 +7,7 @@ import Page from "../layouts/main"
 import { connect } from "react-redux"
 import Head from "next/head"
 import gql from "graphql-tag"
+import UserSummary from "../components/UserSummary"
 
 const GET_SPECS = gql`
   {
@@ -39,7 +40,7 @@ const Index = ({ isLoggedIn }) => (
         <h2>From our Cocktail Library: </h2>
         <SpecList query={GET_SPECS} />
       </Column>
-      <Column>{isLoggedIn ? <div>You are logged in.</div> : <Login />}</Column>
+      <Column>{isLoggedIn ? <UserSummary></UserSummary> : <Login />}</Column>
     </Main>
   </Page>
 )
