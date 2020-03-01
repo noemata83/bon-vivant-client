@@ -5,7 +5,7 @@ import styled from "styled-components"
 import media from "../global/mediaTemplates"
 import { INGREDIENT_LIST_QUERY } from "../queries/listAllIngredients"
 
-export default ({ props }) => (
+export default () => (
   <Page>
     <Main>
       <Column>
@@ -23,7 +23,7 @@ const Main = styled.div`
   display: flex;
   flex-wrap: wrap;
   ${media.landscapeTablet`
-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 `};
 `
 

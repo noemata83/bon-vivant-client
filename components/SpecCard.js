@@ -1,7 +1,6 @@
 import React from "react"
 import Link from "next/link"
 import styled from "styled-components"
-import media from "../global/mediaTemplates"
 import theme from "../global/theme"
 
 export default ({ spec }) => {
@@ -10,9 +9,9 @@ export default ({ spec }) => {
     <CardContainer>
       <Card>
         <CardImageContainer>
-          <CardImage src={spec.image} />
+          <CardImage src={image} />
         </CardImageContainer>
-        <Link href="/cocktails/[slug]" as={`/cocktails/${spec.slug}`}>
+        <Link href="/cocktails/[slug]" as={`/cocktails/${slug}`}>
           <SpecLink>
             <CardTitle>{name}</CardTitle>
             <IngredientList>

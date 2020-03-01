@@ -29,8 +29,3 @@ const SpecGrid = styled.ul`
   grid-row-gap: 3rem;
   margin-bottom: 4rem;
 `
-
-const ShortDescription = styled.p`
-  font-size: 1.4rem;
-  margin-top: 0;
-`
