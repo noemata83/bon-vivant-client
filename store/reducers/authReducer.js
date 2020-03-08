@@ -14,13 +14,19 @@ const reducer = (state = { ...initialState }, action) => {
     case actionTypes.GET_LOGGED_IN_STATE: {
       const token = getCookies(action.ctx).appToken
       const isLoggedIn = token ? true : false
-      const payload = jwt.verify(token, env.SECRET)
-      const { username, id } = payload
+      if (isLoggedIn) {
+        const payload = jwt.verify(token, env.SECRET)
+        const { username, id } = payload
+        return {
+          ...state,
+          isLoggedIn,
+          username,
+          userId: id
+        }
+      }
       return {
         ...state,
-        isLoggedIn,
-        username,
-        userId: id
+        isLoggedIn
       }
     }
     case actionTypes.SET_LOGGED_IN:
