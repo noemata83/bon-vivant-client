@@ -21,6 +21,12 @@ module.exports = {
       directions: {
         type: Sequelize.TEXT
       },
+      dateAdded: {
+        type: Sequelize.DATE,
+        defaultValue: new Date(),
+        allowNull: false
+      },
+      source: Sequelize.STRING,
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

@@ -2,6 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("SpecIngredients", {
+      id: {
+        type: Sequelize.UUID,
+        primaryKey: true,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false,
+        unique: true,
+        autoIncrement: false
+      },
       quantity: {
         type: Sequelize.FLOAT
       },

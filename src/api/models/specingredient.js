@@ -3,6 +3,13 @@ module.exports = (sequelize, DataTypes) => {
   const specingredient = sequelize.define(
     "SpecIngredient",
     {
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        autoIncrement: false
+      },
       quantity: DataTypes.FLOAT,
       measure: DataTypes.ENUM([
         "OZ",
@@ -42,7 +49,10 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   specingredient.associate = function(models) {
-    // associations can be defined here
+    specingredient.belongsToMany(models.ingredientFamily, {
+      as: "subWith",
+      through: "IngredientSubstitionClasses"
+    })
   }
   return specingredient
 }

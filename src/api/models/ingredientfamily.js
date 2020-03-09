@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
       as: "ingredients"
     })
+
+    ingredientFamily.belongsToMany(models.specIngredient, {
+      as: "subbedFor",
+      through: "IngredientSubstitionClasses"
+    })
   }
 
   ingredientFamily.addHook("beforeCreate", (family, options) => {

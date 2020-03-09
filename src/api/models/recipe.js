@@ -10,6 +10,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         autoIncrement: false
       },
+      dateAdded: {
+        type: DataTypes.DATE,
+        defaultValue: new Date(),
+        allowNull: false
+      },
+      source: DataTypes.STRING,
       name: DataTypes.STRING,
       slug: DataTypes.STRING,
       description: DataTypes.TEXT,
@@ -18,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   spec.associate = function(models) {
+    spec.hasOne(models.spec, { as: "riffOn", useJunctionTable: false })
+    spec.belongsTo(models.user, { as: "contributedBy" })
     spec.belongsToMany(models.ingredient, { through: "SpecIngredients" })
     spec.belongsToMany(models.user, {
       through: "CocktailBooks",
