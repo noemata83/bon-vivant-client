@@ -1,5 +1,6 @@
 "use strict"
 const bcrypt = require("bcrypt")
+const uuid = require("uuid/v4")
 
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define(
@@ -8,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: Sequelize.UUID,
         primaryKey: true,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: uuid(),
         allowNull: false,
         autoIncrement: false
       },
@@ -28,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
       as: "book"
     })
   }
+  user.addHook("beforeCreate", async (user, options) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10)
+    user.password = hashedPassword
+  })
   user.prototype.isValidPassword = async function(password) {
     const user = this
     const compare = await bcrypt.compare(password, user.password)

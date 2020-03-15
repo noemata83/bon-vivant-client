@@ -5,11 +5,13 @@ module.exports = {
     return queryInterface.createTable("IngredientsAndFamilies", {
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        timestamps: false
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        timestamps: false
       },
       IngredientId: {
         type: Sequelize.UUID,
