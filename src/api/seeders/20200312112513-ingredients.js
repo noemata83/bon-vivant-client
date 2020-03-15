@@ -70,7 +70,7 @@ module.exports = {
       {
         id: florDeCanaWhiteId,
         name: "Flor de Cana Extra Dry White Rum",
-        slug: "flor-de-cana-extra-dry",
+        slug: "flor-de-cana-extra-dry-white-rum",
         description:
           "A light rum from Nicaragua, aged for four years and filtered for color. Extremely smooth.",
         createdAt: new Date(),

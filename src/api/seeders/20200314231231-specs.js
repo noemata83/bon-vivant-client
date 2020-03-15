@@ -112,7 +112,7 @@ module.exports = {
         id: uuid.v4(),
         createdAt: new Date(),
         updatedAt: new Date(),
-        ingredientId: rittenhouseId,
+        ingredientId: buffaloTraceId,
         specId: bourbonManhattanId,
         quantity: 2.0,
         measure: "OZ",
@@ -164,7 +164,7 @@ module.exports = {
         ingredientId: limeJuiceId,
         specId: daiquiriId,
         quantity: 0.75,
-        measure: "0Z",
+        measure: "OZ",
         canSub: false
       },
       {
@@ -182,6 +182,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete("SpecIngredients", null, {})
-    return queryInterface.bulkDelete("Ingredients", null, {})
+    return queryInterface.bulkDelete("Specs", null, {})
   }
 }
