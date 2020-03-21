@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       specId: {
-        types: DataTypes.UUID,
+        type: DataTypes.UUID,
         references: {
           model: "Specs",
           key: "id",
@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   specingredient.associate = function(models) {
-    specingredient.belongsToMany(models.ingredientFamily, {
+    specingredient.belongsToMany(models.IngredientFamily, {
       as: "subWith",
       through: "IngredientSubstitionClasses"
     })

@@ -1,6 +1,9 @@
-import User from "./User.mjs"
-import Ingredient from "../Ingredients/Ingredient.mjs"
-import Spec from "../Specs/Spec.mjs"
+import models from "../models"
+
+const { User, Ingredient, Spec } = models
+// import User from "./User.mjs"
+// import Ingredient from "../Ingredients/Ingredient.mjs"
+// import Spec from "../Specs/Spec.mjs"
 import { formatSpec } from "../Specs/controller.mjs"
 import jwt from "jsonwebtoken"
 import config from "../../../config/keys.mjs"
@@ -16,16 +19,16 @@ const standardInclude = {
     {
       model: Ingredient,
       as: "shelf",
-      through: "shelfIngredients"
+      through: "IngredientShelves"
     },
     {
       model: Spec,
       as: "book",
-      through: "bookSpecs",
+      through: "CocktailBooks",
       include: [
         {
           model: Ingredient,
-          through: "specIngredients",
+          through: "SpecIngredients",
           as: "ingredients"
         }
       ]

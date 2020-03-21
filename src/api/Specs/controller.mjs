@@ -1,7 +1,9 @@
-import Spec from "./Spec.mjs"
-import Ingredient from "../Ingredients/Ingredient.mjs"
-import IngredientFamily from "../Ingredients/IngredientFamily.mjs"
-import { SpecIngredient } from "../Ingredients/Ingredient.mjs"
+const models = require("../models")
+const { Spec, Ingredient, IngredientFamily, SpecIngredient } = models
+// import Spec from "./Spec.mjs"
+// import Ingredient from "../Ingredients/Ingredient.mjs"
+// import IngredientFamily from "../Ingredients/IngredientFamily.mjs"
+// import { SpecIngredient } from "../Ingredients/Ingredient.mjs"
 
 const formatSpecIngredients = ingredient => ({
   quantity: ingredient.specIngredients.quantity,
@@ -36,14 +38,22 @@ export const fetchAllSpecs = async (filter, limit) => {
     include: [
       {
         model: Ingredient,
-        through: "specIngredients",
         as: "ingredients",
+        through: {
+          model: SpecIngredient,
+          as: "specIngredients"
+        },
         include: [
           {
             model: IngredientFamily,
-            as: "family"
+            as: "family",
+            through: "IngredientsAndFamilies"
           }
         ]
+      },
+      {
+        model: Spec,
+        as: "riffOn"
       }
     ]
   })
@@ -57,7 +67,11 @@ export const findSpec = async where => {
     include: [
       {
         model: Ingredient,
-        as: "ingredients"
+        as: "ingredients",
+        through: {
+          model: SpecIngredient,
+          as: "specIngredients"
+        }
       }
     ]
   })
@@ -90,7 +104,7 @@ export const createSpec = async ({ spec }) => {
           as: "ingredients",
           through: {
             model: SpecIngredient,
-            as: "specIngredients"
+            as: "SpecIngredients"
           }
         }
       ]

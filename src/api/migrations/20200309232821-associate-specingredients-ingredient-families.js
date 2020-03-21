@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      specingredientId: {
+      SpecingredientId: {
         type: Sequelize.UUID,
         references: {
           model: "SpecIngredients",
@@ -19,7 +19,7 @@ module.exports = {
         },
         primaryKey: true
       },
-      ingredientFamilyId: {
+      IngredientFamilyId: {
         type: Sequelize.UUID,
         references: {
           model: "IngredientFamilies",

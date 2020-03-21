@@ -88,49 +88,50 @@ module.exports = {
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: manhattanRyeId,
-        ingredientFamilyId: ryeWhiskeyId
+        SpecingredientId: manhattanRyeId,
+        IngredientFamilyId: ryeWhiskeyId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: manhattanVermouthId,
-        ingredientFamilyId: vermouthId
+        SpecingredientId: manhattanVermouthId,
+        IngredientFamilyId: vermouthId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: manhattanAngosturaId,
-        ingredientFamilyId: aromaticBittersId
+        SpecingredientId: manhattanAngosturaId,
+        IngredientFamilyId: aromaticBittersId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: bourbonManhattanBourbonId,
-        ingredientFamilyId: bourbonWhiskeyId
+        SpecingredientId: bourbonManhattanBourbonId,
+        IngredientFamilyId: bourbonWhiskeyId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: bourbonManhattanVermouthId,
-        ingredientFamilyId: vermouthId
+        SpecingredientId: bourbonManhattanVermouthId,
+        IngredientFamilyId: vermouthId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: bourbonManhattanAngosturaId,
-        ingredientFamilyId: aromaticBittersId
+        SpecingredientId: bourbonManhattanAngosturaId,
+        IngredientFamilyId: aromaticBittersId
       },
       {
         createdAt: new Date(),
         updatedAt: new Date(),
-        specingredientId: daiquiriRumId,
-        ingredientFamilyId: lightRumId
+        SpecingredientId: daiquiriRumId,
+        IngredientFamilyId: lightRumId
       }
     ])
   },
 
   down: async (queryInterface, Sequelize) => {
     return queryInterface.bulkDelete("IngredientSubstitutionClasses", null, {})
+    // return queryInterface.dropTable("IngredientSubstitutionClasses")
   }
 }

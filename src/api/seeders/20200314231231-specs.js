@@ -43,7 +43,7 @@ module.exports = {
         description: "The classic.",
         directions:
           "Build liquid ingredients in a mixing glass with ice. Stir for twenty seconds, then strain into a chilled cocktail class or a rocks glass with ice, as desired. Garnish with the cherry.",
-        riffOn: null
+        riffOnId: null
       },
       {
         id: bourbonManhattanId,
@@ -54,7 +54,7 @@ module.exports = {
         description: "The bourbon variation on the classic.",
         directions:
           "Build liquid ingredients in a mixing glass with ice. Stir for twenty seconds, then strain into a chilled cocktail class or a rocks glass with ice, as desired. Garnish with the cherry.",
-        riffOn: manhattanId
+        riffOnId: manhattanId
       },
       {
         id: daiquiriId,

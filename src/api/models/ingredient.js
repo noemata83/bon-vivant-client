@@ -1,4 +1,7 @@
 "use strict"
+
+const slugify = require("slugify")
+
 module.exports = (sequelize, DataTypes) => {
   const ingredient = sequelize.define(
     "Ingredient",
@@ -17,20 +20,23 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   ingredient.associate = function(models) {
-    ingredient.belongsToMany(models.ingredientFamily, {
+    ingredient.belongsToMany(models.IngredientFamily, {
       through: "IngredientsAndFamilies",
       as: "family"
     })
-    ingredient.belongsToMany(models.spec, {
-      through: "SpecIngredients"
+    ingredient.belongsToMany(models.Spec, {
+      through: "SpecIngredients",
+      as: "ingredients",
+      foreignKey: "ingredientId"
     })
-    ingredient.belongsToMany(models.user, {
+    ingredient.belongsToMany(models.User, {
       through: "IngredientShelves",
       as: "shelf_users"
     })
   }
 
   ingredient.addHook("beforeCreate", (ingredient, options) => {
+    console.log(ingredient)
     if (!ingredient.slug) {
       const slug = slugify(ingredient.name.toLowerCase())
       ingredient.slug = slug

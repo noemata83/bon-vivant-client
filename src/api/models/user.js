@@ -1,15 +1,15 @@
 "use strict"
 const bcrypt = require("bcrypt")
-const uuid = require("uuid/v4")
+const uuid = require("uuid")
 
 module.exports = (sequelize, DataTypes) => {
   const user = sequelize.define(
     "User",
     {
       id: {
-        type: Sequelize.UUID,
+        type: DataTypes.UUID,
         primaryKey: true,
-        defaultValue: uuid(),
+        defaultValue: uuid.v4(),
         allowNull: false,
         autoIncrement: false
       },
@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   user.associate = function(models) {
-    user.belongsToMany(models.ingredient, {
+    user.belongsToMany(models.Ingredient, {
       through: "IngredientShelves",
       as: "shelf"
     })
-    user.belongsToMany(models.spec, {
+    user.belongsToMany(models.Spec, {
       through: "CocktailBooks",
       as: "book"
     })

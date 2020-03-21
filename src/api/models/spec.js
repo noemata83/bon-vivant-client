@@ -1,4 +1,6 @@
 "use strict"
+const slugify = require("slugify")
+
 module.exports = (sequelize, DataTypes) => {
   const spec = sequelize.define(
     "Spec",
@@ -24,10 +26,17 @@ module.exports = (sequelize, DataTypes) => {
     {}
   )
   spec.associate = function(models) {
-    spec.hasOne(models.spec, { as: "riffOn", useJunctionTable: false })
-    spec.belongsTo(models.user, { as: "contributedBy" })
-    spec.belongsToMany(models.ingredient, { through: "SpecIngredients" })
-    spec.belongsToMany(models.user, {
+    spec.hasOne(models.Spec, {
+      as: "riffOn",
+      useJunctionTable: false
+    })
+    spec.belongsTo(models.User, { as: "contributedBy" })
+    spec.belongsToMany(models.Ingredient, {
+      through: "SpecIngredients",
+      as: "ingredients",
+      foreignKey: "specId"
+    })
+    spec.belongsToMany(models.User, {
       through: "CocktailBooks",
       as: "users_saved"
     })
@@ -38,5 +47,5 @@ module.exports = (sequelize, DataTypes) => {
       spec.slug = slug
     }
   })
-  return Spec
+  return spec
 }

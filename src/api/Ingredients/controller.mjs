@@ -1,5 +1,7 @@
-import IngredientFamily from "./IngredientFamily"
-import Ingredient, { IngFamily } from "./Ingredient"
+// import IngredientFamily from "./IngredientFamily"
+import models from "../models/"
+
+const { Ingredient, IngredientFamily } = models
 
 export const registerIngredientType = async ({ family }) => {
   try {
@@ -41,14 +43,10 @@ export const deleteIngredientType = async ({ id }) => {
 }
 
 export const createIngredient = async ({ ingredient }) => {
-  // console.log(JSON.stringify(ingredient, null, 4))
   const newIngredient = await Ingredient.create(ingredient)
-  // console.log(newIngredient)
-  // newIngredient.setIngredientFamily(families)
-  const familyRelations = ingredient.family.map(family =>
-    IngFamily.create({ familyId: family, ingredientId: newIngredient.id })
-  )
-  await Promise.all(familyRelations)
+  ingredient.family.forEach(fam => {
+    newIngredient.addFamily(fam)
+  })
   const createdIngredient = Ingredient.findOne({
     where: { id: newIngredient.id },
     include: [
@@ -56,10 +54,7 @@ export const createIngredient = async ({ ingredient }) => {
         model: IngredientFamily,
         as: "family",
         required: false,
-        through: {
-          model: IngFamily,
-          as: "ingFamilies"
-        }
+        through: "IngredientsAndFamilies"
       }
     ]
   })
@@ -72,10 +67,7 @@ export const fetchAllIngredients = async () => {
       {
         model: IngredientFamily,
         as: "family",
-        through: {
-          model: IngFamily,
-          as: "ingFamilies"
-        }
+        through: "IngredientsAndFamilies"
       }
     ]
   })
@@ -98,10 +90,7 @@ export const findIngredient = args => {
       {
         model: IngredientFamily,
         as: "family",
-        through: {
-          model: IngFamily,
-          as: "ingFamilies"
-        }
+        through: "IngredientsAndFamilies"
       }
     ]
   })

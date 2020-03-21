@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn("Specs", "contributedBy", {
+    return queryInterface.addColumn("Specs", "contributedById", {
       type: Sequelize.UUID,
       references: {
         model: "Users",
@@ -13,6 +13,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn("Specs", "contributedBy")
+    return queryInterface.removeColumn("Specs", "contributedById")
   }
 }

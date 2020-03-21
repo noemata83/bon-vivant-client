@@ -25,7 +25,7 @@ type MeasureList {
 }
 
 type IngredientFamily {
-  id: Int
+  id: String
   name: String
   slug: String
   description: String
@@ -36,11 +36,11 @@ input IngredientFamilyInput {
   name: String!
   slug: String
   description: String
-  parent: Int
+  parent: String
 }
 
 type Ingredient {
-  id: Int
+  id: String
   name: String
   slug: String
   family: [IngredientFamily]
@@ -51,9 +51,9 @@ type Ingredient {
 input IngredientInput {
   name: String!
   slug: String
-  family: [Int]
+  family: [String]
   description: String
-  spec: Int
+  spec: String
 }
 
 type Review {
@@ -143,27 +143,27 @@ input SpecFilterInput {
 type Mutation {
   editIngredient(ingredient: IngredientInput): Ingredient
   registerIngredientType(family: IngredientFamilyInput): IngredientFamily
-  deleteIngredientType(id: Int): IngredientFamily
+  deleteIngredientType(id: String): IngredientFamily
   addIngredient(ingredient: IngredientInput): Ingredient
-  deleteIngredient(id: Int!): Ingredient
+  deleteIngredient(id: String!): Ingredient
   createSpec(spec: SpecInput): Spec
-  editSpec(id: Int!, spec: SpecInput): Spec
-  deleteSpec(id: Int!): Spec
-  addIngredientToShelf(id: Int!): User
-  removeIngredientFromShelf(id: Int!): User
-  addSpecToBook(id: Int!): User
-  removeSpecFromBook(id: Int!): User
+  editSpec(id: String!, spec: SpecInput): Spec
+  deleteSpec(id: String!): Spec
+  addIngredientToShelf(id: String!): User
+  removeIngredientFromShelf(id: String!): User
+  addSpecToBook(id: String!): User
+  removeSpecFromBook(id: String!): User
   signUp(username: String!, password: String!, email: String!): User
   login(username: String!, password: String!): UserToken
-  deleteUser(id: Int!): User
+  deleteUser(id: String!): User
 }
 
 type Query {
-  ingredient(id: Int, name: String, slug: String): Ingredient
+  ingredient(id: String, name: String, slug: String): Ingredient
   ingredients: [Ingredient]
   ingredientFamilies: [IngredientFamily]
   specs(filter: SpecFilterInput): [Spec]
-  spec(id: Int, name: String, slug: String): Spec
+  spec(id: String, name: String, slug: String): Spec
   users: [User]
   me: User
   whatICanMake: [Spec]

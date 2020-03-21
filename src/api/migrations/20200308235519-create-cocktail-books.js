@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      userId: {
+      UserId: {
         type: Sequelize.UUID,
         references: {
           model: "Users",
@@ -19,7 +19,7 @@ module.exports = {
         },
         primaryKey: true
       },
-      specId: {
+      SpecId: {
         type: Sequelize.UUID,
         references: {
           model: "Specs",
