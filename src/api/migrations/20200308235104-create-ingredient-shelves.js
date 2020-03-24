@@ -17,7 +17,9 @@ module.exports = {
           model: "Users",
           key: "id"
         },
-        primaryKey: true
+        primaryKey: true,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       IngredientId: {
         type: Sequelize.UUID,
@@ -25,7 +27,9 @@ module.exports = {
           model: "Ingredients",
           key: "id"
         },
-        primaryKey: true
+        primaryKey: true,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       }
     })
   },

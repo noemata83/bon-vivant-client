@@ -1,12 +1,13 @@
 "use strict"
+const uuid = require("uuid")
 module.exports = (sequelize, DataTypes) => {
   const specingredient = sequelize.define(
     "SpecIngredient",
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true,
         defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
         allowNull: false,
         autoIncrement: false
       },
@@ -51,7 +52,8 @@ module.exports = (sequelize, DataTypes) => {
   specingredient.associate = function(models) {
     specingredient.belongsToMany(models.IngredientFamily, {
       as: "subWith",
-      through: "IngredientSubstitionClasses"
+      through: "IngredientSubstitionClasses",
+      onDelete: "CASCADE"
     })
   }
   return specingredient

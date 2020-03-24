@@ -23,13 +23,14 @@ module.exports = (sequelize, DataTypes) => {
     ingredientFamily.belongsToMany(models.Ingredient, {
       through: "IngredientsAndFamilies",
       constraints: false,
-      onDelete: "cascade",
+      onDelete: "CASCADE",
       as: "ingredients"
     })
 
     ingredientFamily.belongsToMany(models.SpecIngredient, {
       as: "subbedFor",
-      through: "IngredientSubstitionClasses"
+      through: "IngredientSubstitionClasses",
+      onDelete: "CASCADE"
     })
   }
 

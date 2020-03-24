@@ -1,6 +1,6 @@
 import models from "../models"
 
-const { User, Ingredient, Spec } = models
+const { User, Ingredient, Spec, SpecIngredient } = models
 // import User from "./User.mjs"
 // import Ingredient from "../Ingredients/Ingredient.mjs"
 // import Spec from "../Specs/Spec.mjs"
@@ -28,8 +28,11 @@ const standardInclude = {
       include: [
         {
           model: Ingredient,
-          through: "SpecIngredients",
-          as: "ingredients"
+          as: "ingredients",
+          through: {
+            model: SpecIngredient,
+            as: "specIngredients"
+          }
         }
       ]
     }
@@ -89,13 +92,13 @@ export const addIngredientToShelf = async (userId, ingredientId) => {
     throw new Error("Ingredient is already on your shelf.")
   try {
     await user.addShelf(ingredientId)
-    const updatedUser = await await User.findOne({
+    const updatedUser = await User.findOne({
       where: {
         id: userId
       },
       ...standardInclude
     })
-    updatedUser.book = user.book.map(formatSpec)
+    updatedUser.book = updatedUser.book.map(formatSpec)
     return updatedUser
   } catch (e) {
     throw new Error(`Error updating ingredient shelf: ${e}`)
@@ -122,7 +125,7 @@ export const removeIngredientFromShelf = async (userId, ingredientId) => {
 export const addSpecToBook = async (userId, specId) => {
   try {
     const user = await User.findByPk(userId)
-    const book = await user.getBook()
+    const book = await user.getCocktailBooks()
     if (isDuplicate(book, specId)) {
       throw new Error("Spec is already in your cocktail book.")
     }

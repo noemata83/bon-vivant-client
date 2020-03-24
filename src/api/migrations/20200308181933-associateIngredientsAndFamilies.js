@@ -15,11 +15,23 @@ module.exports = {
       },
       IngredientId: {
         type: Sequelize.UUID,
-        primaryKey: true
+        primaryKey: true,
+        references: {
+          model: "Ingredients",
+          key: "id"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       IngredientFamilyId: {
         type: Sequelize.UUID,
-        primaryKey: true
+        primaryKey: true,
+        references: {
+          model: "IngredientFamilies",
+          key: "id"
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       }
     })
   },

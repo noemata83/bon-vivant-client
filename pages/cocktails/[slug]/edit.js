@@ -38,7 +38,7 @@ const editIngredient = props => {
       }))
     }
     try {
-      editSpec({ variables: { ...parsedValues, id: +data.spec.id } })
+      editSpec({ variables: { ...parsedValues, id: data.spec.id } })
       Router.push("/")
     } catch (err) {
       console.log(err)

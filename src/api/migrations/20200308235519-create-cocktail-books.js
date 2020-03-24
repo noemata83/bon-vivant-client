@@ -17,7 +17,9 @@ module.exports = {
           model: "Users",
           key: "id"
         },
-        primaryKey: true
+        primaryKey: true,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       },
       SpecId: {
         type: Sequelize.UUID,
@@ -25,7 +27,9 @@ module.exports = {
           model: "Specs",
           key: "id"
         },
-        primaryKey: true
+        primaryKey: true,
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE"
       }
     })
   },

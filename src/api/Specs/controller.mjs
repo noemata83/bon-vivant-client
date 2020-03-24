@@ -88,8 +88,10 @@ export const createSpec = async ({ spec }) => {
     })
     delete ingredient.name
     try {
-      await newSpec.addIngredient(foundIngredient, {
-        through: { ...ingredient }
+      await SpecIngredient.create({
+        specId: newSpec.id,
+        ingredientId: foundIngredient.id,
+        ...ingredient
       })
     } catch (err) {
       console.log(err)
@@ -122,14 +124,18 @@ export const editSpec = async (id, updates) => {
       where: { name: ingredient.name }
     })
     delete ingredient.name
-    await SpecIngredient.create({
-      ingredientId: foundIngredient.id,
-      specId: id,
-      ...ingredient
-    })
+    try {
+      await SpecIngredient.create({
+        specId: specToUpdate.id,
+        ingredientId: foundIngredient.id,
+        ...ingredient
+      })
+    } catch (err) {
+      console.log(err)
+    }
   })
   delete spec.ingredients
-  const updatedSpec = await Spec.update(
+  await Spec.update(
     {
       ...spec
     },

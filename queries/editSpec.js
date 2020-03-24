@@ -2,7 +2,7 @@ import gql from "graphql-tag"
 
 export const EDIT_SPEC = gql`
   mutation editSpec(
-    $id: Int!
+    $id: String!
     $name: String!
     $description: String
     $ingredients: [SpecIngredientInput]!

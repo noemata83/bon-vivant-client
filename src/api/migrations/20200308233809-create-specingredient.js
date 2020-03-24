@@ -4,8 +4,8 @@ module.exports = {
     return queryInterface.createTable("SpecIngredients", {
       id: {
         type: Sequelize.UUID,
-        primaryKey: true,
         defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
         allowNull: false,
         unique: true,
         autoIncrement: false
@@ -38,6 +38,8 @@ module.exports = {
           model: "Ingredients",
           key: "id"
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         primaryKey: true
       },
       specId: {
@@ -46,6 +48,8 @@ module.exports = {
           model: "Specs",
           key: "id"
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
         primaryKey: true
       },
       canSub: {

@@ -17,6 +17,8 @@ module.exports = {
           model: "SpecIngredients",
           key: "id"
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
         primaryKey: true
       },
       IngredientFamilyId: {
@@ -25,6 +27,8 @@ module.exports = {
           model: "IngredientFamilies",
           key: "id"
         },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
         primaryKey: true
       }
     })
