@@ -9,7 +9,7 @@ import specMutations from "../../src/api/Specs/mutations"
 import userResolvers from "../../src/api/Users/resolvers.mjs"
 import userMutations from "../../src/api/Users/mutations.mjs"
 
-import typeDefs from "../../src/api/types.graphql"
+import typeDefs from "../../src/api/types"
 import { syncDB } from "../../src/api/syncDB"
 
 const resolvers = mergeResolvers([

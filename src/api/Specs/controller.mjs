@@ -1,5 +1,5 @@
 const models = require("../models")
-const { Spec, Ingredient, IngredientFamily, SpecIngredient } = models
+const { Spec, Ingredient, IngredientFamily, SpecIngredient, User } = models
 // import Spec from "./Spec.mjs"
 // import Ingredient from "../Ingredients/Ingredient.mjs"
 // import IngredientFamily from "../Ingredients/IngredientFamily.mjs"
@@ -25,7 +25,10 @@ export const formatSpec = spec => ({
   slug: spec.slug,
   description: spec.description,
   directions: spec.directions,
+  author: spec.author,
+  source: spec.source,
   id: spec.id,
+  contributedBy: spec.contributedBy,
   riffOn: spec.riffOn,
   ingredients: spec.ingredients.map(formatSpecIngredients)
 })
@@ -54,6 +57,10 @@ export const fetchAllSpecs = async (filter, limit) => {
       {
         model: Spec,
         as: "riffOn"
+      },
+      {
+        model: User,
+        as: "contributedBy"
       }
     ]
   })
@@ -72,6 +79,10 @@ export const findSpec = async where => {
           model: SpecIngredient,
           as: "specIngredients"
         }
+      },
+      {
+        model: User,
+        as: "contributedBy"
       }
     ]
   })
@@ -79,9 +90,9 @@ export const findSpec = async where => {
   return formattedFoundSpec
 }
 
-export const createSpec = async ({ spec }) => {
+export const createSpec = async ({ spec }, user) => {
   const ingredients = spec.ingredients
-  const newSpec = await Spec.create({ ...spec })
+  const newSpec = await Spec.create({ ...spec, contributedById: user })
   ingredients.forEach(async ingredient => {
     const foundIngredient = await Ingredient.findOne({
       where: { name: ingredient.name }
@@ -97,21 +108,23 @@ export const createSpec = async ({ spec }) => {
       console.log(err)
     }
   })
-  return Spec.findOne(
-    { where: { id: newSpec.id } },
-    {
-      include: [
-        {
-          model: Ingredient,
-          as: "ingredients",
-          through: {
-            model: SpecIngredient,
-            as: "SpecIngredients"
-          }
+  return Spec.findOne({
+    where: { id: newSpec.id },
+    include: [
+      {
+        model: Ingredient,
+        as: "ingredients",
+        through: {
+          model: SpecIngredient,
+          as: "SpecIngredients"
         }
-      ]
-    }
-  )
+      },
+      {
+        model: User,
+        as: "contributedBy"
+      }
+    ]
+  })
 }
 
 export const editSpec = async (id, updates) => {
@@ -146,7 +159,15 @@ export const editSpec = async (id, updates) => {
     include: [
       {
         model: Ingredient,
-        as: "ingredients"
+        as: "ingredients",
+        through: {
+          model: SpecIngredient,
+          as: "SpecIngredients"
+        }
+      },
+      {
+        model: User,
+        as: "contributedBy"
       }
     ]
   })

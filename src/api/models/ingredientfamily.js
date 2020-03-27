@@ -35,7 +35,6 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   ingredientFamily.addHook("beforeCreate", (family, options) => {
-    console.log(family)
     if (!family.slug) {
       const slug = slugify(family.name.toLowerCase())
       family.slug = slug

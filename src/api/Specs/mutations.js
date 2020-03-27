@@ -6,7 +6,7 @@ export default {
       if (!user) {
         throw new Error("You are not authenticated!")
       }
-      const newspec = await createSpec(args)
+      const newspec = await createSpec(args, user)
       return newspec
     },
     editSpec(_, args, { user }) {
@@ -15,7 +15,7 @@ export default {
       }
       return editSpec(args.id, args)
     },
-    deleteSpec(_, args) {
+    deleteSpec(_, args, { user }) {
       if (!user) {
         throw new Error("You are not authenticated!")
       }
