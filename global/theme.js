@@ -1,10 +1,12 @@
 export default {
   color: {
-    background: "#ECE1D6",
-    primary: "#2F195F",
+    background: "#EBE7E5",
+    primary: "#2f195f",
     secondary: "#5A352A",
-    accentLight: "#845A6D",
-    accentDark: "#3E1929"
+    accentLight: "#5d418d",
+    accentDark: "#0c0035",
+    secondaryLight: "#895f53",
+    secondaryDark: "#895f53"
   },
   type: {
     heading: {
@@ -33,7 +35,7 @@ export default {
   button: {
     standard: {
       foreground: "#ECE1D6",
-      background: "#845A6D"
+      background: "#5d418d"
     }
   }
 }

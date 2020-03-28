@@ -8,6 +8,7 @@ import specResolvers from "../../src/api/Specs/resolvers"
 import specMutations from "../../src/api/Specs/mutations"
 import userResolvers from "../../src/api/Users/resolvers.mjs"
 import userMutations from "../../src/api/Users/mutations.mjs"
+import reviewMutations from "../../src/api/Reviews/mutations"
 
 import typeDefs from "../../src/api/types"
 import { syncDB } from "../../src/api/syncDB"
@@ -18,7 +19,8 @@ const resolvers = mergeResolvers([
   specMutations,
   ingredientsMutations,
   userResolvers,
-  userMutations
+  userMutations,
+  reviewMutations
 ])
 
 const context = integrationContext => ({

@@ -60,10 +60,16 @@ export default gql`
   }
 
   type Review {
+    id: String
     rating: Float
-    authr: User
-    comment: String
+    User: BriefUser
+    content: String
     createdAt: Date
+  }
+
+  input ReviewInput {
+    rating: Float!
+    content: String!
   }
 
   type SpecIngredient {
@@ -105,6 +111,12 @@ export default gql`
     ingredients: [SpecIngredientInput]
     directions: String!
     riffOn: String
+  }
+
+  type BriefUser {
+    id: String
+    username: String
+    email: String
   }
 
   type User {
@@ -163,6 +175,9 @@ export default gql`
     signUp(username: String!, password: String!, email: String!): User
     login(username: String!, password: String!): UserToken
     deleteUser(id: String!): User
+    addReview(spec: String!, review: ReviewInput!): Review
+    editReview(id: String!, review: ReviewInput!): Review
+    deleteReview(id: String!): Review
   }
 
   type Query {

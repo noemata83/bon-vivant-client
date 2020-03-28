@@ -1,9 +1,12 @@
 const models = require("../models")
-const { Spec, Ingredient, IngredientFamily, SpecIngredient, User } = models
-// import Spec from "./Spec.mjs"
-// import Ingredient from "../Ingredients/Ingredient.mjs"
-// import IngredientFamily from "../Ingredients/IngredientFamily.mjs"
-// import { SpecIngredient } from "../Ingredients/Ingredient.mjs"
+const {
+  Spec,
+  Ingredient,
+  IngredientFamily,
+  SpecIngredient,
+  User,
+  Review
+} = models
 
 const formatSpecIngredients = ingredient => ({
   quantity: ingredient.specIngredients.quantity,
@@ -30,6 +33,7 @@ export const formatSpec = spec => ({
   id: spec.id,
   contributedBy: spec.contributedBy,
   riffOn: spec.riffOn,
+  reviews: spec.reviews,
   ingredients: spec.ingredients.map(formatSpecIngredients)
 })
 
@@ -61,6 +65,14 @@ export const fetchAllSpecs = async (filter, limit) => {
       {
         model: User,
         as: "contributedBy"
+      },
+      {
+        model: Review,
+        as: "reviews",
+        include: {
+          model: User,
+          as: "User"
+        }
       }
     ]
   })
@@ -83,6 +95,14 @@ export const findSpec = async where => {
       {
         model: User,
         as: "contributedBy"
+      },
+      {
+        model: Review,
+        as: "reviews",
+        include: {
+          model: User,
+          as: "User"
+        }
       }
     ]
   })
@@ -122,6 +142,14 @@ export const createSpec = async ({ spec }, user) => {
       {
         model: User,
         as: "contributedBy"
+      },
+      {
+        model: Review,
+        as: "reviews",
+        include: {
+          model: User,
+          as: "User"
+        }
       }
     ]
   })
@@ -168,6 +196,14 @@ export const editSpec = async (id, updates) => {
       {
         model: User,
         as: "contributedBy"
+      },
+      {
+        model: Review,
+        as: "reviews",
+        include: {
+          model: User,
+          as: "User"
+        }
       }
     ]
   })

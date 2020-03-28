@@ -9,9 +9,6 @@ module.exports = {
         allowNull: false,
         autoIncrement: false
       },
-      id: {
-        type: Sequelize.UUID
-      },
       rating: {
         type: Sequelize.NUMERIC
       },

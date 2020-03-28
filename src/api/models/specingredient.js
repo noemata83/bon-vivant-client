@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   specingredient.associate = function(models) {
     specingredient.belongsToMany(models.IngredientFamily, {
       as: "subWith",
-      through: "IngredientSubstitionClasses",
+      through: "IngredientSubstitutionClasses",
       onDelete: "CASCADE"
     })
   }

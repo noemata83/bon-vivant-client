@@ -40,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
       through: "CocktailBooks",
       as: "users_saved"
     })
+    spec.hasMany(models.Review, {
+      as: "reviews"
+    })
   }
   spec.addHook("beforeCreate", (spec, options) => {
     if (!spec.slug) {
