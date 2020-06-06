@@ -25,7 +25,7 @@
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
-    "apollo-server-micro": "^2.11.0",
+    "apollo-server-micro": "^2.14.2",
     "babel-plugin-import-graphql": "^2.7.0",
     "bcrypt": "^4.0.1",
     "cookie": "^0.4.0",
