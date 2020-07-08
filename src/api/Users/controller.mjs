@@ -1,9 +1,7 @@
 import models from "../models"
 
 const { User, Ingredient, Spec, SpecIngredient } = models
-// import User from "./User.mjs"
-// import Ingredient from "../Ingredients/Ingredient.mjs"
-// import Spec from "../Specs/Spec.mjs"
+
 import { formatSpec } from "../Specs/controller.mjs"
 import jwt from "jsonwebtoken"
 import config from "../../../config/keys.mjs"
