@@ -1,27 +1,27 @@
 import React from "react"
 import Page from "../../layouts/main"
 import CocktailForm from "../../components/forms/cocktailForm"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 import { ADD_SPEC } from "../../queries/"
 
 const NewCocktail = ({ isLoggedIn }) => {
   const [addSpec, { error, loading, data }] = useMutation(ADD_SPEC, {
-    onError: error => {
+    onError: (error) => {
       console.log(error)
-    }
+    },
   })
 
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     // values.preventDefault()
     console.log(values)
     const parsedValues = {
       spec: {
         ...values,
-        ingredients: values.ingredients.map(ingredient => ({
+        ingredients: values.ingredients.map((ingredient) => ({
           ...ingredient,
-          quantity: +ingredient.quantity
-        }))
-      }
+          quantity: +ingredient.quantity,
+        })),
+      },
     }
     try {
       addSpec({ variables: parsedValues })

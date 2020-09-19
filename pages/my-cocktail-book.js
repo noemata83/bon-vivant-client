@@ -3,8 +3,10 @@ import styled from "styled-components"
 import Page from "../layouts/main"
 import MyCocktailBook from "../components/MyCocktailBook"
 
-export default () => (
+const myCocktailBook = () => (
   <Page>
     <MyCocktailBook />
   </Page>
 )
+
+export default myCocktailBook

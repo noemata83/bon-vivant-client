@@ -1,8 +1,8 @@
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import { ME_QUERY } from "../queries/me"
 import Link from "next/link"
 
-export default props => {
+export default (props) => {
   const { data, error, loading } = useQuery(ME_QUERY)
   if (error) return `Ack! An error: ${error.message}`
   if (loading) return `Loading...`
@@ -14,7 +14,7 @@ export default props => {
       <div>
         <h2>Saved Cocktails</h2>
         <ul>
-          {book.slice(0, 4).map(spec => (
+          {book.slice(0, 4).map((spec) => (
             <li key={spec.id}>
               <Link href="cocktails/[slug]" as={`/cocktails/${spec.slug}`}>
                 <a>{spec.name}</a>
@@ -29,7 +29,7 @@ export default props => {
         </ul>
         <h2>On Your Shelf</h2>
         <ul>
-          {shelf.slice(0, 4).map(ingredient => (
+          {shelf.slice(0, 4).map((ingredient) => (
             <li key={ingredient.name}>{ingredient.name}</li>
           ))}
         </ul>

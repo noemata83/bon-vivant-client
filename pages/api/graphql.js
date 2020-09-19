@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import env from "../../config/keys"
-import { ApolloServer, gql } from "apollo-server-micro"
-import { mergeResolvers } from "graphql-toolkit"
+import { ApolloServer } from "apollo-server-micro"
+import { mergeResolvers } from "@graphql-tools/merge"
 import ingredientsResolvers from "../../src/api/Ingredients/resolvers"
 import ingredientsMutations from "../../src/api/Ingredients/mutations"
 import specResolvers from "../../src/api/Specs/resolvers"
@@ -20,24 +20,24 @@ const resolvers = mergeResolvers([
   ingredientsMutations,
   userResolvers,
   userMutations,
-  reviewMutations
+  reviewMutations,
 ])
 
-const context = integrationContext => ({
+const context = (integrationContext) => ({
   req: integrationContext.req,
   res: integrationContext.res,
-  user: integrationContext.req.user
+  user: integrationContext.req.user,
 })
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers, context })
 
 export const config = {
   api: {
-    bodyParser: false
-  }
+    bodyParser: false,
+  },
 }
 
-const auth = handler => (req, res) => {
+const auth = (handler) => (req, res) => {
   let token = ""
   if (req.headers.authorization) {
     token = req.headers.authorization.split(" ")[1]

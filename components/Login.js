@@ -1,7 +1,7 @@
 import { useState } from "react"
 import gql from "graphql-tag"
 import styled from "styled-components"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 import { connect } from "react-redux"
 import { setLoggedIn } from "../store/actions/"
 import Router from "next/router"
@@ -21,9 +21,9 @@ const LoginComponent = ({ updateLoggedInState }) => {
   const [error, setError] = useState("")
   const [
     login,
-    { error: mutationError, loading: mutationLoading }
+    { error: mutationError, loading: mutationLoading },
   ] = useMutation(LOGIN, {
-    onCompleted: data => {
+    onCompleted: (data) => {
       setUsername("")
       setPassword("")
       if (data.login) {
@@ -33,15 +33,15 @@ const LoginComponent = ({ updateLoggedInState }) => {
         setError("Login unsuccessful")
       }
     },
-    onError: error => {
+    onError: (error) => {
       console.log(error)
       setError(error.message)
-    }
+    },
   })
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault()
     login({
-      variables: { username, password }
+      variables: { username, password },
     })
   }
   return (
@@ -52,7 +52,7 @@ const LoginComponent = ({ updateLoggedInState }) => {
         placeholder="Username"
         label="Username"
         value={username}
-        update={e => setUsername(e.target.value)}
+        update={(e) => setUsername(e.target.value)}
       />
       <TextInput
         label="Password"
@@ -60,7 +60,7 @@ const LoginComponent = ({ updateLoggedInState }) => {
         name="password"
         placeholder="Password"
         value={password}
-        update={e => setPassword(e.target.value)}
+        update={(e) => setPassword(e.target.value)}
       />
       {error && <div style={{ color: "red" }}>{error}</div>}
       <SubmitButton type="submit" value="Login" />
@@ -84,8 +84,8 @@ const SubmitButton = styled.input`
   border-radius: 10px;
   border: none;
 `
-const mapDispatchToProps = dispatch => ({
-  updateLoggedInState: () => dispatch(setLoggedIn())
+const mapDispatchToProps = (dispatch) => ({
+  updateLoggedInState: () => dispatch(setLoggedIn()),
 })
 
 export default connect(null, mapDispatchToProps)(LoginComponent)

@@ -1,6 +1,6 @@
 import Link from "next/link"
 import gql from "graphql-tag"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 
 const ME_QUERY = gql`
   query MeQuery {
@@ -20,7 +20,7 @@ const ME_QUERY = gql`
   }
 `
 
-const myCocktailBook = props => {
+const myCocktailBook = (props) => {
   const { data, error, loading } = useQuery(ME_QUERY)
   if (error) return `Ack! An error: ${error.message}`
   if (loading) return `Loading...`
@@ -31,7 +31,7 @@ const myCocktailBook = props => {
       <h1>Welcome back, {username}!</h1>
       <h2>My cocktail book:</h2>
       <ul>
-        {book.map(spec => (
+        {book.map((spec) => (
           <li key={spec.id}>
             <Link href={`/cocktails/[slug]`} as={`/cocktails/${spec.slug}`}>
               <a>{spec.name}</a>

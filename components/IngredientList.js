@@ -1,16 +1,16 @@
 import React from "react"
 import Link from "next/link"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import styled from "styled-components"
 
 const sortIngredients = (ingredients, ingredientFamilies) => {
   return ingredientFamilies.reduce((acc, type) => {
     return {
       ...acc,
-      [type.name]: ingredients.filter(ingredient => {
-        const result = ingredient.family.find(fam => fam.id == type.id)
+      [type.name]: ingredients.filter((ingredient) => {
+        const result = ingredient.family.find((fam) => fam.id == type.id)
         return Boolean(result)
-      })
+      }),
     }
   }, {})
 }
@@ -24,7 +24,7 @@ export default ({ query }) => {
   return (
     <div>
       <ul>
-        {Object.keys(sortedIngredients).map(type => {
+        {Object.keys(sortedIngredients).map((type) => {
           if (sortedIngredients[type].length === 0) {
             return
           }
@@ -32,7 +32,7 @@ export default ({ query }) => {
             <li key={type}>
               <TypeHeader>{type}</TypeHeader>
               <ListOfIngredientsByType>
-                {sortedIngredients[type].map(ingredient => (
+                {sortedIngredients[type].map((ingredient) => (
                   <IndividualIngredient key={ingredient.name}>
                     <Link
                       href="/ingredients/[slug]"

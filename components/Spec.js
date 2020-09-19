@@ -1,5 +1,5 @@
 import gql from "graphql-tag"
-import { useQuery } from "@apollo/react-hooks"
+import { useQuery } from "@apollo/client"
 import Link from "next/link"
 import Container from "./layout/container"
 import styled from "styled-components"
@@ -47,7 +47,7 @@ const Spec = ({ slug, isLoggedIn }) => {
       </SpecHeader>
       <p>{spec.description}</p>
       <ul>
-        {spec.ingredients.map(specIngredient => (
+        {spec.ingredients.map((specIngredient) => (
           <li key={specIngredient.ingredient.id}>
             {`${specIngredient.quantity} ${
               specIngredient.measure ? specIngredient.measure.toLowerCase() : ""
@@ -70,8 +70,8 @@ const SpecHeader = styled.div`
   align-items: center;
 `
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
 })
 
 export default connect(mapStateToProps)(Spec)

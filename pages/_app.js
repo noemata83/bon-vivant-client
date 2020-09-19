@@ -1,6 +1,6 @@
 import App from "next/app"
 import React, { Fragment } from "react"
-import { ApolloProvider } from "react-apollo"
+import { ApolloProvider } from "@apollo/client"
 import withApollo from "../lib/withApollo"
 import { ThemeProvider } from "styled-components"
 import theme from "../global/theme"

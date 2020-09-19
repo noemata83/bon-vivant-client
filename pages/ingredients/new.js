@@ -2,7 +2,7 @@ import React from "react"
 import Router from "next/router"
 import Page from "../../layouts/main"
 import IngredientForm from "../../components/forms/registerIngredient"
-import { useMutation } from "@apollo/react-hooks"
+import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
 
 const ADD_INGREDIENT = gql`
@@ -21,12 +21,12 @@ const ADD_INGREDIENT = gql`
   }
 `
 
-const newIngredient = props => {
+const newIngredient = (props) => {
   const [addIngredient, { error }] = useMutation(ADD_INGREDIENT)
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     const parsedValues = {
       ...values,
-      family: values.family.map(fam => fam.value)
+      family: values.family.map((fam) => fam.value),
     }
     console.log(parsedValues)
     try {

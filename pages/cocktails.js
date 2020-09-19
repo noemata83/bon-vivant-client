@@ -5,7 +5,7 @@ import SpecCard from "../components/SpecCard"
 import { GET_SPECS } from "../queries/getSpecs"
 import styled from "styled-components"
 import media from "../global/mediaTemplates"
-import { useQuery } from "react-apollo"
+import { useQuery } from "@apollo/client"
 
 export default () => {
   const { loading, error, data } = useQuery(GET_SPECS)
@@ -19,7 +19,7 @@ export default () => {
       <Main>
         <FilterRow>Filters could go here.</FilterRow>
         <ListingRow>
-          {data.specs.map(spec => (
+          {data.specs.map((spec) => (
             <SpecCard spec={spec} />
           ))}
         </ListingRow>

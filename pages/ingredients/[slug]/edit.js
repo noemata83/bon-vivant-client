@@ -1,9 +1,9 @@
-import React from 'react'
-import Router, { useRouter } from 'next/router'
-import Page from '../../../layouts/main'
-import IngredientForm from '../../../components/forms/registerIngredient'
-import { useMutation, useQuery } from '@apollo/react-hooks'
-import gql from 'graphql-tag'
+import React from "react"
+import Router, { useRouter } from "next/router"
+import Page from "../../../layouts/main"
+import IngredientForm from "../../../components/forms/registerIngredient"
+import { useMutation, useQuery } from "@apollo/client"
+import gql from "graphql-tag"
 
 const ADD_INGREDIENT = gql`
   mutation editIngredient(
@@ -40,31 +40,31 @@ const GET_INGREDIENT = gql`
   }
 `
 
-const editIngredient = props => {
+const editIngredient = (props) => {
   const router = useRouter()
   const { data, error, loading } = useQuery(GET_INGREDIENT, {
     variables: {
-      slug: router.query.slug
-    }
+      slug: router.query.slug,
+    },
   })
   const [editIngredient, { error: mutationError }] = useMutation(ADD_INGREDIENT)
-  if (loading) return 'Loading...'
+  if (loading) return "Loading..."
   if (error) return `Woops! An Error: ${error.message}`
   const ingredient = {
     ...data.ingredient,
-    family: data.ingredient.family.map(fam => ({
+    family: data.ingredient.family.map((fam) => ({
       value: fam.id,
-      label: fam.name
-    }))
+      label: fam.name,
+    })),
   }
-  const handleSubmit = values => {
+  const handleSubmit = (values) => {
     const parsedValues = {
       ...values,
-      family: values.family.map(fam => fam.value)
+      family: values.family.map((fam) => fam.value),
     }
     try {
       editIngredient({ variables: { ...parsedValues, id: data.ingredient.id } })
-      Router.push('/ingredients')
+      Router.push("/ingredients")
     } catch (err) {
       console.log(err)
     }

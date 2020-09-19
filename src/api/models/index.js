@@ -20,7 +20,7 @@ const operatorsAliases = {
   lt: Op.lt,
   like: Op.like,
   contains: Op.contains,
-  notLike: Op.notLike
+  notLike: Op.notLike,
 }
 
 const sequelize = new Sequelize(
@@ -32,24 +32,22 @@ const sequelize = new Sequelize(
     port: 54320,
     dialect: "postgres",
     logging: false,
-    operatorsAliases
+    operatorsAliases,
   }
 )
 
 fs.readdirSync(process.cwd() + "/src/api/models/")
-  .filter(file => {
+  .filter((file) => {
     return (
       file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
     )
   })
-  .forEach(file => {
-    const model = sequelize["import"](
-      path.join(process.cwd() + "/src/api/models/", file)
-    )
+  .forEach((file) => {
+    const model = require("./" + file)(sequelize, Sequelize)
     db[model.name] = model
   })
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db)
   }

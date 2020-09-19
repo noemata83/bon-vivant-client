@@ -4,12 +4,12 @@ import TextInput from "../UI/form/textInput"
 import Textarea from "../UI/form/textarea"
 import Button from "../UI/buttons/Button"
 import CreatableSelect from "react-select/creatable"
-import { useQuery, useMutation } from "@apollo/react-hooks"
+import { useQuery, useMutation } from "@apollo/client"
 import styled from "styled-components"
 import gql from "graphql-tag"
 
-const renderInput = props => <TextInput {...props.input} {...props} />
-const renderTextArea = props => <Textarea {...props.input} {...props} />
+const renderInput = (props) => <TextInput {...props.input} {...props} />
+const renderTextArea = (props) => <Textarea {...props.input} {...props} />
 
 const ING_FAMILY_QUERY = gql`
   query {
@@ -29,7 +29,7 @@ const REGISTER_ING_FAMILY = gql`
   }
 `
 
-const IngredientFamilySelect = props => {
+const IngredientFamilySelect = (props) => {
   const [options, setOptions] = useState([{}])
   const [loaded, setLoaded] = useState(false)
   const { input } = props
@@ -39,9 +39,9 @@ const IngredientFamilySelect = props => {
   const { ingredientFamilies } = data
   if (!loaded) {
     setOptions(
-      ingredientFamilies.map(type => ({
+      ingredientFamilies.map((type) => ({
         label: type.name,
-        value: type.id
+        value: type.id,
       }))
     )
     setLoaded(true)
@@ -49,9 +49,9 @@ const IngredientFamilySelect = props => {
   // console.log(options)
   const [registerIngredientType, response] = useMutation(REGISTER_ING_FAMILY)
 
-  const handleCreate = async inputValue => {
+  const handleCreate = async (inputValue) => {
     const result = await registerIngredientType({
-      variables: { name: inputValue }
+      variables: { name: inputValue },
     })
     if (result.data) {
       const { name, id } = result.data.registerIngredientType
@@ -59,8 +59,8 @@ const IngredientFamilySelect = props => {
         ...options,
         {
           value: id,
-          label: name
-        }
+          label: name,
+        },
       ])
     }
   }
@@ -71,7 +71,7 @@ const IngredientFamilySelect = props => {
       isMulti
       {...input}
       onCreateOption={handleCreate}
-      onChange={option => input.onChange(option)}
+      onChange={(option) => input.onChange(option)}
       onBlur={() => input.onBlur(input.value)}
       options={options}
     />
@@ -96,5 +96,5 @@ const registerIngredientForm = ({ initialValues, handleSubmit }) => (
 
 export default reduxForm({
   form: `newIngredientForm`,
-  enableReinitialize: true
+  enableReinitialize: true,
 })(registerIngredientForm)
