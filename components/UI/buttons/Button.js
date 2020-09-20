@@ -1,12 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
+import Button from "@material-ui/core/Button"
 
-const button = ({ children, ...props }) => (
-  <Button {...props}>{children}</Button>
-)
-
-const Button = styled.button`
-  styled.input;
+const StyledButton = styled(Button)`
   cursor: pointer;
   display: block;
   background-color: ${({ theme }) => theme.button.standard.background};
@@ -17,6 +13,9 @@ const Button = styled.button`
   margin: 1rem 0;
   font-size: 1.6rem;
   font-weight: bold;
+  &:hover {
+    background-color: ${({ theme }) => theme.button.standard.hover};
+  }
 `
 
-export default button
+export default StyledButton

@@ -37,7 +37,7 @@ const Index = ({ isLoggedIn }) => (
     </Head>
     <Main>
       <Column>
-        <h2>From our Cocktail Library: </h2>
+        <MainTitle>From our Cocktail Library: </MainTitle>
         <SpecList query={GET_SPECS} />
       </Column>
       <Column>{isLoggedIn ? <UserSummary></UserSummary> : <Login />}</Column>
@@ -46,7 +46,7 @@ const Index = ({ isLoggedIn }) => (
 )
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color.background};
-  padding-top: 2rem;
+  padding-top: 4rem;
   color: #333;
   flex-grow: 1;
   display: grid;
@@ -65,6 +65,10 @@ const Column = styled.div`
       margin-right: 1.5%;
     }
   `};
+`
+
+const MainTitle = styled.h2`
+  margin-top: 0;
 `
 
 const mapStateToProps = (state) => ({

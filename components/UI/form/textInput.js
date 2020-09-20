@@ -1,5 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
+import TextField from "@material-ui/core/TextField"
 
 export default ({
   value,
@@ -14,48 +15,44 @@ export default ({
   ...props
 }) => {
   return update ? (
-    <div>
-      <Label htmlFor={name}>{label}:</Label>
-      <TextInput
-        type={type ? type : 'text'}
-        value={value}
-        onChange={update}
-        name={name}
-        placeholder={placeholder}
-        style={style}
-        className={className}
-        {...props}
-      />
-    </div>
+    <TextInput
+      type={type ? type : "text"}
+      value={value}
+      onChange={update}
+      name={name}
+      fullWidth
+      placeholder={placeholder}
+      style={style}
+      className={className}
+      {...props}
+    />
   ) : (
-    <div>
-      <Label htmlFor={name}>{label}:</Label>
-      <TextInput
-        type={type ? type : 'text'}
-        name={name}
-        placeholder={placeholder}
-        style={style}
-        className={className}
-        value={value}
-        {...props}
-      />
-    </div>
+    <TextInput
+      label={label}
+      variant="outlined"
+      type={type ? type : "text"}
+      name={name}
+      fullWidth
+      placeholder={placeholder}
+      style={style}
+      className={className}
+      value={value}
+      {...props}
+    />
   )
 }
 
-export const TextInput = styled.input`
+export const TextInput = styled(TextField)`
   display: block;
-  border: 1px solid #333;
   background-color: white;
-  font-family: 'Raleway', sans-serif;
-  padding: 0.5rem;
-  width: 30rem;
+  font-family: "Raleway", sans-serif;
   margin-bottom: 2rem;
   font-size: 1.8rem;
-`
-
-const Label = styled.label`
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  display: block;
+  width: 30rem;
+  .MuiFormLabel-root {
+    font-size: inherit;
+  }
+  .MuiInputBase-root {
+    font-size: inherit;
+  }
 `
