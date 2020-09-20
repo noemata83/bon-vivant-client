@@ -3,7 +3,7 @@ import Link from "next/link"
 import styled from "styled-components"
 import theme from "../global/theme"
 
-export default ({ spec }) => {
+const SpecCard = ({ spec }) => {
   const { image, name, slug, ingredients } = spec
   return (
     <CardContainer>
@@ -26,7 +26,9 @@ export default ({ spec }) => {
       </Card>
     </CardContainer>
   )
-}
+};
+
+export default SpecCard;
 
 const CardContainer = styled.div`
   height: 45rem;

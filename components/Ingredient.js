@@ -16,7 +16,7 @@ const GET_INGREDIENT = gql`
   }
 `
 
-export default ({ slug }) => {
+const Ingredient = ({ slug }) => {
   const { loading, error, data } = useQuery(GET_INGREDIENT, {
     variables: { slug },
   })
@@ -32,4 +32,6 @@ export default ({ slug }) => {
       <p>{ingredient.description}</p>
     </div>
   )
-}
+};
+
+export default Ingredient;

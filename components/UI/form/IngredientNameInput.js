@@ -11,10 +11,12 @@ const INGREDIENT_QUERY = gql`
   }
 `
 
-export default (props) => {
+const IngredientNameInput = props => {
   const { loading, data, error } = useQuery(INGREDIENT_QUERY)
   if (loading) return "Loading ..."
   if (error) return `Woops: ${error}`
   const { ingredients } = data
   return <Autocomplete data={ingredients} label="name" {...props} />
-}
+};
+
+export default IngredientNameInput;

@@ -9,7 +9,7 @@ const ADD_INGREDIENT = gql`
   mutation createIngredient(
     $name: String!
     $description: String
-    $family: [Int]!
+    $family: [String]!
   ) {
     addIngredient(
       ingredient: { name: $name, description: $description, family: $family }

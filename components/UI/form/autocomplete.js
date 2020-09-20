@@ -1,7 +1,7 @@
 import Autocomplete from 'react-autocomplete'
 import { TextInput } from './textInput'
 
-export default ({ data, label, ...props }) => {
+const AutocompleteComponent = ({ data, label, ...props }) => {
   return (
     <Autocomplete
       getItemValue={item => item[label]}
@@ -29,4 +29,6 @@ export default ({ data, label, ...props }) => {
       {...props}
     />
   )
-}
+};
+
+export default AutocompleteComponent;

@@ -7,7 +7,7 @@ import styled from "styled-components"
 import media from "../global/mediaTemplates"
 import { useQuery } from "@apollo/client"
 
-export default () => {
+const Cocktails = () => {
   const { loading, error, data } = useQuery(GET_SPECS)
   if (loading) {
     return "Loading..."
@@ -26,7 +26,9 @@ export default () => {
       </Main>
     </Page>
   )
-}
+};
+
+export default Cocktails;
 
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color.background};

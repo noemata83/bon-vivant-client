@@ -5,16 +5,16 @@ import styled from "styled-components"
 import media from "../global/mediaTemplates"
 import { INGREDIENT_LIST_QUERY } from "../queries/listAllIngredients"
 
-export default () => (
-  <Page>
-    <Main>
-      <Column>
-        <h2>Ingredients</h2>
-        <IngredientList query={INGREDIENT_LIST_QUERY} />
-      </Column>
-    </Main>
-  </Page>
-)
+const Ingredients = () => <Page>
+  <Main>
+    <Column>
+      <h2>Ingredients</h2>
+      <IngredientList query={INGREDIENT_LIST_QUERY} />
+    </Column>
+  </Main>
+</Page>;
+
+export default Ingredients;
 const Main = styled.div`
   background-color: ${({ theme }) => theme.color.background};
   padding-top: 2rem;

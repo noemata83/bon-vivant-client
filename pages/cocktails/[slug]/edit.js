@@ -3,7 +3,6 @@ import Router, { useRouter } from "next/router"
 import Page from "../../../layouts/main"
 import CocktailForm from "../../../components/forms/cocktailForm"
 import { useMutation, useQuery } from "@apollo/client"
-import gql from "graphql-tag"
 import { GET_SPEC, EDIT_SPEC } from "../../../queries"
 import Head from "next/head"
 
@@ -37,6 +36,7 @@ const editIngredient = (props) => {
         ingredient: undefined,
       })),
     }
+
     try {
       editSpec({ variables: { ...parsedValues, id: data.spec.id } })
       Router.push("/")

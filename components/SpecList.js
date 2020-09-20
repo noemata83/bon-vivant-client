@@ -4,7 +4,7 @@ import styled from "styled-components"
 import media from "../global/mediaTemplates"
 import SpecCard from "./SpecCard"
 
-export default ({ query }) => {
+const SpecList = ({ query }) => {
   const { loading, error, data } = useQuery(query, {
     fetchPolicy: "no-cache",
   })
@@ -20,7 +20,9 @@ export default ({ query }) => {
       ))}
     </SpecGrid>
   )
-}
+};
+
+export default SpecList;
 
 const SpecGrid = styled.ul`
   display: grid;

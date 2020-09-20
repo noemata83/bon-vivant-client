@@ -1,13 +1,15 @@
 import gql from "graphql-tag"
-import { useQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import Link from "next/link"
-import Container from "./layout/container"
 import styled from "styled-components"
 import { connect } from "react-redux"
+import { DELETE_SPEC } from "../queries/deleteSpec"
+import Router from "next/router"
 
 const GET_SPEC = gql`
   query getSpec($slug: String!) {
     spec(slug: $slug) {
+      id
       name
       slug
       description
@@ -29,6 +31,14 @@ const GET_SPEC = gql`
 
 const Spec = ({ slug, isLoggedIn }) => {
   const { loading, error, data } = useQuery(GET_SPEC, { variables: { slug } })
+  const [deleteSpec] = useMutation(DELETE_SPEC, {
+    onCompleted: () => {
+      Router.push("/")
+    },
+    onError: (err) => {
+      console.error("Unable to delete spec!", err)
+    },
+  })
   if (loading) return "Loading..."
   if (error) return `Error: ${error.message}`
   const { spec } = data
@@ -37,12 +47,22 @@ const Spec = ({ slug, isLoggedIn }) => {
       <SpecHeader>
         <h1>{spec.name}</h1>
         {isLoggedIn && (
-          <Link
-            href={`/cocktails/[slug]/edit`}
-            as={`/cocktails/${spec.slug}/edit`}
-          >
-            <a>Edit</a>
-          </Link>
+          <div>
+            <Link
+              href={`/cocktails/[slug]/edit`}
+              as={`/cocktails/${spec.slug}/edit`}
+            >
+              <a>Edit</a>
+            </Link>
+            <a
+              onClick={() => {
+                console.log("spec.id: ", spec.id)
+                deleteSpec({ variables: { id: spec.id } })
+              }}
+            >
+              Delete
+            </a>
+          </div>
         )}
       </SpecHeader>
       <p>{spec.description}</p>
