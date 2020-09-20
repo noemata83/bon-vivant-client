@@ -5,10 +5,10 @@ const {
   IngredientFamily,
   SpecIngredient,
   User,
-  Review
+  Review,
 } = models
 
-const formatSpecIngredients = ingredient => ({
+const formatSpecIngredients = (ingredient) => ({
   quantity: ingredient.specIngredients.quantity,
   measure: ingredient.specIngredients.measure,
   canSub: ingredient.specIngredients.canSub,
@@ -19,11 +19,11 @@ const formatSpecIngredients = ingredient => ({
     slug: ingredient.slug,
     description: ingredient.description,
     createdAt: ingredient.createdAt,
-    updatedAt: ingredient.updatedAt
-  }
+    updatedAt: ingredient.updatedAt,
+  },
 })
 
-export const formatSpec = spec => ({
+export const formatSpec = (spec) => ({
   name: spec.name,
   slug: spec.slug,
   description: spec.description,
@@ -34,7 +34,7 @@ export const formatSpec = spec => ({
   contributedBy: spec.contributedBy,
   riffOn: spec.riffOn,
   reviews: spec.reviews,
-  ingredients: spec.ingredients.map(formatSpecIngredients)
+  ingredients: spec.ingredients.map(formatSpecIngredients),
 })
 
 export const fetchAllSpecs = async (filter, limit) => {
@@ -48,39 +48,39 @@ export const fetchAllSpecs = async (filter, limit) => {
         as: "ingredients",
         through: {
           model: SpecIngredient,
-          as: "specIngredients"
+          as: "specIngredients",
         },
         include: [
           {
             model: IngredientFamily,
             as: "family",
-            through: "IngredientsAndFamilies"
-          }
-        ]
+            through: "IngredientsAndFamilies",
+          },
+        ],
       },
       {
         model: Spec,
-        as: "riffOn"
+        as: "riffOn",
       },
       {
         model: User,
-        as: "contributedBy"
+        as: "contributedBy",
       },
       {
         model: Review,
         as: "reviews",
         include: {
           model: User,
-          as: "User"
-        }
-      }
-    ]
+          as: "User",
+        },
+      },
+    ],
   })
   const formattedSpecs = specs.map(formatSpec)
   return formattedSpecs
 }
 
-export const findSpec = async where => {
+export const findSpec = async (where) => {
   const foundSpec = await Spec.findOne({
     where,
     include: [
@@ -89,22 +89,22 @@ export const findSpec = async where => {
         as: "ingredients",
         through: {
           model: SpecIngredient,
-          as: "specIngredients"
-        }
+          as: "specIngredients",
+        },
       },
       {
         model: User,
-        as: "contributedBy"
+        as: "contributedBy",
       },
       {
         model: Review,
         as: "reviews",
         include: {
           model: User,
-          as: "User"
-        }
-      }
-    ]
+          as: "User",
+        },
+      },
+    ],
   })
   const formattedFoundSpec = formatSpec(foundSpec)
   return formattedFoundSpec
@@ -113,16 +113,16 @@ export const findSpec = async where => {
 export const createSpec = async ({ spec }, user) => {
   const ingredients = spec.ingredients
   const newSpec = await Spec.create({ ...spec, contributedById: user })
-  ingredients.forEach(async ingredient => {
+  ingredients.forEach(async (ingredient) => {
     const foundIngredient = await Ingredient.findOne({
-      where: { name: ingredient.name }
+      where: { name: ingredient.name },
     })
     delete ingredient.name
     try {
       await SpecIngredient.create({
         specId: newSpec.id,
         ingredientId: foundIngredient.id,
-        ...ingredient
+        ...ingredient,
       })
     } catch (err) {
       console.log(err)
@@ -136,22 +136,22 @@ export const createSpec = async ({ spec }, user) => {
         as: "ingredients",
         through: {
           model: SpecIngredient,
-          as: "SpecIngredients"
-        }
+          as: "SpecIngredients",
+        },
       },
       {
         model: User,
-        as: "contributedBy"
+        as: "contributedBy",
       },
       {
         model: Review,
         as: "reviews",
         include: {
           model: User,
-          as: "User"
-        }
-      }
-    ]
+          as: "User",
+        },
+      },
+    ],
   })
 }
 
@@ -160,16 +160,16 @@ export const editSpec = async (id, updates) => {
   const ingredients = await specToUpdate.getIngredients()
   await specToUpdate.removeIngredients(ingredients)
   const { spec } = updates
-  spec.ingredients.forEach(async ingredient => {
+  spec.ingredients.forEach(async (ingredient) => {
     const foundIngredient = await Ingredient.findOne({
-      where: { name: ingredient.name }
+      where: { name: ingredient.name },
     })
     delete ingredient.name
     try {
       await SpecIngredient.create({
         specId: specToUpdate.id,
         ingredientId: foundIngredient.id,
-        ...ingredient
+        ...ingredient,
       })
     } catch (err) {
       console.log(err)
@@ -178,7 +178,7 @@ export const editSpec = async (id, updates) => {
   delete spec.ingredients
   await Spec.update(
     {
-      ...spec
+      ...spec,
     },
     { where: { id } }
   )
@@ -190,28 +190,28 @@ export const editSpec = async (id, updates) => {
         as: "ingredients",
         through: {
           model: SpecIngredient,
-          as: "SpecIngredients"
-        }
+          as: "SpecIngredients",
+        },
       },
       {
         model: User,
-        as: "contributedBy"
+        as: "contributedBy",
       },
       {
         model: Review,
         as: "reviews",
         include: {
           model: User,
-          as: "User"
-        }
-      }
-    ]
+          as: "User",
+        },
+      },
+    ],
   })
   const formattedFoundSpec = formatSpec(theSpec)
   return formattedFoundSpec
 }
 
-export const deleteSpec = async id => {
+export const deleteSpec = async (id) => {
   const SpecToDelete = await Spec.findByPk(id)
   try {
     const result = await Spec.destroy({ where: { id } })
@@ -221,7 +221,7 @@ export const deleteSpec = async id => {
   }
 }
 
-const formatFilter = rawFilter => {
+const formatFilter = (rawFilter) => {
   const filter = {}
   if (!rawFilter) {
     return

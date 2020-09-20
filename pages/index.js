@@ -11,7 +11,7 @@ import UserSummary from "../components/UserSummary"
 
 const GET_SPECS = gql`
   {
-    specs {
+    specs(limit: 6) {
       id
       slug
       name
@@ -67,8 +67,8 @@ const Column = styled.div`
   `};
 `
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
 })
 
 export default connect(mapStateToProps)(Index)

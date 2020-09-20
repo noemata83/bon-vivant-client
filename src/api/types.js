@@ -184,7 +184,7 @@ export default gql`
     ingredient(id: String, name: String, slug: String): Ingredient
     ingredients: [Ingredient]
     ingredientFamilies: [IngredientFamily]
-    specs(filter: SpecFilterInput): [Spec]
+    specs(filter: SpecFilterInput, limit: Int): [Spec]
     spec(id: String, name: String, slug: String): Spec
     users: [User]
     me: User

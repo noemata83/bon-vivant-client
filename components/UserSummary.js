@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client"
 import { ME_QUERY } from "../queries/me"
 import Link from "next/link"
 
-const UserSummary = props => {
+const UserSummary = (props) => {
   const { data, error, loading } = useQuery(ME_QUERY)
   if (error) return `Ack! An error: ${error.message}`
   if (loading) return `Loading...`
@@ -36,6 +36,6 @@ const UserSummary = props => {
       </div>
     </div>
   )
-};
+}
 
-export default UserSummary;
+export default UserSummary
