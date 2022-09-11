@@ -13,12 +13,13 @@ const NewCocktail = ({ isLoggedIn }) => {
   })
 
   const handleSubmit = (values) => {
-    // values.preventDefault()
+    console.log(values)
     const parsedValues = {
       spec: {
         ...values,
         ingredients: values.ingredients.map((ingredient) => ({
           ...ingredient,
+          name: ingredient.name.name,
           quantity: +ingredient.quantity,
         })),
       },
@@ -32,10 +33,8 @@ const NewCocktail = ({ isLoggedIn }) => {
   }
   return (
     <Page>
-      <main>
-        <CocktailForm onSubmit={handleSubmit} />
-        {error && <span>{error.message}</span>}
-      </main>
+      <CocktailForm onSubmit={handleSubmit} />
+      {error && <span>{error.message}</span>}
     </Page>
   )
 }

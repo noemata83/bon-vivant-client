@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import env from "../../config/keys"
+import env from "../../config/keys.mjs"
 import { ApolloServer } from "apollo-server-micro"
 import { mergeResolvers } from "@graphql-tools/merge"
 import ingredientsResolvers from "../../src/api/Ingredients/resolvers"
@@ -53,5 +53,10 @@ const auth = (handler) => (req, res) => {
   return handler(req, res)
 }
 
-const server = apolloServer.createHandler({ path: "/api/graphql" })
-export default auth(syncDB(server))
+const startServer = apolloServer.start()
+export default auth(
+  syncDB(async (req, res) => {
+    await startServer
+    await apolloServer.createHandler({ path: "/api/graphql" })(req, res)
+  })
+)

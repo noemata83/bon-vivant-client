@@ -1,21 +1,22 @@
-import Document, { Head, Main, NextScript } from "next/document"
+import Document, { Html, Head, Main, NextScript } from "next/document"
 import { ServerStyleSheet } from "styled-components"
 
 export default class StyledDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx)
     const sheet = new ServerStyleSheet()
-    const page = renderPage(App => props =>
-      sheet.collectStyles(<App {...props} />)
+    const page = ctx.renderPage(
+      (App) => (props) => sheet.collectStyles(<App {...props} />)
     )
 
     const styleTags = sheet.getStyleElement()
 
-    return { ...page, styleTags }
+    return { ...initialProps, ...page, styleTags }
   }
 
   render() {
     return (
-      <html>
+      <Html>
         <Head>
           <link
             href="https://fonts.googleapis.com/css?family=Poiret+One|Raleway&display=swap"
@@ -27,7 +28,7 @@ export default class StyledDocument extends Document {
           <Main />
           <NextScript />
         </body>
-      </html>
+      </Html>
     )
   }
 }

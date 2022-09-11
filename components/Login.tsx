@@ -3,7 +3,7 @@ import gql from "graphql-tag"
 import styled from "styled-components"
 import { useMutation } from "@apollo/client"
 import { connect } from "react-redux"
-import { setLoggedIn } from "../store/actions/"
+import { setLoggedIn } from "../store/actions"
 import Router from "next/router"
 import TextInput from "./UI/form/textInput"
 
@@ -19,25 +19,23 @@ const LoginComponent = ({ updateLoggedInState }) => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const [
-    login,
-    { error: mutationError, loading: mutationLoading },
-  ] = useMutation(LOGIN, {
-    onCompleted: (data) => {
-      setUsername("")
-      setPassword("")
-      if (data.login) {
-        updateLoggedInState()
-        Router.push("/my-cocktail-book")
-      } else {
-        setError("Login unsuccessful")
-      }
-    },
-    onError: (error) => {
-      console.log(error)
-      setError(error.message)
-    },
-  })
+  const [login, { error: mutationError, loading: mutationLoading }] =
+    useMutation(LOGIN, {
+      onCompleted: (data) => {
+        setUsername("")
+        setPassword("")
+        if (data.login) {
+          updateLoggedInState()
+          Router.push("/my-cocktail-book")
+        } else {
+          setError("Login unsuccessful")
+        }
+      },
+      onError: (error) => {
+        console.log(error)
+        setError(error.message)
+      },
+    })
   const onSubmit = async (e) => {
     e.preventDefault()
     login({

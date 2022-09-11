@@ -2,13 +2,15 @@ import Header from "./header/header"
 import Footer from "./footer/footer"
 import styled from "styled-components"
 
-const MainComponent = ({ children, isLoggedIn }) => <Main>
-  <Header isLoggedIn={isLoggedIn} />
-  <Container>{children}</Container>
-  <Footer />
-</Main>;
+const MainComponent = ({ children, isLoggedIn }) => (
+  <Main>
+    <Header isLoggedIn={isLoggedIn} />
+    <Container>{children}</Container>
+    <Footer />
+  </Main>
+)
 
-export default MainComponent;
+export default MainComponent
 
 const Main = styled.main`
   min-height: 100vh;

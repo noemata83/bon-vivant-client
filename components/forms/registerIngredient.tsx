@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react"
-import { Field, reduxForm } from "redux-form"
+import { Form, Field } from "react-final-form"
 import TextInput from "../UI/form/textInput"
 import Textarea from "../UI/form/textarea"
 import Button from "../UI/buttons/Button"
@@ -34,8 +34,8 @@ const IngredientFamilySelect = (props) => {
   const [loaded, setLoaded] = useState(false)
   const { input } = props
   const { data, error, loading } = useQuery(ING_FAMILY_QUERY)
-  if (error) return "Oops!"
-  if (loading) return "..."
+  if (error) return <>"Oops!"</>
+  if (loading) return <>"..."</>
   const { ingredientFamilies } = data
   if (!loaded) {
     setOptions(
@@ -78,23 +78,28 @@ const IngredientFamilySelect = (props) => {
   )
 }
 
-const registerIngredientForm = ({ initialValues, handleSubmit }) => (
+const registerIngredientForm = ({ initialValues, onSubmit }) => (
   <div>
     <h2>Add a new Ingredient</h2>
-    <form onSubmit={handleSubmit}>
-      <Field component={renderInput} label="Name" name="name" />
-      <Field
-        component={renderTextArea}
-        label="Description"
-        name="description"
-      />
-      <Field component={IngredientFamilySelect} label="Family" name="family" />
-      <input type="submit" value="Submit" />
-    </form>
+    <Form onSubmit={onSubmit} initialValues={initialValues} enableReinitialize>
+      {({ handleSubmit }) => (
+        <form onSubmit={handleSubmit}>
+          <Field component={renderInput} label="Name" name="name" />
+          <Field
+            component={renderTextArea}
+            label="Description"
+            name="description"
+          />
+          <Field
+            component={IngredientFamilySelect}
+            label="Family"
+            name="family"
+          />
+          <input type="submit" value="Submit" />
+        </form>
+      )}
+    </Form>
   </div>
 )
 
-export default reduxForm({
-  form: `newIngredientForm`,
-  enableReinitialize: true,
-})(registerIngredientForm)
+export default registerIngredientForm

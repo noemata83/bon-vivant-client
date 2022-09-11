@@ -3,39 +3,40 @@ import Router, { useRouter } from "next/router"
 import Page from "../../../layouts/main"
 import CocktailForm from "../../../components/forms/cocktailForm"
 import { useMutation, useQuery } from "@apollo/client"
-import { GET_SPEC, EDIT_SPEC } from "../../../queries"
+import { GET_SPEC, EDIT_SPEC, GET_SPECS } from "../../../queries"
 import Head from "next/head"
 
-const editIngredient = (props) => {
+const editSpec = (props) => {
   const router = useRouter()
   const { data, error, loading } = useQuery(GET_SPEC, {
     variables: {
       slug: router.query.slug,
     },
   })
-  const [editSpec, { error: mutationError }] = useMutation(EDIT_SPEC)
+  const [editSpec, { error: mutationError }] = useMutation(EDIT_SPEC, {
+    refetchQueries: [{ query: GET_SPEC }, { query: GET_SPECS }],
+  })
   if (loading) return "Loading..."
   if (error) return `Woops! An Error: ${error.message}`
   const spec = {
     ...data.spec,
-    ingredients: data.spec.ingredients.map((ing) => {
-      return {
-        ...ing,
-        name: ing.ingredient.name,
-      }
-    }),
   }
   const handleSubmit = (values) => {
+    console.log(values.ingredients)
     const parsedValues = {
       ...values,
       ingredients: values.ingredients.map((ingredient) => ({
-        ...ingredient,
-        name: ingredient.name,
+        name: ingredient.ingredient.name,
+        slug: ingredient.ingredient.slug,
         quantity: +ingredient.quantity,
-        __typename: undefined,
+        ...ingredient,
         ingredient: undefined,
+        __typename: undefined,
       })),
     }
+
+    debugger
+    console.log({ parsedValues })
 
     try {
       editSpec({ variables: { ...parsedValues, id: data.spec.id } })
@@ -46,7 +47,7 @@ const editIngredient = (props) => {
   }
 
   return (
-    <Page>
+    <Page isLoggedIn={props.isLoggedIn}>
       <Head>
         <title>Bon Vivant Cocktails: Edit {spec.name}</title>
       </Head>
@@ -57,4 +58,4 @@ const editIngredient = (props) => {
   )
 }
 
-export default editIngredient
+export default editSpec

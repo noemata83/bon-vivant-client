@@ -29,7 +29,12 @@ const GET_SPEC = gql`
   }
 `
 
-const Spec = ({ slug, isLoggedIn }) => {
+type ISpec = {
+  slug: string
+  isLoggedIn: boolean
+}
+
+const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
   const { loading, error, data } = useQuery(GET_SPEC, { variables: { slug } })
   const [deleteSpec] = useMutation(DELETE_SPEC, {
     onCompleted: () => {
@@ -39,8 +44,8 @@ const Spec = ({ slug, isLoggedIn }) => {
       console.error("Unable to delete spec!", err)
     },
   })
-  if (loading) return "Loading..."
-  if (error) return `Error: ${error.message}`
+  if (loading) return <>"Loading..."</>
+  if (error) return <>`Error: ${error.message}`</>
   const { spec } = data
   return (
     <div>

@@ -1,7 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react"
+import styled from "styled-components"
+import TextField from "@mui/material/TextField"
 
-export default ({
+const TextAreaInput = ({
   value,
   label,
   update,
@@ -15,12 +16,16 @@ export default ({
 }) => {
   return update ? (
     <div>
-      <Label htmlFor={name}>{label}</Label>
       <Textarea
         value={value}
+        label={label}
         onChange={update}
         name={name}
         placeholder={placeholder}
+        multiline
+        fullWidth
+        minRows={5}
+        variant="outlined"
         style={style}
         className={className}
         {...props}
@@ -28,10 +33,14 @@ export default ({
     </div>
   ) : (
     <div>
-      <Label htmlFor={name}>{label}:</Label>
       <Textarea
-        type={type ? type : 'text'}
+        type={type ? type : "text"}
         name={name}
+        label={label}
+        multiline
+        fullWidth
+        variant="outlined"
+        rows={5}
         placeholder={placeholder}
         style={style}
         className={className}
@@ -42,19 +51,18 @@ export default ({
   )
 }
 
-const Textarea = styled.textarea`
+const Textarea = styled(TextField)`
   display: block;
-  border: 1px solid #333;
   background-color: white;
-  font-family: 'Raleway', sans-serif;
-  padding: 0.5rem;
-  width: 40rem;
+  font-family: "Raleway", sans-serif;
+  width: 50rem;
   margin-bottom: 2rem;
   font-size: 1.8rem;
+  .MuiFormLabel-root {
+    font-size: inherit;
+  }
+  .MuiInputBase-root {
+    font-size: inherit;
+  }
 `
-
-const Label = styled.label`
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  display: block;
-`
+export default TextAreaInput

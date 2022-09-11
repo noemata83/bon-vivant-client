@@ -7,7 +7,6 @@ import theme from "../global/theme"
 import GlobalStyle from "../global/globalStyles"
 import { Provider } from "react-redux"
 import withReduxStore from "../lib/withRedux"
-import { StylesProvider } from "@material-ui/core/styles"
 
 import { getLoggedInState } from "../store/actions/"
 
@@ -29,11 +28,9 @@ class BonVivantApp extends App {
         <GlobalStyle />
         <ThemeProvider theme={theme}>
           <ApolloProvider client={apolloClient}>
-            <StylesProvider injectFirst>
-              <Provider store={reduxStore}>
-                <Component {...pageProps} />
-              </Provider>
-            </StylesProvider>
+            <Provider store={reduxStore}>
+              <Component {...pageProps} />
+            </Provider>
           </ApolloProvider>
         </ThemeProvider>
       </>
