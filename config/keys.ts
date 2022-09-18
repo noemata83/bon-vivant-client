@@ -1,5 +1,5 @@
 import devConfig from "./dev"
-import prodConfig from "./prod.js"
+import prodConfig from "./prod"
 
 let config
 if (process.env.NODE_ENV == "production") {

@@ -25,7 +25,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/api/migrations/20200308181040-create-ingredient.js"  ],
   "exclude": [
     "node_modules"
   ]

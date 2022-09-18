@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import * as actionTypes from "../actions/actionTypes"
 import getCookies from "../../lib/nextCookies"
-import env from "../../config/keys.js"
+import env from "../../config/keys"
 
 interface AuthState {
   isLoggedIn: boolean
