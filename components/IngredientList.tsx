@@ -17,8 +17,8 @@ const sortIngredients = (ingredients, ingredientFamilies) => {
 
 const IngredientList = ({ query }) => {
   const { loading, error, data } = useQuery(query)
-  if (loading) return "Loading ..."
-  if (error) return `Oh noes! An error! ${error}`
+  if (loading) return <>"Loading ..."</>
+  if (error) return <>`Oh noes! An error! ${error}`</>
   const { ingredients, ingredientFamilies } = data
   const sortedIngredients = sortIngredients(ingredients, ingredientFamilies)
   return (
@@ -49,9 +49,9 @@ const IngredientList = ({ query }) => {
       </ul>
     </div>
   )
-};
+}
 
-export default IngredientList;
+export default IngredientList
 
 const TypeHeader = styled.h3`
   margin-top: 3rem;

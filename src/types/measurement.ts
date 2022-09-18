@@ -1,0 +1,17 @@
+export enum Measurement {
+  "OZ",
+  "ML",
+  "TSP",
+  "TBSP",
+  "DS",
+  "DR",
+  "PN",
+  "BSP",
+  "SPL",
+  "RINSE",
+  "TWIST",
+  "SPG",
+  "SLI",
+  "WDG",
+  "CUBE",
+}

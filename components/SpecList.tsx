@@ -8,8 +8,8 @@ const SpecList = ({ query }) => {
   const { loading, error, data } = useQuery(query, {
     fetchPolicy: "no-cache",
   })
-  if (loading) return "Loading..."
-  if (error) return `Error! ${error.message}`
+  if (loading) return <>"Loading..."</>
+  if (error) return <>`Error! ${error.message}`</>
 
   return (
     <SpecGrid>
@@ -20,9 +20,9 @@ const SpecList = ({ query }) => {
       ))}
     </SpecGrid>
   )
-};
+}
 
-export default SpecList;
+export default SpecList
 
 const SpecGrid = styled.ul`
   display: grid;

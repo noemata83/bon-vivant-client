@@ -1,8 +1,0 @@
-export { ADD_INGREDIENT } from './addIngredient'
-export { EDIT_INGREDIENT } from './editIngredient'
-export { GET_INGREDIENT } from './getIngredient'
-export { GET_INGREDIENTS } from './getIngredients'
-export { ADD_SPEC } from './addSpec'
-export { EDIT_SPEC } from './editSpec'
-export { GET_SPEC } from './getSpec'
-export { GET_SPECS } from './getSpecs'

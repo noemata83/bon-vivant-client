@@ -1,4 +1,4 @@
-import { createSpec } from "../Specs/controller.mjs"
+import { createSpec } from "../Specs/controller"
 
 const specs = [
   {
@@ -11,30 +11,30 @@ const specs = [
         measure: "OZ",
         name: "Rittenhouse Rye",
         canSub: true,
-        subWith: "Rye Whiskey"
+        subWith: "Rye Whiskey",
       },
       {
         quantity: 0.5,
         measure: "OZ",
         name: "Martini Rosso Sweet Vermouth",
         canSub: true,
-        subWith: "Sweet Vermouth"
+        subWith: "Sweet Vermouth",
       },
       {
         quantity: 1.0,
         measure: "DS",
         name: "Angostura Bitters",
         canSub: true,
-        subWith: "Aromatic Bitters"
+        subWith: "Aromatic Bitters",
       },
       {
         quantity: 1.0,
         name: "Luxardo cherry",
-        canSub: false
-      }
+        canSub: false,
+      },
     ],
     directions:
-      "Stir ingredients in a mixing glass with ice. Strain into an ice-filled rocks glass and garnish with the cherry."
+      "Stir ingredients in a mixing glass with ice. Strain into an ice-filled rocks glass and garnish with the cherry.",
   },
   {
     name: "Daiquiri",
@@ -46,23 +46,23 @@ const specs = [
         measure: "OZ",
         name: "Flor de Cana Extra Dry White Rum",
         canSub: true,
-        subWith: "White Rum"
+        subWith: "White Rum",
       },
       {
         quantity: 1.0,
         measure: "OZ",
         name: "Lime Juice",
-        canSub: false
+        canSub: false,
       },
       {
         quantity: 0.5,
         measure: "OZ",
         name: "Simple Syrup",
-        canSub: false
-      }
+        canSub: false,
+      },
     ],
     directions:
-      "Shake the ingredients together with ice; strain into a chilled coupe. Optionally, garnish with a lime wedge."
+      "Shake the ingredients together with ice; strain into a chilled coupe. Optionally, garnish with a lime wedge.",
   },
   {
     name: "Bourbon Manhattan",
@@ -74,35 +74,35 @@ const specs = [
         measure: "OZ",
         name: "Buffalo Trace Bourbon Whiskey",
         canSub: true,
-        subWith: "Bourbon Whiskey"
+        subWith: "Bourbon Whiskey",
       },
       {
         quantity: 0.5,
         measure: "OZ",
         name: "Martino Rossi Sweet Vermouth",
         canSub: true,
-        subWith: "Sweet Vermouth"
+        subWith: "Sweet Vermouth",
       },
       {
         quantity: 1.0,
         measure: "DS",
         name: "Angostura Bitters",
         canSub: true,
-        subWith: "Aromatic Bitters"
+        subWith: "Aromatic Bitters",
       },
       {
         quantity: 1.0,
         name: "Luxardo cherry",
-        canSub: false
-      }
+        canSub: false,
+      },
     ],
     directions:
-      "Stir ingredients in a mixing glass with ice. Strain into an ice-filled rocks glass and garnish with the cherry."
-  }
+      "Stir ingredients in a mixing glass with ice. Strain into an ice-filled rocks glass and garnish with the cherry.",
+  },
 ]
 
 export default async () => {
-  specs.forEach(async spec => {
+  specs.forEach(async (spec) => {
     try {
       const newSpec = await createSpec({ spec })
     } catch (err) {

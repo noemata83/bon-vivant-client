@@ -22,7 +22,10 @@ const GET_SPEC = gql`
           name
         }
         canSub
-        subWith
+        subWith {
+          id
+          name
+        }
       }
       directions
     }
@@ -30,7 +33,7 @@ const GET_SPEC = gql`
 `
 
 type ISpec = {
-  slug: string
+  slug: string | string[]
   isLoggedIn: boolean
 }
 
@@ -47,6 +50,7 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
   if (loading) return <>"Loading..."</>
   if (error) return <>`Error: ${error.message}`</>
   const { spec } = data
+  console.log({ spec })
   return (
     <div>
       <SpecHeader>
@@ -61,7 +65,6 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
             </Link>
             <a
               onClick={() => {
-                console.log("spec.id: ", spec.id)
                 deleteSpec({ variables: { id: spec.id } })
               }}
             >
@@ -73,12 +76,12 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
       <p>{spec.description}</p>
       <ul>
         {spec.ingredients.map((specIngredient) => (
-          <li key={specIngredient.ingredient.id}>
+          <li key={specIngredient.ingredient?.id}>
             {`${specIngredient.quantity} ${
               specIngredient.measure ? specIngredient.measure.toLowerCase() : ""
             } `}
-            <Link href={`/ingredients/${specIngredient.ingredient.slug}`}>
-              <a>{specIngredient.ingredient.name}</a>
+            <Link href={`/ingredients/${specIngredient.ingredient?.slug}`}>
+              <a>{specIngredient.ingredient?.name}</a>
             </Link>
           </li>
         ))}

@@ -1,6 +1,11 @@
 {
-  "presets": ["next/babel"],
+  "presets": ["@babel/preset-typescript", "next/babel"],
   "plugins": [
+    ["@babel/plugin-transform-typescript",
+    {
+      "allowDeclareFields": true
+    }
+    ],
     [
       "babel-plugin-styled-components",
       {
@@ -8,6 +13,9 @@
         "displayName": true,
         "preprocess": false
       }
+    ],
+    [
+      "@babel/plugin-proposal-decorators", { "legacy" : true }
     ],
     "import-graphql"
   ]

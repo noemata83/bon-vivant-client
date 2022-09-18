@@ -22,7 +22,6 @@ const editSpec = (props) => {
     ...data.spec,
   }
   const handleSubmit = (values) => {
-    console.log(values.ingredients)
     const parsedValues = {
       ...values,
       ingredients: values.ingredients.map((ingredient) => ({

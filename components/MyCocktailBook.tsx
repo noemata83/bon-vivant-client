@@ -22,8 +22,8 @@ const ME_QUERY = gql`
 
 const myCocktailBook = (props) => {
   const { data, error, loading } = useQuery(ME_QUERY)
-  if (error) return `Ack! An error: ${error.message}`
-  if (loading) return `Loading...`
+  if (error) return <>`Ack! An error: ${error.message}`</>
+  if (loading) return <>x`Loading...`</>
   const { me } = data
   const { book, shelf, username } = me
   return (
