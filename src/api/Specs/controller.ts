@@ -105,7 +105,10 @@ export const createSpec = async ({ spec }, user) => {
     where: { id: newSpec.id },
     include: [
       Ingredient,
-      User,
+      {
+        model: User,
+        as: "contributedBy",
+      },
       {
         model: Review,
         as: "reviews",
@@ -116,9 +119,11 @@ export const createSpec = async ({ spec }, user) => {
 }
 
 export const editSpec = async (id, updates) => {
-  const specToUpdate = await Spec.findByPk(id)
+  const specToUpdate = await Spec.findByPk(id, { include: [SpecIngredient] })
   const ingredients = specToUpdate.ingredients
-  await specToUpdate.$remove("ingredients", ingredients)
+  await ingredients.forEach(async (ingredient) => {
+    await ingredient.destroy()
+  })
   const { spec } = updates
   spec.ingredients.forEach(async (ingredient) => {
     const foundIngredient = await Ingredient.findOne({
@@ -135,7 +140,6 @@ export const editSpec = async (id, updates) => {
       console.log(err)
     }
   })
-  delete spec.ingredients
   await Spec.update(
     {
       ...spec,
@@ -146,7 +150,10 @@ export const editSpec = async (id, updates) => {
     where: { id },
     include: [
       Ingredient,
-      User,
+      {
+        model: User,
+        as: "contributedBy",
+      },
       {
         model: Review,
         as: "reviews",

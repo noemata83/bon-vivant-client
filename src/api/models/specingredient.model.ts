@@ -5,6 +5,7 @@ import {
   BelongsToMany,
   Column,
   DataType,
+  Default,
   ForeignKey,
   Model,
   PrimaryKey,
@@ -16,12 +17,14 @@ import { IngredientFamily } from "./ingredientfamily.model"
 import { Spec } from "./spec.model"
 import { IngredientSubstitionClass } from "./ingredientSubstitutionClass.model"
 import Fix from "./decorators/fix.decorator"
+import { v4 as uuid } from "uuid"
 
 @Fix
 @Table
 export class SpecIngredient extends Model {
   @PrimaryKey
   @AllowNull(false)
+  @Default(() => uuid())
   @Column(DataType.UUID)
   declare id: string
 

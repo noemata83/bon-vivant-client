@@ -16,7 +16,7 @@ import { SpecIngredient } from "./specingredient.model"
 import { Spec } from "./spec.model"
 import { IngredientFamily } from "./ingredientfamily.model"
 import { User } from "./user.model"
-import uuid from "uuid"
+import { v4 as uuid } from "uuid"
 import { IngredientAndFamily } from "./ingredientAndFamily.model"
 import Fix from "./decorators/fix.decorator"
 
@@ -25,7 +25,7 @@ import Fix from "./decorators/fix.decorator"
 export class Ingredient extends Model {
   @PrimaryKey
   @AllowNull(false)
-  @Default(() => uuid.v4())
+  @Default(() => uuid())
   @Column(DataTypes.UUID)
   declare id: string
 

@@ -25,17 +25,14 @@ const editSpec = (props) => {
     const parsedValues = {
       ...values,
       ingredients: values.ingredients.map((ingredient) => ({
+        ...ingredient,
         name: ingredient.ingredient.name,
         slug: ingredient.ingredient.slug,
-        quantity: +ingredient.quantity,
-        ...ingredient,
+        quantity: parseFloat(ingredient.quantity),
         ingredient: undefined,
         __typename: undefined,
       })),
     }
-
-    debugger
-    console.log({ parsedValues })
 
     try {
       editSpec({ variables: { ...parsedValues, id: data.spec.id } })

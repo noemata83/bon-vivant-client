@@ -11,7 +11,7 @@ import {
   Table,
 } from "sequelize-typescript"
 import { Spec } from "./spec.model"
-import uuid from "uuid"
+import { v4 as uuid } from "uuid"
 import { User } from "./user.model"
 import Fix from "./decorators/fix.decorator"
 
@@ -19,7 +19,7 @@ import Fix from "./decorators/fix.decorator"
 @Table
 export class Review extends Model {
   @PrimaryKey
-  @Default(() => uuid.v4())
+  @Default(() => uuid())
   @AllowNull(false)
   @Column(DataTypes.UUID)
   id: string

@@ -42,7 +42,6 @@ const cocktailForm = ({ initialValues, onSubmit }) => {
               name="directions"
             />
             <SubmitButton type="submit">Submit</SubmitButton>
-            <pre>{JSON.stringify(values, null, 2)}</pre>
           </form>
         )}
       </Form>

@@ -1,7 +1,6 @@
-import { useRouter } from 'next/router'
-import Page from '../../layouts/main'
-import styled from 'styled-components'
-import Ingredient from '../../components/Ingredient'
+import { useRouter } from "next/router"
+import Page from "../../layouts/main"
+import Ingredient from "../../components/Ingredient"
 
 const IngredientDetail = () => {
   const router = useRouter()

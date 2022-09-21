@@ -20,12 +20,14 @@ import Fix from "./decorators/fix.decorator"
 import { Review } from "./review.model"
 import { SpecIngredient } from "./specingredient.model"
 import { User } from "./user.model"
+import { v4 as uuid } from "uuid"
 
 @Fix
 @Table
 export class Spec extends Model {
   @PrimaryKey
   @AllowNull(false)
+  @Default(() => uuid())
   @Column(DataType.UUID)
   declare id: string
 

@@ -77,7 +77,7 @@ export default gql`
     measure: Measurement
     ingredient: Ingredient
     canSub: Boolean
-    subWith: String
+    subWith: [IngredientFamily]
   }
 
   type Spec {
@@ -100,7 +100,7 @@ export default gql`
     name: String!
     slug: String
     canSub: Boolean
-    subWith: String
+    subWith: [String]
   }
 
   input SpecInput {
@@ -160,7 +160,7 @@ export default gql`
   }
 
   type Mutation {
-    editIngredient(ingredient: IngredientInput): Ingredient
+    editIngredient(id: String!, ingredient: IngredientInput): Ingredient
     registerIngredientType(family: IngredientFamilyInput): IngredientFamily
     deleteIngredientType(id: String): IngredientFamily
     addIngredient(ingredient: IngredientInput): Ingredient

@@ -46,7 +46,6 @@ const IngredientFamilySelect = (props) => {
     )
     setLoaded(true)
   }
-  // console.log(options)
   const [registerIngredientType, response] = useMutation(REGISTER_ING_FAMILY)
 
   const handleCreate = async (inputValue) => {

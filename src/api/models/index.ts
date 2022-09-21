@@ -28,8 +28,6 @@ const operatorsAliases = {
   notLike: Op.notLike,
 }
 
-console.log("directory: ", process.cwd() + "/src/api/models/*.model.ts")
-
 export const sequelize = new Sequelize({
   database: process.env.PSQL_DATABASE,
   username: process.env.PSQL_USERNAME,

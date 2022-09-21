@@ -8,15 +8,13 @@ import gql from "graphql-tag"
 const ADD_INGREDIENT = gql`
   mutation editIngredient(
     $id: String!
-    $name: String
+    $name: String!
     $description: String
     $family: [String]
   ) {
     editIngredient(
       id: $id
-      name: $name
-      description: $description
-      family: $family
+      ingredient: { name: $name, description: $description, family: $family }
     ) {
       name
       id

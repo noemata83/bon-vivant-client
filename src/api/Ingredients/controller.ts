@@ -39,10 +39,12 @@ export const deleteIngredientType = async ({ id }) => {
 }
 
 export const createIngredient = async ({ ingredient }) => {
+  const familyPromises = ingredient.family.map((famPk) =>
+    IngredientFamily.findByPk(famPk)
+  )
+  const families = await Promise.all(familyPromises)
   const newIngredient = await Ingredient.create(ingredient)
-  ingredient.family.forEach((fam) => {
-    newIngredient.family.push(fam)
-  })
+  await newIngredient.$add("family", families)
   const createdIngredient = Ingredient.findOne({
     where: { id: newIngredient.id },
     include: [
@@ -75,13 +77,6 @@ export const findIngredient = async (args) => {
       eq: args.slug,
     }
   }
-  console.log(
-    await Ingredient.findOne({
-      where,
-      include: [IngredientFamily],
-      plain: true,
-    })
-  )
   return (
     await Ingredient.findOne({
       where,
@@ -91,7 +86,21 @@ export const findIngredient = async (args) => {
   ).toJSON()
 }
 
-export const editIngredient = async (id, update) => {}
+export const editIngredient = async (id, update) => {
+  const { ingredient } = update
+  const familiesPromises = ingredient.family.map((famPk) =>
+    IngredientFamily.findByPk(famPk)
+  )
+  await Ingredient.update(ingredient, {
+    where: { id: { eq: id } },
+  })
+  const updatedIngredient = await Ingredient.findByPk(id)
+  const families = await Promise.all(familiesPromises)
+  await updatedIngredient.$set("family", families)
+  return (
+    await Ingredient.findByPk(id, { include: [IngredientFamily] })
+  ).toJSON()
+}
 
 export const deleteIngredient = async (id) => {
   const ingredientToDelete = await Ingredient.destroy({ where: { id } })

@@ -6,12 +6,14 @@ import {
   BeforeUpdate,
   BelongsToMany,
   Column,
+  Default,
   Model,
   PrimaryKey,
   Table,
 } from "sequelize-typescript"
 import slugify from "slugify"
 import Fix from "./decorators/fix.decorator"
+import { v4 as uuid } from "uuid"
 import { Ingredient } from "./ingredient.model"
 import { IngredientAndFamily } from "./ingredientAndFamily.model"
 import { IngredientSubstitionClass } from "./ingredientSubstitutionClass.model"
@@ -22,6 +24,7 @@ import { SpecIngredient } from "./specingredient.model"
 export class IngredientFamily extends Model {
   @PrimaryKey
   @AllowNull(false)
+  @Default(() => uuid())
   @Column(DataTypes.UUID)
   declare id: string
 

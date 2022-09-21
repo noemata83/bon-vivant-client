@@ -13,14 +13,14 @@ const NewCocktail = ({ isLoggedIn }) => {
   })
 
   const handleSubmit = (values) => {
-    console.log(values)
     const parsedValues = {
       spec: {
         ...values,
-        ingredients: values.ingredients.map((ingredient) => ({
-          ...ingredient,
-          name: ingredient.name.name,
-          quantity: +ingredient.quantity,
+        ingredients: values.ingredients.map((si) => ({
+          ...si,
+          name: si.ingredient.name,
+          quantity: +si.quantity,
+          ingredient: undefined,
         })),
       },
     }

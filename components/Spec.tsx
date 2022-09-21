@@ -50,7 +50,6 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
   if (loading) return <>"Loading..."</>
   if (error) return <>`Error: ${error.message}`</>
   const { spec } = data
-  console.log({ spec })
   return (
     <div>
       <SpecHeader>

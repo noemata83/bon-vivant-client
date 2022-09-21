@@ -2,7 +2,7 @@ import { sequelize, User, Ingredient, Spec, SpecIngredient } from "../models"
 
 import { formatSpec } from "../Specs/controller"
 import jwt from "jsonwebtoken"
-import config from "../../../config/keys.js"
+import config from "../../../config/keys"
 
 export const isDuplicate = (arr, id) => {
   const values = arr.map((item) => item.dataValues)

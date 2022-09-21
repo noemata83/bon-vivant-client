@@ -4,6 +4,7 @@ import Page from "../../layouts/main"
 import IngredientForm from "../../components/forms/registerIngredient"
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
+import { GET_SPEC, GET_SPECS } from "../../queries"
 
 const ADD_INGREDIENT = gql`
   mutation createIngredient(
@@ -22,13 +23,14 @@ const ADD_INGREDIENT = gql`
 `
 
 const newIngredient = (props) => {
-  const [addIngredient, { error }] = useMutation(ADD_INGREDIENT)
+  const [addIngredient, { error }] = useMutation(ADD_INGREDIENT, {
+    refetchQueries: [{ query: GET_SPEC }, { query: GET_SPECS }],
+  })
   const handleSubmit = (values) => {
     const parsedValues = {
       ...values,
       family: values.family.map((fam) => fam.value),
     }
-    console.log(parsedValues)
     try {
       addIngredient({ variables: parsedValues })
       Router.push("/ingredients")

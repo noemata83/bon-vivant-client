@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken"
-import env from "../../config/keys.js"
+import env from "../../config/keys"
 import { ApolloServer } from "apollo-server-micro"
 import { mergeResolvers } from "@graphql-tools/merge"
 import ingredientsResolvers from "../../src/api/Ingredients/resolvers"

@@ -14,7 +14,10 @@ export const GET_SPEC = gql`
           name
         }
         canSub
-        subWith
+        subWith {
+          id
+          name
+        }
       }
       directions
     }
