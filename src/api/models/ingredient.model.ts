@@ -10,12 +10,13 @@ import {
   BeforeCreate,
   BeforeUpdate,
   Unique,
+  BelongsTo,
+  ForeignKey,
+  DataType,
 } from "sequelize-typescript"
-import { DataTypes } from "sequelize"
 import { SpecIngredient } from "./specingredient.model"
 import { Spec } from "./spec.model"
 import { IngredientFamily } from "./ingredientfamily.model"
-import { User } from "./user.model"
 import { v4 as uuid } from "uuid"
 import { IngredientAndFamily } from "./ingredientAndFamily.model"
 import Fix from "./decorators/fix.decorator"
@@ -26,17 +27,17 @@ export class Ingredient extends Model {
   @PrimaryKey
   @AllowNull(false)
   @Default(() => uuid())
-  @Column(DataTypes.UUID)
+  @Column(DataType.UUID)
   declare id: string
 
-  @Column(DataTypes.STRING)
+  @Column(DataType.STRING)
   declare name: string
 
   @Unique
-  @Column(DataTypes.STRING)
+  @Column(DataType.STRING)
   declare slug: string
 
-  @Column(DataTypes.TEXT)
+  @Column(DataType.TEXT)
   declare description?: string
 
   @BelongsToMany(() => Spec, () => SpecIngredient)
@@ -44,6 +45,14 @@ export class Ingredient extends Model {
 
   @BelongsToMany(() => IngredientFamily, () => IngredientAndFamily)
   declare family: IngredientFamily[]
+
+  @BelongsTo(() => Ingredient)
+  parent?: Ingredient
+
+  @ForeignKey(() => Ingredient)
+  @AllowNull(true)
+  @Column(DataType.UUID)
+  parentId: string
 
   @BeforeUpdate
   @BeforeCreate

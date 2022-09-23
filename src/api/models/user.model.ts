@@ -3,10 +3,13 @@ import {
   AllowNull,
   BeforeCreate,
   BeforeUpdate,
+  BelongsTo,
   BelongsToMany,
   Column,
   DataType,
   Default,
+  ForeignKey,
+  HasOne,
   Model,
   PrimaryKey,
   Table,
@@ -16,7 +19,9 @@ import { CocktailBook } from "./cocktailBook.model"
 import Fix from "./decorators/fix.decorator"
 import { Ingredient } from "./ingredient.model"
 import { IngredientShelf } from "./ingredientShelf.model"
+import { Permission } from "./permission.model"
 import { Spec } from "./spec.model"
+import { UserRole } from "./userRole.model"
 
 @Fix
 @Table
@@ -42,6 +47,14 @@ export class User extends Model {
   @BelongsToMany(() => Spec, () => CocktailBook)
   book: Spec[]
 
+  @BelongsTo(() => UserRole)
+  userRole: UserRole
+
+  @ForeignKey(() => UserRole)
+  @AllowNull(false)
+  @Column(DataType.INTEGER)
+  userRoleId: number
+
   @BeforeCreate
   @BeforeUpdate
   static hashPassword(user: User) {
@@ -51,5 +64,9 @@ export class User extends Model {
 
   public async isValidPassword(password) {
     return await bcrypt.compare(password, this.password)
+  }
+
+  public hasPermission(permission: Permission): boolean {
+    return this.userRole.permissions.map((p) => p.id).includes(permission.id)
   }
 }
