@@ -1,4 +1,5 @@
 import {
+  AutoIncrement,
   Column,
   DataType,
   Model,
@@ -11,6 +12,7 @@ import Fix from "./decorators/fix.decorator"
 @Table
 export class Glassware extends Model {
   @PrimaryKey
+  @AutoIncrement
   @Column(DataType.INTEGER)
   id: number
 

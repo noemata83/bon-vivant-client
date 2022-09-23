@@ -8,12 +8,6 @@ import {
 
 export default {
   Mutation: {
-    registerIngredientType(_, args) {
-      return registerIngredientType(args)
-    },
-    deleteIngredientType(_, args) {
-      return deleteIngredientType(args.id)
-    },
     addIngredient(_, args) {
       return createIngredient(args)
     },

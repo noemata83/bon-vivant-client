@@ -1,7 +1,7 @@
 import {
   findIngredient,
   fetchAllIngredients,
-  fetchAllIngredientTypes
+  fetchAllIngredientTypes,
 } from "./controller"
 
 export default {
@@ -12,8 +12,5 @@ export default {
     ingredients(_, args) {
       return fetchAllIngredients()
     },
-    ingredientFamilies(_, args) {
-      return fetchAllIngredientTypes()
-    }
-  }
+  },
 }

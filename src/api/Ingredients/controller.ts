@@ -61,7 +61,7 @@ export const createIngredient = async ({ ingredient }) => {
 export const fetchAllIngredients = async () => {
   const allIngredients = (
     await Ingredient.findAll({
-      include: [IngredientFamily],
+      include: [Ingredient],
     })
   ).map((el) => el.toJSON())
   return allIngredients

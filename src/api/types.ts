@@ -21,42 +21,44 @@ export default gql`
     CUBE
   }
 
+  enum PreparationType {
+    SHAKEN
+    STIRRED
+    OTHER
+  }
+
   type MeasureList {
     abbreviation: String
     plural: String
     singular: String
   }
 
-  type IngredientFamily {
-    id: String
-    name: String
-    slug: String
-    description: String
-    parent: IngredientFamily
-  }
-
-  input IngredientFamilyInput {
-    name: String!
-    slug: String
-    description: String
-    parent: String
-  }
-
   type Ingredient {
     id: String
     name: String
     slug: String
-    family: [IngredientFamily]
+    proof: Int
+    imageURL: String
     description: String
     spec: Spec
+    parentId: String
+    parent: Ingredient
   }
 
   input IngredientInput {
     name: String!
     slug: String
-    family: [String]
+    proof: Int
+    parentId: String
     description: String
+    imageURL: String
     spec: String
+  }
+
+  type Glassware {
+    id: Int
+    name: String
+    iconURL: String
   }
 
   type Review {
@@ -77,7 +79,7 @@ export default gql`
     measure: Measurement
     ingredient: Ingredient
     canSub: Boolean
-    subWith: [IngredientFamily]
+    subWith: Ingredient
   }
 
   type Spec {
@@ -86,6 +88,9 @@ export default gql`
     author: String
     name: String
     source: String
+    abv: Float
+    preparationType: PreparationType
+    glassware: Glassware
     contributedBy: User
     description: String
     ingredients: [SpecIngredient]
@@ -108,6 +113,8 @@ export default gql`
     description: String
     author: String
     source: String
+    glasswareId: Int
+    preparationType: String
     ingredients: [SpecIngredientInput]
     directions: String!
     riffOn: String
@@ -124,6 +131,7 @@ export default gql`
     username: String
     email: String
     token: String
+    role: String
     book: [Spec]
     shelf: [Ingredient]
   }
@@ -161,8 +169,6 @@ export default gql`
 
   type Mutation {
     editIngredient(id: String!, ingredient: IngredientInput): Ingredient
-    registerIngredientType(family: IngredientFamilyInput): IngredientFamily
-    deleteIngredientType(id: String): IngredientFamily
     addIngredient(ingredient: IngredientInput): Ingredient
     deleteIngredient(id: String!): Ingredient
     createSpec(spec: SpecInput): Spec
@@ -173,6 +179,7 @@ export default gql`
     addSpecToBook(id: String!): User
     removeSpecFromBook(id: String!): User
     signUp(username: String!, password: String!, email: String!): User
+    updateUser(username: String!, roleId: Int): User
     login(username: String!, password: String!): UserToken
     deleteUser(id: String!): User
     addReview(spec: String!, review: ReviewInput!): Review
@@ -183,11 +190,9 @@ export default gql`
   type Query {
     ingredient(id: String, name: String, slug: String): Ingredient
     ingredients: [Ingredient]
-    ingredientFamilies: [IngredientFamily]
     specs(filter: SpecFilterInput, limit: Int): [Spec]
     spec(id: String, name: String, slug: String): Spec
     users: [User]
     me: User
-    whatICanMake: [Spec]
   }
 `

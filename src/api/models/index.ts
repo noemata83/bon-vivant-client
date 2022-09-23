@@ -15,7 +15,6 @@ import { IngredientShelf } from "./ingredientShelf.model"
 import { IngredientSubstitionClass } from "./ingredientSubstitutionClass.model"
 import { CocktailBook } from "./cocktailBook.model"
 import { Glassware } from "./glasssware.model"
-import { PreparationType } from "./preparationType.model"
 import { UserRole } from "./userRole.model"
 import { Permission } from "./permission.model"
 import { UserRolePermission } from "./userRolePermission.model"
@@ -54,7 +53,6 @@ export const sequelize = new Sequelize({
     IngredientSubstitionClass,
     CocktailBook,
     Glassware,
-    PreparationType,
     UserRole,
     Permission,
     UserRolePermission,

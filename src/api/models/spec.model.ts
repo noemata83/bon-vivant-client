@@ -22,7 +22,7 @@ import { SpecIngredient } from "./specingredient.model"
 import { User } from "./user.model"
 import { v4 as uuid } from "uuid"
 import { Glassware } from "./glasssware.model"
-import { PreparationType } from "./preparationType.model"
+import { PreparationType } from "../../types/preparationType"
 
 @Fix
 @Table
@@ -76,21 +76,17 @@ export class Spec extends Model {
   @HasMany(() => Review)
   reviews: Review[]
 
-  @BelongsTo(() => Glassware)
-  glassware: Glassware
-
   @ForeignKey(() => Glassware)
   @AllowNull(true)
   @Column(DataType.INTEGER)
   glasswareId: number
 
-  @BelongsTo(() => PreparationType)
-  preparationType: PreparationType
+  @BelongsTo(() => Glassware)
+  glassware: Glassware
 
-  @ForeignKey(() => PreparationType)
   @AllowNull(true)
-  @Column(DataType.INTEGER)
-  preparationTypeId: number
+  @Column(DataType.ENUM("SHAKEN", "STIRRED", "OTHER"))
+  preparationType: PreparationType
 
   @BeforeUpdate
   @BeforeCreate

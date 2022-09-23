@@ -40,6 +40,12 @@ export class Ingredient extends Model {
   @Column(DataType.TEXT)
   declare description?: string
 
+  @Column(DataType.INTEGER)
+  proof: number
+
+  @Column(DataType.STRING)
+  imageURL: string
+
   @BelongsToMany(() => Spec, () => SpecIngredient)
   declare specs: Spec[]
 
