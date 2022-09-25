@@ -18,6 +18,7 @@ import { BySlugLoader } from "../../src/api/loaders/slug"
 import { ByNameLoader } from "../../src/api/loaders/name"
 import { AssociatedCollectionLoader } from "../../src/api/loaders/collection"
 import { AllLoader } from "../../src/api/loaders/all"
+import { SampleCocktailsLoader } from "../../src/api/loaders/ingredients/sampleCocktails"
 
 const resolvers = mergeResolvers([
   ingredientsResolvers,
@@ -38,6 +39,9 @@ const context = (integrationContext) => ({
   name: new ByNameLoader(),
   collection: new AssociatedCollectionLoader(),
   all: new AllLoader(),
+  ingredients: {
+    cocktails: new SampleCocktailsLoader(),
+  },
 })
 
 const apolloServer = new ApolloServer({

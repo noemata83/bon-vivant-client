@@ -16,9 +16,7 @@ import {
 } from "sequelize-typescript"
 import { SpecIngredient } from "./specingredient.model"
 import { Spec } from "./spec.model"
-import { IngredientFamily } from "./ingredientfamily.model"
 import { v4 as uuid } from "uuid"
-import { IngredientAndFamily } from "./ingredientAndFamily.model"
 import Fix from "./decorators/fix.decorator"
 
 @Fix
@@ -48,9 +46,6 @@ export class Ingredient extends Model {
 
   @BelongsToMany(() => Spec, () => SpecIngredient)
   declare specs: Spec[]
-
-  @BelongsToMany(() => IngredientFamily, () => IngredientAndFamily)
-  declare family: IngredientFamily[]
 
   @BelongsTo(() => Ingredient)
   parent?: Ingredient

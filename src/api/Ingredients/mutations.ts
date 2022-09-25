@@ -1,6 +1,4 @@
 import {
-  registerIngredientType,
-  deleteIngredientType,
   createIngredient,
   editIngredient,
   deleteIngredient,

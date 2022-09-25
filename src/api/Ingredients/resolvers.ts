@@ -17,5 +17,11 @@ export default {
         ? context.single.load(Ingredient, ingredient.parentId)
         : null
     },
+    children: (ingredient, _args, context) => {
+      return context.collection.load(Ingredient, "parentId", ingredient.id)
+    },
+    cocktails: (ingredient, _args, context) => {
+      return context.ingredients.cocktails.load(ingredient.id)
+    },
   },
 }

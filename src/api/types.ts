@@ -43,6 +43,8 @@ export default gql`
     spec: Spec
     parentId: String
     parent: Ingredient
+    children: [Ingredient]
+    cocktails: [Spec]
   }
 
   input IngredientInput {

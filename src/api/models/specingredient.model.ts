@@ -2,7 +2,6 @@
 import {
   AllowNull,
   BelongsTo,
-  BelongsToMany,
   Column,
   DataType,
   Default,
@@ -13,9 +12,7 @@ import {
 } from "sequelize-typescript"
 import { Measurement } from "../../types/measurement"
 import { Ingredient } from "./ingredient.model"
-import { IngredientFamily } from "./ingredientfamily.model"
 import { Spec } from "./spec.model"
-import { IngredientSubstitionClass } from "./ingredientSubstitutionClass.model"
 import Fix from "./decorators/fix.decorator"
 import { v4 as uuid } from "uuid"
 
@@ -68,12 +65,4 @@ export class SpecIngredient extends Model {
 
   @Column(DataType.BOOLEAN)
   declare canSub: boolean
-
-  @BelongsToMany(
-    () => IngredientFamily,
-    () => IngredientSubstitionClass,
-    "SpecingredientId",
-    "IngredientFamilyId"
-  )
-  subWith: IngredientFamily[]
 }

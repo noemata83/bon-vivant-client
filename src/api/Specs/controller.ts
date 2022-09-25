@@ -1,11 +1,4 @@
-import {
-  Spec,
-  Ingredient,
-  IngredientFamily,
-  SpecIngredient,
-  User,
-  Review,
-} from "../models"
+import { Spec, Ingredient, SpecIngredient, User, Review } from "../models"
 
 const formatSpecIngredients = (ingredient): SpecIngredient => {
   return SpecIngredient.build({
@@ -41,7 +34,7 @@ export const fetchAllSpecs = async (filter, limit) => {
       include: [
         {
           model: SpecIngredient,
-          include: [Ingredient, IngredientFamily],
+          include: [Ingredient],
         },
         {
           model: Spec,
@@ -67,7 +60,7 @@ export const findSpec = async (where) => {
     await Spec.findOne({
       where,
       include: [
-        { model: SpecIngredient, include: [Ingredient, IngredientFamily] },
+        { model: SpecIngredient, include: [Ingredient] },
         {
           model: User,
           as: "contributedBy",
@@ -85,7 +78,12 @@ export const findSpec = async (where) => {
 
 export const createSpec = async ({ spec }, user) => {
   const ingredients = spec.ingredients
-  const newSpec = await Spec.create({ ...spec, contributedById: user })
+  console.log({ spec })
+  const newSpec = await Spec.create({
+    ...spec,
+    riffOnId: spec.riffOn,
+    contributedById: user,
+  })
   ingredients.forEach(async (ingredient) => {
     const foundIngredient = await Ingredient.findOne({
       where: { name: ingredient.name },
@@ -104,7 +102,7 @@ export const createSpec = async ({ spec }, user) => {
   return Spec.findOne({
     where: { id: newSpec.id },
     include: [
-      Ingredient,
+      SpecIngredient,
       {
         model: User,
         as: "contributedBy",

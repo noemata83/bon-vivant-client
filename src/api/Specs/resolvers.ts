@@ -19,6 +19,9 @@ export default {
     ingredients: (spec, args, context) => {
       return context.collection.load(SpecIngredient, "specId", spec.id)
     },
+    riffOn: (spec, args, context) => {
+      return spec.riffOnId ? context.single.load(Spec, spec.riffOnId) : null
+    },
   },
   SpecIngredient: {
     ingredient: (specIngredient, args, context) => {

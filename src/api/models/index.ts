@@ -5,14 +5,11 @@ const env = process.env.NODE_ENV || "development"
 import dotenv from "dotenv"
 import { Op } from "sequelize"
 import { Ingredient } from "./ingredient.model"
-import { IngredientFamily } from "./ingredientfamily.model"
 import { Review } from "./review.model"
 import { Spec } from "./spec.model"
 import { SpecIngredient } from "./specingredient.model"
 import { User } from "./user.model"
-import { IngredientAndFamily } from "./ingredientAndFamily.model"
 import { IngredientShelf } from "./ingredientShelf.model"
-import { IngredientSubstitionClass } from "./ingredientSubstitutionClass.model"
 import { CocktailBook } from "./cocktailBook.model"
 import { Glassware } from "./glasssware.model"
 import { UserRole } from "./userRole.model"
@@ -32,6 +29,8 @@ const operatorsAliases = {
   like: Op.like,
   contains: Op.contains,
   notLike: Op.notLike,
+  or: Op.or,
+  and: Op.and,
 }
 
 export const sequelize = new Sequelize({
@@ -47,14 +46,11 @@ export const sequelize = new Sequelize({
   operatorsAliases,
   models: [
     Ingredient,
-    IngredientFamily,
     Review,
     Spec,
     SpecIngredient,
     User,
-    IngredientAndFamily,
     IngredientShelf,
-    IngredientSubstitionClass,
     CocktailBook,
     Glassware,
     UserRole,
@@ -64,7 +60,6 @@ export const sequelize = new Sequelize({
 })
 
 export { Ingredient } from "./ingredient.model"
-export { IngredientFamily } from "./ingredientfamily.model"
 export { Review } from "./review.model"
 export { Spec } from "./spec.model"
 export { SpecIngredient } from "./specingredient.model"
