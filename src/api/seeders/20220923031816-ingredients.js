@@ -19,6 +19,9 @@ module.exports = {
     const fruitJuiceId = uuid.v4()
     const vermouthId = uuid.v4()
     const citrusJuiceId = uuid.v4()
+    const amaroId = uuid.v4()
+    const aromaticBittersId = uuid.v4()
+    const spanishStyleRumId = uuid.v4()
     await queryInterface.bulkInsert("Ingredients", [
       {
         name: "Whiskey",
@@ -358,34 +361,32 @@ module.exports = {
         updatedAt: new Date(Date.now()).toISOString(),
       },
       {
-        name: "English-style Rum",
+        name: "Light Rum",
         id: uuid.v4(),
-        slug: "english-style-rum",
+        slug: "light-rum",
         proof: 80,
-        description:
-          "A type of rum typically made from molasses using a copper pot still and produced mainly in the West Indies and surrounding areas.",
+        description: "This type of rum is aged in oak barrels briefly and then",
         parentId: rumId,
         createdAt: new Date(Date.now()).toISOString(),
         updatedAt: new Date(Date.now()).toISOString(),
       },
       {
-        name: "Spanish-style Rum",
+        name: "Gold Rum",
         id: uuid.v4(),
-        slug: "spanish-style-rum",
+        slug: "gold-rum",
         proof: 80,
-        description:
-          "A smoother, less funky style of rum than its English counterpart.",
+        description: "A medium-bodied rum, usually aged in oak barrels.",
         parentId: rumId,
         createdAt: new Date(Date.now()).toISOString(),
         updatedAt: new Date(Date.now()).toISOString(),
       },
       {
-        name: "Jamaican Rum",
+        name: "Dark Rum",
         id: uuid.v4(),
-        slug: "jamaican-rum",
+        slug: "dark-rum",
         proof: 80,
         description:
-          "Sometimes called 'Navy rum,' this style has a very distinctive, funky complexity.",
+          "Usually made from carmelized sugar or molasses, and usually aged longer than other rums.",
         parentId: rumId,
         createdAt: new Date(Date.now()).toISOString(),
         updatedAt: new Date(Date.now()).toISOString(),
@@ -447,7 +448,7 @@ module.exports = {
       },
       {
         name: "Aromatic bitters",
-        id: uuid.v4(),
+        id: aromaticBittersId,
         slug: "aromatic-bitters",
         proof: 80,
         description:
@@ -548,6 +549,70 @@ module.exports = {
         description:
           "One of two vermouths produced by the Carpano company. A very complex, slightly more bitter than average sweet vermouth.",
         parentId: vermouthId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Brandied Cherry",
+        id: uuid.v4(),
+        slug: "brandied-cherry",
+        proof: 0,
+        description: "A candied cherry often added as a cocktail garnish.",
+        parentId: garnishId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Orange Bitters",
+        id: uuid.v4(),
+        slug: "orange-bitters",
+        proof: 80,
+        description: "Orange-flavored bitters",
+        parentId: bittersId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Amaro",
+        id: amaroId,
+        slug: "amaro",
+        proof: 48,
+        description:
+          "An italian herbal liqueur, often consumed as an appertif. Usually bittersweet, sometimes syrupy, with a proof between 32 and 80.",
+        parentId: liqueurId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Campari",
+        id: uuid.v4(),
+        slug: "campari",
+        proof: 48,
+        description:
+          "An iconic red amaro liqueur, with a taste reminiscent of grapefruit.",
+        parentId: amaroId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Lemon Twist",
+        id: uuid.v4(),
+        slug: "lemon-twist",
+        proof: 0,
+        description:
+          "A lemon peel curled into a twist shape for a cocktail garnish.",
+        parentId: garnishId,
+        createdAt: new Date(Date.now()).toISOString(),
+        updatedAt: new Date(Date.now()).toISOString(),
+      },
+      {
+        name: "Angostura Bitters",
+        id: uuid.v4(),
+        slug: "angostura-bitters",
+        proof: 90,
+        description:
+          "A concentrated bitters based on gentian, herbs, and spices; produced in Trinidad and Tobago.",
+        parentId: aromaticBittersId,
         createdAt: new Date(Date.now()).toISOString(),
         updatedAt: new Date(Date.now()).toISOString(),
       },

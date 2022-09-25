@@ -53,7 +53,7 @@ export class User extends Model {
   @ForeignKey(() => UserRole)
   @AllowNull(false)
   @Column(DataType.INTEGER)
-  userRoleId: number
+  roleId: number
 
   @BeforeCreate
   @BeforeUpdate

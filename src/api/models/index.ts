@@ -27,6 +27,8 @@ const operatorsAliases = {
   gt: Op.gt,
   lte: Op.lte,
   lt: Op.lt,
+  in: Op.in,
+  notIn: Op.notIn,
   like: Op.like,
   contains: Op.contains,
   notLike: Op.notLike,
@@ -39,7 +41,9 @@ export const sequelize = new Sequelize({
   dialect: "postgres",
   host: "localhost",
   port: 54320,
-  logging: console.log,
+  logging: (sql, queryObject: any) => {
+    queryObject.where ? console.log(queryObject.where) : queryObject
+  },
   operatorsAliases,
   models: [
     Ingredient,

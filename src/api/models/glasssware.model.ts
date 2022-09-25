@@ -9,7 +9,7 @@ import {
 import Fix from "./decorators/fix.decorator"
 
 @Fix
-@Table
+@Table({ timestamps: false })
 export class Glassware extends Model {
   @PrimaryKey
   @AutoIncrement
@@ -20,5 +20,5 @@ export class Glassware extends Model {
   name: string
 
   @Column(DataType.STRING)
-  iconURL: string
+  icon: string
 }
