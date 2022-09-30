@@ -35,7 +35,7 @@ const newIngredient = (props) => {
       addIngredient({ variables: parsedValues })
       Router.push("/ingredients")
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
   return (

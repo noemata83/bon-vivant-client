@@ -9,6 +9,6 @@ export const syncDB = (handler) => async (req, res) => {
   await sequelize.sync()
   await sequelize.authenticate()
   connection.isConnected = true
-  console.log("=> Created a new database connection.")
+  console.info("=> Created a new database connection.")
   return handler(req, res)
 }

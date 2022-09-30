@@ -38,7 +38,7 @@ const editSpec = (props) => {
       editSpec({ variables: { ...parsedValues, id: data.spec.id } })
       Router.push("/")
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 

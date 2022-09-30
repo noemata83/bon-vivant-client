@@ -3,6 +3,8 @@ import { sequelize, User, Ingredient, Spec, SpecIngredient } from "../models"
 import { formatSpec } from "../Specs/controller"
 import jwt from "jsonwebtoken"
 import config from "../../../config/keys"
+import { UserRole } from "../models/userRole.model"
+import { Permission } from "../models/permission.model"
 
 export const isDuplicate = (arr, id) => {
   const values = arr.map((item) => item.dataValues)
@@ -141,7 +143,15 @@ export const removeSpecFromBook = async (userId, specId) => {
 export const signUp = async (username, password, email, res) => {
   const user = await User.create({ username, password, email })
   try {
-    const payload = { username: user.username, id: user.id }
+    const userRole = await UserRole.findOne({
+      where: { name: "Guest" },
+      include: [Permission],
+    })
+    const payload = {
+      username: user.username,
+      id: user.id,
+      role: userRole.toJSON(),
+    }
     const options = { expiresIn: "7d" }
     const secret = config.SECRET
     const token = jwt.sign(payload, secret, options)
@@ -151,16 +161,23 @@ export const signUp = async (username, password, email, res) => {
       token,
     }
   } catch (e) {
-    console.log(e)
+    console.error(e)
   }
 }
 
 export const login = async (username, password, res) => {
-  const user = await User.findOne({ where: { username: username } })
+  const user = await User.findOne({
+    where: { username: username },
+    include: [{ model: UserRole, include: [Permission] }],
+  })
   if (user) {
     const passwordIsValid = await user.isValidPassword(password)
     if (passwordIsValid) {
-      const payload = { username: user.username, id: user.id }
+      const payload = {
+        username: user.username,
+        id: user.id,
+        role: user.userRole.toJSON(),
+      }
       const options = { expiresIn: "7d" }
       const secret = config.SECRET
       const token = jwt.sign(payload, secret, options)

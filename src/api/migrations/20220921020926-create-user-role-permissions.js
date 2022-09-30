@@ -23,9 +23,6 @@ module.exports = {
           onDelete: "CASCADE",
         },
       },
-      allowed: {
-        type: Sequelize.DataTypes.BOOLEAN,
-      },
     })
   },
 

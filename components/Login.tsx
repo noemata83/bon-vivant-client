@@ -32,7 +32,7 @@ const LoginComponent = ({ updateLoggedInState }) => {
         }
       },
       onError: (error) => {
-        console.log(error)
+        console.error(error)
         setError(error.message)
       },
     })

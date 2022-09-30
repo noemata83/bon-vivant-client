@@ -1,4 +1,6 @@
 import { Ingredient } from "../models"
+import { hasPermission } from "../Users/authorization/authorization"
+import { PermissionType } from "../Users/authorization/permission.enum"
 
 export default {
   Query: {

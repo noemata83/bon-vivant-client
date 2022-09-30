@@ -8,7 +8,7 @@ import Router from "next/router"
 const NewCocktail = ({ isLoggedIn }) => {
   const [addSpec, { error, loading, data }] = useMutation(ADD_SPEC, {
     onError: (error) => {
-      console.log(error)
+      console.error(error)
     },
   })
 
@@ -28,7 +28,7 @@ const NewCocktail = ({ isLoggedIn }) => {
       addSpec({ variables: parsedValues })
       Router.push("/")
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
   return (

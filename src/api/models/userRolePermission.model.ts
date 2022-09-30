@@ -11,7 +11,9 @@ import { Permission } from "./permission.model"
 import { UserRole } from "./userRole.model"
 
 @Fix
-@Table
+@Table({
+  timestamps: false,
+})
 export class UserRolePermission extends Model {
   @PrimaryKey
   @ForeignKey(() => UserRole)

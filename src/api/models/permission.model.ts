@@ -1,4 +1,5 @@
 import {
+  BelongsToMany,
   Column,
   DataType,
   Model,
@@ -6,9 +7,13 @@ import {
   Table,
 } from "sequelize-typescript"
 import Fix from "./decorators/fix.decorator"
+import { UserRole } from "./userRole.model"
+import { UserRolePermission } from "./userRolePermission.model"
 
 @Fix
-@Table
+@Table({
+  timestamps: false,
+})
 export class Permission extends Model {
   @PrimaryKey
   @Column(DataType.INTEGER)
@@ -16,4 +21,7 @@ export class Permission extends Model {
 
   @Column(DataType.STRING)
   action: string
+
+  @BelongsToMany(() => UserRole, () => UserRolePermission)
+  userRoles: UserRole[]
 }

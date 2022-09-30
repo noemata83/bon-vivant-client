@@ -19,6 +19,7 @@ import { ByNameLoader } from "../../src/api/loaders/name"
 import { AssociatedCollectionLoader } from "../../src/api/loaders/collection"
 import { AllLoader } from "../../src/api/loaders/all"
 import { SampleCocktailsLoader } from "../../src/api/loaders/ingredients/sampleCocktails"
+import { UserRolePermissionLoader } from "../../src/api/loaders/permission"
 
 const resolvers = mergeResolvers([
   ingredientsResolvers,
@@ -39,6 +40,7 @@ const context = (integrationContext) => ({
   name: new ByNameLoader(),
   collection: new AssociatedCollectionLoader(),
   all: new AllLoader(),
+  permissions: new UserRolePermissionLoader(),
   ingredients: {
     cocktails: new SampleCocktailsLoader(),
   },
@@ -64,7 +66,11 @@ const auth = (handler) => (req, res) => {
     if (token) {
       try {
         const decoded = jwt.verify(token, env.SECRET)
-        req.user = decoded.id
+        req.user = {
+          username: decoded.username,
+          id: decoded.id,
+          role: decoded.role,
+        }
       } catch (err) {
         throw new Error(err)
       }

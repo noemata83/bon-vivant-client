@@ -11,7 +11,9 @@ import { Permission } from "./permission.model"
 import { UserRolePermission } from "./userRolePermission.model"
 
 @Fix
-@Table
+@Table({
+  timestamps: false,
+})
 export class UserRole extends Model {
   @PrimaryKey
   @Column(DataType.INTEGER)

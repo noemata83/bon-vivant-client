@@ -133,9 +133,19 @@ export default gql`
     username: String
     email: String
     token: String
-    role: String
+    role: UserRole
     book: [Spec]
     shelf: [Ingredient]
+  }
+
+  type UserRole {
+    name: String
+    id: Int
+    permissions: [Permission]
+  }
+
+  type Permission {
+    action: String
   }
 
   input UserInput {

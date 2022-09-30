@@ -78,11 +78,10 @@ export const findSpec = async (where) => {
 
 export const createSpec = async ({ spec }, user) => {
   const ingredients = spec.ingredients
-  console.log({ spec })
   const newSpec = await Spec.create({
     ...spec,
     riffOnId: spec.riffOn,
-    contributedById: user,
+    contributedById: user.id,
   })
   ingredients.forEach(async (ingredient) => {
     const foundIngredient = await Ingredient.findOne({
@@ -96,7 +95,7 @@ export const createSpec = async ({ spec }, user) => {
         ...ingredient,
       })
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   })
   return Spec.findOne({
@@ -135,7 +134,7 @@ export const editSpec = async (id, updates) => {
         ...ingredient,
       })
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   })
   await Spec.update(

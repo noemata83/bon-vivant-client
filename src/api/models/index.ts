@@ -41,7 +41,7 @@ export const sequelize = new Sequelize({
   host: "localhost",
   port: 54320,
   logging: (sql, queryObject: any) => {
-    queryObject.where ? console.log(queryObject.where) : queryObject
+    queryObject.where ? console.info(queryObject.where) : queryObject
   },
   operatorsAliases,
   models: [

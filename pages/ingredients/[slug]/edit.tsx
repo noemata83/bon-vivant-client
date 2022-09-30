@@ -64,7 +64,7 @@ const editIngredient = (props) => {
       editIngredient({ variables: { ...parsedValues, id: data.ingredient.id } })
       Router.push("/ingredients")
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
