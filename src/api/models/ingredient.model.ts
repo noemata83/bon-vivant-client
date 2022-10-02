@@ -18,6 +18,8 @@ import { SpecIngredient } from "./specingredient.model"
 import { Spec } from "./spec.model"
 import { v4 as uuid } from "uuid"
 import Fix from "./decorators/fix.decorator"
+import { User } from "./user.model"
+import { IngredientShelf } from "./ingredientShelf.model"
 
 @Fix
 @Table
@@ -46,6 +48,9 @@ export class Ingredient extends Model {
 
   @BelongsToMany(() => Spec, () => SpecIngredient)
   declare specs: Spec[]
+
+  @BelongsToMany(() => User, () => IngredientShelf)
+  usersSaved: User[]
 
   @BelongsTo(() => Ingredient)
   parent?: Ingredient

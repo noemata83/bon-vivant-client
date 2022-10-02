@@ -35,7 +35,13 @@ export default {
       return removeSpecFromBook(user, args.id)
     },
     signUp(_, args, { res }) {
-      return signUp(args.username, args.password, args.email, res)
+      return signUp(
+        args.username,
+        args.password,
+        args.email,
+        args.contribute,
+        res
+      )
     },
     login(_, args, { res }) {
       return login(args.username, args.password, res)

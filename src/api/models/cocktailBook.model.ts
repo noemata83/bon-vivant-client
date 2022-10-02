@@ -5,9 +5,11 @@ import {
   Model,
   Table,
 } from "sequelize-typescript"
+import Fix from "./decorators/fix.decorator"
 import { Spec } from "./spec.model"
 import { User } from "./user.model"
 
+@Fix
 @Table({
   tableName: "CocktailBooks",
 })

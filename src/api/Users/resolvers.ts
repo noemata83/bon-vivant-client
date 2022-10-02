@@ -1,7 +1,5 @@
 import { User } from "../models"
-import { Permission } from "../models/permission.model"
 import { UserRole } from "../models/userRole.model"
-import { getAllUsers, getUserById } from "./controller"
 
 export default {
   Query: {
@@ -12,12 +10,19 @@ export default {
       if (!user) {
         throw new Error("You are not authenticated!")
       }
-      return single.load(User, user)
+      return single.load(User, user.id)
     },
   },
   User: {
     role: (user, _args, context) => {
       return context.single.load(UserRole, user.roleId)
+    },
+    book: (user, args, context) => {
+      return context.cocktailBooks.load(user.id)
+    },
+    shelf: (user, _args, context) => {
+      console.log("hi")
+      return context.shelf.load(user.id)
     },
   },
   UserRole: {

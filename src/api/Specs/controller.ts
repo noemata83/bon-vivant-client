@@ -1,4 +1,7 @@
+import { ForbiddenError } from "apollo-server-core"
 import { Spec, Ingredient, SpecIngredient, User, Review } from "../models"
+import { hasPermission } from "../Users/authorization/authorization"
+import { PermissionType } from "../Users/authorization/permission.enum"
 
 const formatSpecIngredients = (ingredient): SpecIngredient => {
   return SpecIngredient.build({
@@ -77,6 +80,11 @@ export const findSpec = async (where) => {
 }
 
 export const createSpec = async ({ spec }, user) => {
+  if (!user || !hasPermission(user, PermissionType.CreateSpec)) {
+    throw new ForbiddenError(
+      "You do not have permission to create a new cocktail spec."
+    )
+  }
   const ingredients = spec.ingredients
   const newSpec = await Spec.create({
     ...spec,
@@ -115,7 +123,12 @@ export const createSpec = async ({ spec }, user) => {
   })
 }
 
-export const editSpec = async (id, updates) => {
+export const editSpec = async (id, updates, user) => {
+  if (!user || !hasPermission(user, PermissionType.EditSpec)) {
+    throw new ForbiddenError(
+      "You do not have permission to edit a cocktail spec."
+    )
+  }
   const specToUpdate = await Spec.findByPk(id, { include: [SpecIngredient] })
   const ingredients = specToUpdate.ingredients
   await ingredients.forEach(async (ingredient) => {
@@ -146,7 +159,7 @@ export const editSpec = async (id, updates) => {
   const theSpec = await Spec.findOne({
     where: { id },
     include: [
-      Ingredient,
+      SpecIngredient,
       {
         model: User,
         as: "contributedBy",
@@ -165,7 +178,7 @@ export const editSpec = async (id, updates) => {
 export const deleteSpec = async (id) => {
   const SpecToDelete = await Spec.findByPk(id)
   try {
-    const result = await Spec.destroy({ where: { id } })
+    await Spec.destroy({ where: { id } })
     return SpecToDelete
   } catch (err) {
     throw Error("Could not delete that spec.")

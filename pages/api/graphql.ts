@@ -20,6 +20,8 @@ import { AssociatedCollectionLoader } from "../../src/api/loaders/collection"
 import { AllLoader } from "../../src/api/loaders/all"
 import { SampleCocktailsLoader } from "../../src/api/loaders/ingredients/sampleCocktails"
 import { UserRolePermissionLoader } from "../../src/api/loaders/permission"
+import { CocktailBookLoader } from "../../src/api/loaders/cocktailbooks/cocktailbook"
+import { ShelfLoader } from "../../src/api/loaders/shelf/shelf"
 
 const resolvers = mergeResolvers([
   ingredientsResolvers,
@@ -44,6 +46,8 @@ const context = (integrationContext) => ({
   ingredients: {
     cocktails: new SampleCocktailsLoader(),
   },
+  cocktailBooks: new CocktailBookLoader(),
+  shelf: new ShelfLoader(),
 })
 
 const apolloServer = new ApolloServer({

@@ -14,7 +14,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript"
-import uuid from "uuid"
+import { v4 as uuid } from "uuid"
 import { CocktailBook } from "./cocktailBook.model"
 import Fix from "./decorators/fix.decorator"
 import { Ingredient } from "./ingredient.model"
@@ -28,7 +28,7 @@ import { UserRole } from "./userRole.model"
 export class User extends Model {
   @PrimaryKey
   @AllowNull(false)
-  @Default(() => uuid.v4())
+  @Default(() => uuid())
   @Column(DataType.UUID)
   id: string
 

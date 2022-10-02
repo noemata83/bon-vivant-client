@@ -1,6 +1,14 @@
+import { ForbiddenError } from "apollo-server-core"
 import { Ingredient } from "../models"
+import { hasPermission } from "../Users/authorization/authorization"
+import { PermissionType } from "../Users/authorization/permission.enum"
 
-export const createIngredient = async ({ ingredient }) => {
+export const createIngredient = async ({ ingredient }, user) => {
+  if (!hasPermission(user, PermissionType.CreateIngredient)) {
+    throw new ForbiddenError(
+      "You do not have permission to create ingredients."
+    )
+  }
   const newIngredient = await Ingredient.create(ingredient)
   const createdIngredient = Ingredient.findOne({
     where: { id: newIngredient.id },
@@ -37,7 +45,12 @@ export const findIngredient = async (args) => {
   ).toJSON()
 }
 
-export const editIngredient = async (id, update) => {
+export const editIngredient = async (id, update, user) => {
+  if (!hasPermission(user, PermissionType.EditIngredient)) {
+    throw new ForbiddenError(
+      "You do not have permission to modify ingredients."
+    )
+  }
   const { ingredient } = update
   await Ingredient.update(ingredient, {
     where: { id: { eq: id } },

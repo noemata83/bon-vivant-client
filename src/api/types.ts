@@ -43,6 +43,18 @@ export default gql`
     spec: Spec
     parentId: String
     parent: Ingredient
+  }
+
+  type IngredientDetail {
+    id: String
+    name: String
+    slug: String
+    proof: Int
+    imageURL: String
+    description: String
+    spec: Spec
+    parentId: String
+    parent: Ingredient
     children: [Ingredient]
     cocktails: [Spec]
   }
@@ -152,6 +164,7 @@ export default gql`
     username: String!
     password: String!
     email: String!
+    contribute: Boolean
   }
 
   type UserToken {
@@ -170,7 +183,7 @@ export default gql`
 
   input IngredientFilterInput {
     name: StringFilterInput
-    family: StringFilterInput
+    parent: StringFilterInput
   }
 
   input SpecFilterInput {
@@ -190,7 +203,12 @@ export default gql`
     removeIngredientFromShelf(id: String!): User
     addSpecToBook(id: String!): User
     removeSpecFromBook(id: String!): User
-    signUp(username: String!, password: String!, email: String!): User
+    signUp(
+      username: String!
+      password: String!
+      email: String!
+      contribute: Boolean
+    ): User
     updateUser(username: String!, roleId: Int): User
     login(username: String!, password: String!): UserToken
     deleteUser(id: String!): User
@@ -200,7 +218,7 @@ export default gql`
   }
 
   type Query {
-    ingredient(id: String, name: String, slug: String): Ingredient
+    ingredient(id: String, name: String, slug: String): IngredientDetail
     ingredients: [Ingredient]
     specs(filter: SpecFilterInput, limit: Int): [Spec]
     spec(id: String, name: String, slug: String): Spec

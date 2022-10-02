@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken"
 import config from "../../../config/keys"
 import { UserRole } from "../models/userRole.model"
 import { Permission } from "../models/permission.model"
+import { USER_ROLE } from "./authorization/userRole"
+import { AuthenticatedUser } from "./authorization/authorization"
 
 export const isDuplicate = (arr, id) => {
   const values = arr.map((item) => item.dataValues)
@@ -65,20 +67,23 @@ export const deleteUser = async (id) => {
   return await User.destroy({ where: { id } })
 }
 
-export const addIngredientToShelf = async (userId, ingredientId) => {
-  const user = await User.findOne({
+export const addIngredientToShelf = async (
+  user: AuthenticatedUser,
+  ingredientId: string
+) => {
+  const userModel = await User.findOne({
     where: {
-      id: userId,
+      id: user.id,
     },
     include: [Ingredient],
   })
-  if (isDuplicate(user.shelf, ingredientId))
+  if (isDuplicate(userModel.shelf, ingredientId))
     throw new Error("Ingredient is already on your shelf.")
   try {
-    await user.$add("shelf", ingredientId)
+    await userModel.$add("shelf", ingredientId)
     const updatedUser = await User.findOne({
       where: {
-        id: userId,
+        id: user.id,
       },
       ...standardInclude,
     })
@@ -106,15 +111,15 @@ export const removeIngredientFromShelf = async (userId, ingredientId) => {
   }
 }
 
-export const addSpecToBook = async (userId, specId) => {
+export const addSpecToBook = async (user, specId) => {
   try {
-    const user = await User.findByPk(userId, { include: [Spec] })
-    const book = user.book
+    const userRecord = await User.findByPk(user.id, { include: [Spec] })
+    const book = userRecord.book
     if (isDuplicate(book, specId)) {
       throw new Error("Spec is already in your cocktail book.")
     }
-    await user.$add("book", specId)
-    const updatedUser = await User.findByPk(userId, {
+    await userRecord.$add("book", specId)
+    const updatedUser = await User.findByPk(user.id, {
       ...standardInclude,
     })
     updatedUser.book = updatedUser.book.map(formatSpec)
@@ -124,13 +129,13 @@ export const addSpecToBook = async (userId, specId) => {
   }
 }
 
-export const removeSpecFromBook = async (userId, specId) => {
+export const removeSpecFromBook = async (user, specId) => {
   try {
-    const user = await User.findByPk(userId, { include: [Spec] })
-    const book = user.book
+    const userRecord = await User.findByPk(user.id, { include: [Spec] })
+    const book = userRecord.book
     const updatedBook = book.filter((spec) => spec.id !== specId)
-    await user.$set("book", updatedBook)
-    const updatedUser = await User.findByPk(userId, {
+    await userRecord.$set("book", updatedBook)
+    const updatedUser = await User.findByPk(user.id, {
       ...standardInclude,
     })
     updatedUser.book = updatedUser.book.map(formatSpec)
@@ -140,11 +145,14 @@ export const removeSpecFromBook = async (userId, specId) => {
   }
 }
 
-export const signUp = async (username, password, email, res) => {
-  const user = await User.create({ username, password, email })
+export const signUp = async (username, password, email, contribute, res) => {
+  const roleId = contribute ? USER_ROLE.Contributor : USER_ROLE.Guest
+  const user = await User.create({ username, password, email, roleId: roleId })
   try {
     const userRole = await UserRole.findOne({
-      where: { name: "Guest" },
+      where: {
+        id: roleId,
+      },
       include: [Permission],
     })
     const payload = {

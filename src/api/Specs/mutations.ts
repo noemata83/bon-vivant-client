@@ -3,17 +3,11 @@ import { createSpec, editSpec, deleteSpec } from "./controller"
 export default {
   Mutation: {
     async createSpec(parentValue, args, { user }) {
-      if (!user) {
-        throw new Error("You are not authenticated!")
-      }
       const newspec = await createSpec(args, user)
       return newspec
     },
     editSpec(_, args, { user }) {
-      if (!user) {
-        throw new Error("You are not authenticated!")
-      }
-      return editSpec(args.id, args)
+      return editSpec(args.id, args, user)
     },
     deleteSpec(_, args, { user }) {
       if (!user) {
