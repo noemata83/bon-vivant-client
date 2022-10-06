@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { ME_QUERY } from "../queries/me"
+import { ME_QUERY } from "./queries/me"
 import Link from "next/link"
 
 const UserSummary = (props) => {

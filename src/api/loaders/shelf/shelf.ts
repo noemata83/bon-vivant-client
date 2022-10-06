@@ -1,16 +1,18 @@
 import DataLoader from "dataloader"
-import { Ingredient, User } from "../../models"
+import { Ingredient, sequelize, User } from "../../models"
 
 export class ShelfLoader {
   private loader: DataLoader<unknown, unknown>
 
   load(requestedUserId: string) {
+    const ingredientRepository = sequelize.getRepository(Ingredient)
+    const userRepository = sequelize.getRepository(User)
     if (!this.loader) {
       this.loader = new DataLoader(async (userIds: string[]) => {
-        const ingredientRows = await Ingredient.findAll({
+        const ingredientRows = await ingredientRepository.findAll({
           include: [
             {
-              model: User,
+              model: userRepository,
               as: "usersSaved",
               through: {
                 where: {

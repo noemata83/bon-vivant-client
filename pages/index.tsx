@@ -1,13 +1,13 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import media from "../global/mediaTemplates"
-import SpecList from "../components/SpecList"
-import Login from "../components/Login"
-import Page from "../layouts/main"
+import media from "../src/client/global/mediaTemplates"
+import SpecList from "../src/client/components/SpecList"
+import Login from "../src/client/components/Login"
+import Page from "../src/client/components/layouts/main"
 import { connect } from "react-redux"
 import Head from "next/head"
 import gql from "graphql-tag"
-import UserSummary from "../components/UserSummary"
+import UserSummary from "../src/client/components/UserSummary"
 
 const GET_SPECS = gql`
   {

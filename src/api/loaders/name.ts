@@ -1,5 +1,5 @@
 import DataLoader from "dataloader"
-import { Model, ModelCtor } from "sequelize-typescript"
+import { Model, Repository } from "sequelize-typescript"
 import { Loaders } from "./types"
 
 interface NameModel extends Model {
@@ -9,24 +9,29 @@ interface NameModel extends Model {
 export class ByNameLoader {
   loaders: Loaders = {}
 
-  public load(model: ModelCtor, id) {
-    return this.findLoader(model).load(id)
+  public load<T extends NameModel>(repository: Repository<T>, id) {
+    return this.findLoader(repository).load(id)
   }
 
-  findLoader(model: ModelCtor) {
-    if (!this.loaders[model.name]) {
-      this.loaders[model.name] = new DataLoader(async (names: string[]) => {
-        const rows: NameModel[] = (await model.findAll({
-          where: { name: { in: names } },
-        })) as NameModel[]
-        const lookup: { [key: string]: NameModel } = rows.reduce((acc, row) => {
-          acc[row.name] = row
-          return acc
-        }, {})
+  findLoader<T extends NameModel>(repository: Repository<T>) {
+    if (!this.loaders[repository.name]) {
+      this.loaders[repository.name] = new DataLoader(
+        async (names: string[]) => {
+          const rows: NameModel[] = (await repository.findAll({
+            where: { name: { in: names } },
+          })) as NameModel[]
+          const lookup: { [key: string]: NameModel } = rows.reduce(
+            (acc, row) => {
+              acc[row.name] = row
+              return acc
+            },
+            {}
+          )
 
-        return names.map((name) => lookup[name] || null)
-      })
+          return names.map((name) => lookup[name] || null)
+        }
+      )
     }
-    return this.loaders[model.name]
+    return this.loaders[repository.name]
   }
 }

@@ -22,6 +22,9 @@ import { SampleCocktailsLoader } from "../../src/api/loaders/ingredients/sampleC
 import { UserRolePermissionLoader } from "../../src/api/loaders/permission"
 import { CocktailBookLoader } from "../../src/api/loaders/cocktailbooks/cocktailbook"
 import { ShelfLoader } from "../../src/api/loaders/shelf/shelf"
+import { sequelize } from "../../src/api/models"
+import { AuthenticatedUser } from "../../src/api/Users/authorization/authorization"
+import { Sequelize } from "sequelize-typescript"
 
 const resolvers = mergeResolvers([
   ingredientsResolvers,
@@ -33,7 +36,26 @@ const resolvers = mergeResolvers([
   reviewMutations,
 ])
 
-const context = (integrationContext) => ({
+export interface ApplicationContext {
+  req: any
+  res: any
+  user: AuthenticatedUser
+  single: ByIdLoader
+  slug: BySlugLoader
+  name: ByNameLoader
+  collection: AssociatedCollectionLoader
+  all: AllLoader
+  permissions: UserRolePermissionLoader
+  ingredients: {
+    cocktails: SampleCocktailsLoader
+  }
+  cocktailBooks: CocktailBookLoader
+  sequelize: Sequelize
+}
+
+const context: (integrationContext: any) => ApplicationContext = (
+  integrationContext
+) => ({
   req: integrationContext.req,
   res: integrationContext.res,
   user: integrationContext.req.user,
@@ -48,6 +70,7 @@ const context = (integrationContext) => ({
   },
   cocktailBooks: new CocktailBookLoader(),
   shelf: new ShelfLoader(),
+  sequelize: sequelize,
 })
 
 const apolloServer = new ApolloServer({

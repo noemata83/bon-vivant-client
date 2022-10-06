@@ -1,17 +1,19 @@
 import DataLoader from "dataloader"
-import { User } from "../../models"
+import { sequelize, User } from "../../models"
 import { Spec } from "../../models/spec.model"
 
 export class CocktailBookLoader {
   loader: DataLoader<unknown, unknown>
 
   public load(requestedId) {
+    const specRepository = sequelize.getRepository(Spec)
+    const userRepository = sequelize.getRepository(User)
     if (!this.loader) {
       this.loader = new DataLoader(async (userIds: string[]) => {
-        const specs = await Spec.findAll({
+        const specs = await specRepository.findAll({
           include: [
             {
-              model: User,
+              model: userRepository,
               as: "usersSaved",
               through: {
                 where: {

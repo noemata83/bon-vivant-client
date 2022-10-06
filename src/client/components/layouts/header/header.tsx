@@ -1,13 +1,13 @@
 import styled from "styled-components"
-import Container from "../../components/layout/container"
+import Container from "../../layout/container"
 import Logo from "./logo"
 import Link from "next/link"
-import media from "../../global/mediaTemplates"
-import UserMenu from "../../components/UI/menu/UserMenu"
+import media from "../../../global/mediaTemplates"
+import UserMenu from "../../UI/menu/UserMenu"
 import { connect } from "react-redux"
 
-const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+const mapStateToProps = (state) => ({
+  isLoggedIn: state.auth.isLoggedIn,
 })
 
 export default connect(mapStateToProps)(({ isLoggedIn }) => (

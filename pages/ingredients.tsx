@@ -1,9 +1,9 @@
 import React from "react"
-import Page from "../layouts/main"
-import IngredientList from "../components/IngredientList"
+import Page from "../src/client/components/layouts/main"
+import IngredientList from "../src/client/components/IngredientList"
 import styled from "styled-components"
-import media from "../global/mediaTemplates"
-import { INGREDIENT_LIST_QUERY } from "../queries/listAllIngredients"
+import media from "../src/client/global/mediaTemplates"
+import { INGREDIENT_LIST_QUERY } from "../src/client/components/queries/listAllIngredients"
 
 const Ingredients = () => (
   <Page>

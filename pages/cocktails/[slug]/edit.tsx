@@ -1,9 +1,13 @@
 import React from "react"
 import Router, { useRouter } from "next/router"
-import Page from "../../../layouts/main"
-import CocktailForm from "../../../components/forms/cocktailForm"
+import Page from "../../../src/client/components/layouts/main"
+import CocktailForm from "../../../src/client/components/forms/cocktailForm"
 import { useMutation, useQuery } from "@apollo/client"
-import { GET_SPEC, EDIT_SPEC, GET_SPECS } from "../../../queries"
+import {
+  GET_SPEC,
+  EDIT_SPEC,
+  GET_SPECS,
+} from "../../../src/client/components/queries"
 import Head from "next/head"
 
 const editSpec = (props) => {

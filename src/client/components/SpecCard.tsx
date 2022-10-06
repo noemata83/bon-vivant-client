@@ -15,7 +15,7 @@ const SpecCard = ({ spec }) => {
           <SpecLink>
             <CardTitle>{name}</CardTitle>
             <IngredientList>
-              {spec.ingredients.slice(0, 4).map(ingredient => (
+              {spec.ingredients.slice(0, 4).map((ingredient) => (
                 <IngredientItem key={ingredient.ingredient.name}>
                   {ingredient.ingredient.name}
                 </IngredientItem>
@@ -26,9 +26,9 @@ const SpecCard = ({ spec }) => {
       </Card>
     </CardContainer>
   )
-};
+}
 
-export default SpecCard;
+export default SpecCard
 
 const CardContainer = styled.div`
   height: 45rem;

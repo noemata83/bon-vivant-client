@@ -1,21 +1,28 @@
+import { ApplicationContext } from "../../../pages/api/graphql"
 import { User } from "../models"
 import { UserRole } from "../models/userRole.model"
 
 export default {
   Query: {
-    async users(parent, args, context) {
-      return context.all.load(User)
+    async users(parent, args, context: ApplicationContext) {
+      return context.all.load(context.sequelize.getRepository(User))
     },
-    async me(_, args, { user, single }) {
-      if (!user) {
+    async me(_, args, context: ApplicationContext) {
+      if (!context.user) {
         throw new Error("You are not authenticated!")
       }
-      return single.load(User, user.id)
+      return context.single.load(
+        context.sequelize.getRepository(User),
+        context.user.id
+      )
     },
   },
   User: {
     role: (user, _args, context) => {
-      return context.single.load(UserRole, user.roleId)
+      return context.single.load(
+        context.sequelize.getRepository(UserRole),
+        user.roleId
+      )
     },
     book: (user, args, context) => {
       return context.cocktailBooks.load(user.id)

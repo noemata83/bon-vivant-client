@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@apollo/client"
 import Link from "next/link"
 import styled from "styled-components"
 import { connect } from "react-redux"
-import { DELETE_SPEC } from "../queries/deleteSpec"
+import { DELETE_SPEC } from "./queries/deleteSpec"
 import Router from "next/router"
 
 const GET_SPEC = gql`

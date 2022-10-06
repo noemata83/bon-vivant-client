@@ -1,10 +1,10 @@
 import React from "react"
-import Page from "../layouts/main"
-import SpecList from "../components/SpecList"
-import SpecCard from "../components/SpecCard"
-import { GET_SPECS } from "../queries/getSpecs"
+import Page from "../src/client/components/layouts/main"
+import SpecList from "../src/client/components/SpecList"
+import SpecCard from "../src/client/components/SpecCard"
+import { GET_SPECS } from "../src/client/components/queries/getSpecs"
 import styled from "styled-components"
-import media from "../global/mediaTemplates"
+import media from "../src/client/global/mediaTemplates"
 import { useQuery } from "@apollo/client"
 
 const Cocktails = () => {

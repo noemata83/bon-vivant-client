@@ -1,5 +1,5 @@
 import DataLoader from "dataloader"
-import { Model, ModelCtor } from "sequelize-typescript"
+import { Model, Repository } from "sequelize-typescript"
 import { Loaders } from "./types"
 
 interface SlugModel extends Model {
@@ -11,11 +11,11 @@ type Slug = string
 export class BySlugLoader {
   loaders: Loaders = {}
 
-  public load(model: ModelCtor, id) {
-    return this.findLoader(model).load(id)
+  public load<T extends SlugModel>(repository: Repository<T>, id) {
+    return this.findLoader(repository).load(id)
   }
 
-  findLoader(model: ModelCtor) {
+  findLoader<T extends SlugModel>(model: Repository<T>) {
     if (!this.loaders[model.name]) {
       this.loaders[model.name] = new DataLoader(async (slugs: Slug[]) => {
         const rows = (await model.findAll({

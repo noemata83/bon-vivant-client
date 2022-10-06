@@ -1,6 +1,9 @@
 import { ForbiddenError } from "apollo-server-core"
 import { Spec, Ingredient, SpecIngredient, User, Review } from "../models"
-import { hasPermission } from "../Users/authorization/authorization"
+import {
+  AuthenticatedUser,
+  hasPermission,
+} from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
 
 const formatSpecIngredients = (ingredient): SpecIngredient => {
@@ -175,7 +178,12 @@ export const editSpec = async (id, updates, user) => {
   return formattedFoundSpec
 }
 
-export const deleteSpec = async (id) => {
+export const deleteSpec = async (id: string, user: AuthenticatedUser) => {
+  if (!user || !hasPermission(user, PermissionType.EditSpec)) {
+    throw new ForbiddenError(
+      "You do not have permission to edit a cocktail spec."
+    )
+  }
   const SpecToDelete = await Spec.findByPk(id)
   try {
     await Spec.destroy({ where: { id } })

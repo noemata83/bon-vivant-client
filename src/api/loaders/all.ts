@@ -1,22 +1,22 @@
 import DataLoader from "dataloader"
-import { ModelCtor } from "sequelize-typescript"
+import { Model, ModelCtor, Repository } from "sequelize-typescript"
 import { Loaders } from "./types"
 
 // so this is pretty silly, but I wanted to retire the controller
 export class AllLoader {
   loaders: Loaders = {}
 
-  public load(model: ModelCtor) {
-    return this.findLoader(model).load("all")
+  public load<T extends Model>(repository: Repository<T>) {
+    return this.findLoader(repository).load("all")
   }
 
-  findLoader(model: ModelCtor) {
-    if (!this.loaders[model.name]) {
-      this.loaders[model.name] = new DataLoader(async () => {
-        const rows = await model.findAll()
+  findLoader<T extends Model>(repository: Repository<T>) {
+    if (!this.loaders[repository.name]) {
+      this.loaders[repository.name] = new DataLoader(async () => {
+        const rows = await repository.findAll()
         return [rows]
       })
     }
-    return this.loaders[model.name]
+    return this.loaders[repository.name]
   }
 }

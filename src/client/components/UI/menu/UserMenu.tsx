@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import Link from "next/link"
 import UserButton from "./UserButton"
 import styled from "styled-components"
-import logout from "../../../lib/logout"
+import logout from "../../../../lib/logout"
 
 const UserMenu = () => {
   const [menuIsOpen, setMenuIsOpen] = useState(false)

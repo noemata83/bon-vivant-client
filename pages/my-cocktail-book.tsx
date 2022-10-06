@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import Page from "../layouts/main"
-import MyCocktailBook from "../components/MyCocktailBook"
+import Page from "../src/client/components/layouts/main"
+import MyCocktailBook from "../src/client/components/MyCocktailBook"
 
 const myCocktailBook = () => (
   <Page>

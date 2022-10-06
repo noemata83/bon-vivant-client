@@ -1,5 +1,5 @@
 import styled, { CSSProperties } from "styled-components"
-import media from "../../global/mediaTemplates"
+import media from "../../../global/mediaTemplates"
 
 interface LogoProps {
   className?: string

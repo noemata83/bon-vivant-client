@@ -1,7 +1,7 @@
 import React from "react"
 import Router, { useRouter } from "next/router"
-import Page from "../../../layouts/main"
-import IngredientForm from "../../../components/forms/registerIngredient"
+import Page from "../../../src/client/components/layouts/main"
+import IngredientForm from "../../../src/client/components/forms/registerIngredient"
 import { useMutation, useQuery } from "@apollo/client"
 import gql from "graphql-tag"
 

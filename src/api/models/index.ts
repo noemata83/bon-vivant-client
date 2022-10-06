@@ -44,6 +44,7 @@ export const sequelize = new Sequelize({
     queryObject.where ? console.info(queryObject.where) : queryObject
   },
   operatorsAliases,
+  repositoryMode: true,
   models: [
     Ingredient,
     Review,

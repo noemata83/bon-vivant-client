@@ -1,10 +1,10 @@
 import React from "react"
 import Router from "next/router"
-import Page from "../../layouts/main"
-import IngredientForm from "../../components/forms/registerIngredient"
+import Page from "../../src/client/components/layouts/main"
+import IngredientForm from "../../src/client/components/forms/registerIngredient"
 import { useMutation } from "@apollo/client"
 import gql from "graphql-tag"
-import { GET_SPEC, GET_SPECS } from "../../queries"
+import { GET_SPEC, GET_SPECS } from "../../src/client/components/queries"
 
 const ADD_INGREDIENT = gql`
   mutation createIngredient(

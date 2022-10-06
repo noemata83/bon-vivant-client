@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache } from "@apollo/client"
 import { BatchHttpLink } from "@apollo/client/link/batch-http"
 import { setContext } from "@apollo/client/link/context"
 import fetch from "isomorphic-unfetch"
-import config from "../config/keys"
+import config from "../../config/keys"
 
 let apolloClient = null
 

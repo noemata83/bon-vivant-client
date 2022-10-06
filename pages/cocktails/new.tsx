@@ -1,8 +1,8 @@
 import React from "react"
-import Page from "../../layouts/main"
-import CocktailForm from "../../components/forms/cocktailForm"
+import Page from "../../src/client/components/layouts/main"
+import CocktailForm from "../../src/client/components/forms/cocktailForm"
 import { useMutation } from "@apollo/client"
-import { ADD_SPEC } from "../../queries"
+import { ADD_SPEC } from "../../src/client/components/queries"
 import Router from "next/router"
 
 const NewCocktail = ({ isLoggedIn }) => {

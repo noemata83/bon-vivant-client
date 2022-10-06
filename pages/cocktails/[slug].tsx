@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
-import Page from "../../layouts/main"
+import Page from "../../src/client/components/layouts/main"
 import styled from "styled-components"
-import Spec from "../../components/Spec"
+import Spec from "../../src/client/components/Spec"
 
 const SpecDetail = () => {
   const router = useRouter()

@@ -1,14 +1,14 @@
 import App from "next/app"
 import React, { Fragment } from "react"
 import { ApolloProvider } from "@apollo/client"
-import withApollo from "../lib/withApollo"
+import withApollo from "../src/lib/withApollo"
 import { ThemeProvider } from "styled-components"
-import theme from "../global/theme"
-import GlobalStyle from "../global/globalStyles"
+import theme from "../src/client/global/theme"
+import GlobalStyle from "../src/client/global/globalStyles"
 import { Provider } from "react-redux"
-import withReduxStore from "../lib/withRedux"
+import withReduxStore from "../src/lib/withRedux"
 
-import { getLoggedInState } from "../store/actions"
+import { getLoggedInState } from "../src/client/store/actions"
 
 class BonVivantApp extends App {
   static async getInitialProps({ Component, router, ctx }) {
