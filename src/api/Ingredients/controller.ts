@@ -2,63 +2,50 @@ import { ForbiddenError } from "apollo-server-core"
 import { Ingredient } from "../models"
 import { hasPermission } from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
+import {
+  CreateIngredientCommand,
+  DeleteIngredientCommand,
+  EditIngredientCommand,
+} from "./commands"
 
-export const createIngredient = async ({ ingredient }, user) => {
+export const createIngredient = async (command: CreateIngredientCommand) => {
+  const { user, ingredient, ingredientRepository } = command
   if (!hasPermission(user, PermissionType.CreateIngredient)) {
     throw new ForbiddenError(
       "You do not have permission to create ingredients."
     )
   }
-  const newIngredient = await Ingredient.create(ingredient)
-  const createdIngredient = Ingredient.findOne({
+  const newIngredient = await ingredientRepository.create(ingredient)
+  const createdIngredient = ingredientRepository.findOne({
     where: { id: newIngredient.id },
-    include: [Ingredient],
+    include: [ingredientRepository],
   })
   return createdIngredient
 }
 
-export const fetchAllIngredients = async () => {
-  const allIngredients = (
-    await Ingredient.findAll({
-      include: [Ingredient],
-    })
-  ).map((el) => el.toJSON())
-  return allIngredients
-}
-
-export const findIngredient = async (args) => {
-  const where: any = {}
-  if (args.id) {
-    where.id = args.id
-  }
-  if (args.slug) {
-    where.slug = {
-      eq: args.slug,
-    }
-  }
-  return (
-    await Ingredient.findOne({
-      where,
-      include: [Ingredient],
-      plain: true,
-    })
-  ).toJSON()
-}
-
-export const editIngredient = async (id, update, user) => {
+export const editIngredient = async (command: EditIngredientCommand) => {
+  const { id, user, update, ingredientRepository } = command
   if (!hasPermission(user, PermissionType.EditIngredient)) {
     throw new ForbiddenError(
       "You do not have permission to modify ingredients."
     )
   }
   const { ingredient } = update
-  await Ingredient.update(ingredient, {
+  await ingredientRepository.update(ingredient, {
     where: { id: { eq: id } },
   })
-  return (await Ingredient.findByPk(id, { include: [Ingredient] })).toJSON()
+  return (
+    await ingredientRepository.findByPk(id, { include: [ingredientRepository] })
+  ).toJSON()
 }
 
-export const deleteIngredient = async (id) => {
+export const deleteIngredient = async (command: DeleteIngredientCommand) => {
+  const { id, user, ingredientRepository } = command
+  if (!hasPermission(user, PermissionType.DeleteIngredient)) {
+    throw new ForbiddenError(
+      "You do not have permission to delete ingredients."
+    )
+  }
   const ingredientToDelete = await Ingredient.destroy({ where: { id } })
   return ingredientToDelete
 }

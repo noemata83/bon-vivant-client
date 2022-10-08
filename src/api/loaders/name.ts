@@ -1,4 +1,5 @@
 import DataLoader from "dataloader"
+import { Op } from "sequelize"
 import { Model, Repository } from "sequelize-typescript"
 import { Loaders } from "./types"
 
@@ -17,8 +18,9 @@ export class ByNameLoader {
     if (!this.loaders[repository.name]) {
       this.loaders[repository.name] = new DataLoader(
         async (names: string[]) => {
+          const where = { name: { [Op.in]: names } }
           const rows: NameModel[] = (await repository.findAll({
-            where: { name: { in: names } },
+            where,
           })) as NameModel[]
           const lookup: { [key: string]: NameModel } = rows.reduce(
             (acc, row) => {

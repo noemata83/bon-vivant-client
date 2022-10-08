@@ -7,8 +7,9 @@ import { UserRole } from "../models/userRole.model"
 import { Permission } from "../models/permission.model"
 import { USER_ROLE } from "./authorization/userRole"
 import { AuthenticatedUser } from "./authorization/authorization"
+import { ISignUpCommand } from "./commands"
 
-export const isDuplicate = (arr, id) => {
+export const isDuplicate = (arr: any[], id: string | number) => {
   const values = arr.map((item) => item.dataValues)
   const found = values.findIndex((item) => item == id)
   return found !== -1
@@ -31,7 +32,7 @@ const standardInclude = {
   ],
 }
 
-const setTokenCookie = (res, token) => {
+const setTokenCookie = (res, token: string) => {
   res.setHeader(
     "Set-Cookie",
     `appToken=${token}; ${
@@ -40,7 +41,7 @@ const setTokenCookie = (res, token) => {
   )
 }
 
-export const getUserById = async (id) => {
+export const getUserById = async (id: string) => {
   try {
     const user = await User.findByPk(id, {
       ...standardInclude,
@@ -94,7 +95,10 @@ export const addIngredientToShelf = async (
   }
 }
 
-export const removeIngredientFromShelf = async (userId, ingredientId) => {
+export const removeIngredientFromShelf = async (
+  userId: string,
+  ingredientId: string
+) => {
   try {
     const user = await User.findByPk(userId, { include: [Ingredient] })
     const associatedIngredients = user.shelf
@@ -111,7 +115,7 @@ export const removeIngredientFromShelf = async (userId, ingredientId) => {
   }
 }
 
-export const addSpecToBook = async (user, specId) => {
+export const addSpecToBook = async (user: User, specId: string) => {
   try {
     const userRecord = await User.findByPk(user.id, { include: [Spec] })
     const book = userRecord.book
@@ -129,7 +133,7 @@ export const addSpecToBook = async (user, specId) => {
   }
 }
 
-export const removeSpecFromBook = async (user, specId) => {
+export const removeSpecFromBook = async (user: User, specId: string) => {
   try {
     const userRecord = await User.findByPk(user.id, { include: [Spec] })
     const book = userRecord.book
@@ -145,15 +149,25 @@ export const removeSpecFromBook = async (user, specId) => {
   }
 }
 
-export const signUp = async (username, password, email, contribute, res) => {
+export const signUp = async (command: ISignUpCommand) => {
+  const { username, contribute, password, email } = command
+  const userRoleRepository = command.userRoleRepository
+  const userRepository = command.userRepository
+  const permissionRepository = command.permissionRepository
+  const res = command.res
   const roleId = contribute ? USER_ROLE.Contributor : USER_ROLE.Guest
-  const user = await User.create({ username, password, email, roleId: roleId })
+  const user = await userRepository.create({
+    username,
+    password,
+    email,
+    roleId: roleId,
+  })
   try {
-    const userRole = await UserRole.findOne({
+    const userRole = await userRoleRepository.findOne({
       where: {
         id: roleId,
       },
-      include: [Permission],
+      include: [permissionRepository],
     })
     const payload = {
       username: user.username,

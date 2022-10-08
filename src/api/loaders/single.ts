@@ -1,4 +1,5 @@
 import DataLoader from "dataloader"
+import { Op } from "sequelize"
 import { Model, Repository } from "sequelize-typescript"
 import { IdType, Loaders } from "./types"
 
@@ -12,7 +13,10 @@ export class ByIdLoader {
   findLoader<T extends Model>(repository: Repository<T>) {
     if (!this.loaders[repository.name]) {
       this.loaders[repository.name] = new DataLoader(async (ids: IdType[]) => {
-        const rows = await repository.findAll({ where: { id: { in: ids } } })
+        const where = { id: { [Op.in]: ids } }
+        const rows = await repository.findAll({
+          where,
+        })
         const lookup: { [key: IdType]: Model } = rows.reduce((acc, row) => {
           acc[row.id] = row
           return acc

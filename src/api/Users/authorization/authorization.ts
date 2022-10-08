@@ -1,6 +1,11 @@
 import { Permission } from "../../models/permission.model"
 import { PermissionType } from "./permission.enum"
 
+export interface PermissionRecord {
+  id: number
+  action: PermissionType
+}
+
 export interface AuthenticatedUser {
   id: string
   username: string
@@ -8,7 +13,7 @@ export interface AuthenticatedUser {
     id: number
     name: string
     description: string
-    permissions: Permission[]
+    permissions: PermissionRecord[]
   }
 }
 

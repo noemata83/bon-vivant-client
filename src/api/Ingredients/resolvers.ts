@@ -5,18 +5,33 @@ import { PermissionType } from "../Users/authorization/permission.enum"
 export default {
   Query: {
     ingredient(_, args, context) {
-      if (args.id) return context.single.load(Ingredient, args.id)
-      if (args.slug) return context.slug.load(Ingredient, args.slug)
-      if (args.name) return context.name.load(Ingredient, args.name)
+      if (args.id)
+        return context.single.load(
+          context.sequelize.getRepository(Ingredient),
+          args.id
+        )
+      if (args.slug)
+        return context.slug.load(
+          context.sequelize.getRepository(Ingredient),
+          args.slug
+        )
+      if (args.name)
+        return context.name.load(
+          context.sequelize.getRepository(Ingredient),
+          args.name
+        )
     },
     ingredients(_, args, context) {
-      return context.all.load(Ingredient)
+      return context.all.load(context.sequelize.getRepository(Ingredient))
     },
   },
   Ingredient: {
     parent: (ingredient, _args, context) => {
       return ingredient.parentId
-        ? context.single.load(Ingredient, ingredient.parentId)
+        ? context.single.load(
+            context.sequelize.getRepository(Ingredient),
+            ingredient.parentId
+          )
         : null
     },
   },

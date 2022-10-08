@@ -17,22 +17,6 @@ import { Permission } from "./permission.model"
 import { UserRolePermission } from "./userRolePermission.model"
 dotenv.config()
 
-const operatorsAliases = {
-  eq: Op.eq,
-  ne: Op.ne,
-  gte: Op.gte,
-  gt: Op.gt,
-  lte: Op.lte,
-  lt: Op.lt,
-  in: Op.in,
-  notIn: Op.notIn,
-  like: Op.like,
-  contains: Op.contains,
-  notLike: Op.notLike,
-  or: Op.or,
-  and: Op.and,
-}
-
 export const sequelize = new Sequelize({
   database: process.env.PSQL_DATABASE,
   username: process.env.PSQL_USERNAME,
@@ -43,8 +27,25 @@ export const sequelize = new Sequelize({
   logging: (sql, queryObject: any) => {
     queryObject.where ? console.info(queryObject.where) : queryObject
   },
-  operatorsAliases,
   repositoryMode: true,
+  models: [
+    Ingredient,
+    Review,
+    Spec,
+    SpecIngredient,
+    User,
+    IngredientShelf,
+    CocktailBook,
+    Glassware,
+    UserRole,
+    Permission,
+    UserRolePermission,
+  ],
+})
+
+export const testSequelize = new Sequelize("sqlite::memory:", {
+  repositoryMode: true,
+  logging: false,
   models: [
     Ingredient,
     Review,

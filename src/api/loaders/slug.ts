@@ -1,4 +1,5 @@
 import DataLoader from "dataloader"
+import { Op } from "sequelize"
 import { Model, Repository } from "sequelize-typescript"
 import { Loaders } from "./types"
 
@@ -18,8 +19,9 @@ export class BySlugLoader {
   findLoader<T extends SlugModel>(model: Repository<T>) {
     if (!this.loaders[model.name]) {
       this.loaders[model.name] = new DataLoader(async (slugs: Slug[]) => {
+        const where = { slug: { [Op.in]: slugs } }
         const rows = (await model.findAll({
-          where: { slug: { in: slugs } },
+          where,
         })) as SlugModel[]
         const lookup: { [key: Slug]: Model } = rows.reduce((acc, row) => {
           acc[row.slug] = row

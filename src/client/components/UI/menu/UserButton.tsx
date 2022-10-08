@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
-const User = ({ toggleUserMenu }) => {
+const UserIcon = ({ toggleUserMenu }) => {
   return (
     <UserButton onClick={toggleUserMenu}>
       <UserSVG
@@ -32,4 +32,4 @@ const UserSVG = styled.svg`
   height: 2.8rem;
 `
 
-export default User
+export default UserIcon
