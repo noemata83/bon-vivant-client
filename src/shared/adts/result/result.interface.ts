@@ -4,7 +4,8 @@ import { Option } from "../option/option"
 type Result<T, E extends Error> = Ok<T, E> | Err<T, E>
 
 type ResultFnInput<T, E extends Error = Error, F extends Error = E> =
-  | unknown
+  | any
+  | any[]
   | E
   | F
 
@@ -46,8 +47,12 @@ export interface ResultMap<T, E extends Error, U = unknown> {
   (f: ResultMapFn<T, U>): Result<U, E>
 }
 
-export interface ResultMapErr<T, F extends Error = Error> {
-  (f: ResultMapFn<T>): Result<T, F>
+export interface ResultMapErr<
+  T,
+  E extends Error = Error,
+  F extends Error = Error
+> {
+  (f: ErrMapFn<T, E, F>): Result<T, F>
 }
 
 type ConditionalResultOutput<
@@ -77,6 +82,10 @@ export interface ResultTransform<
 
 export interface ResultMapFn<T, U = unknown> {
   (input: T): U
+}
+
+export interface ErrMapFn<T, E extends Error = Error, F extends Error = Error> {
+  (error: E): Result<T, F>
 }
 
 export interface ResultMatch<T, E extends Error> {

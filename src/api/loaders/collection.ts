@@ -1,24 +1,18 @@
 import DataLoader from "dataloader"
-import { Op } from "sequelize"
-import { Model, Repository } from "sequelize-typescript"
+import { Model, ModelCtor } from "sequelize-typescript"
 import { IdType, Loaders } from "./types"
 
 export class AssociatedCollectionLoader {
   loaders: Loaders = {}
 
-  public load<T extends Model>(repository: Repository<T>, key, id) {
-    return this.findLoader(repository, key).load(id)
+  public load(model: ModelCtor, key, id) {
+    return this.findLoader(model, key).load(id)
   }
 
-  findLoader<T extends Model>(repository: Repository<T>, key) {
-    if (!this.loaders[repository.name]) {
-      this.loaders[repository.name] = new DataLoader(async (ids: IdType[]) => {
-        const where = {
-          [key]: { [Op.in]: ids },
-        }
-        const rows = await repository.findAll({
-          where,
-        })
+  findLoader(model: ModelCtor, key: string) {
+    if (!this.loaders[model.name]) {
+      this.loaders[model.name] = new DataLoader(async (ids: IdType[]) => {
+        const rows = await model.findAll({ where: { [key]: { in: ids } } })
         const lookup: { [key: IdType]: Model[] } = rows.reduce((acc, row) => {
           if (acc[row[key]]) {
             acc[row[key]] = acc[row[key]].concat(row)
@@ -31,6 +25,6 @@ export class AssociatedCollectionLoader {
         return ids.map((id) => lookup[id] || null)
       })
     }
-    return this.loaders[repository.name]
+    return this.loaders[model.name]
   }
 }

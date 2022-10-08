@@ -8,6 +8,7 @@ import { Permission } from "../models/permission.model"
 import { USER_ROLE } from "./authorization/userRole"
 import { AuthenticatedUser } from "./authorization/authorization"
 import { ISignUpCommand } from "./commands"
+import { NextApiResponse } from "next"
 
 export const isDuplicate = (arr: any[], id: string | number) => {
   const values = arr.map((item) => item.dataValues)
@@ -32,7 +33,7 @@ const standardInclude = {
   ],
 }
 
-const setTokenCookie = (res, token: string) => {
+const setTokenCookie = (res: NextApiResponse, token: string) => {
   res.setHeader(
     "Set-Cookie",
     `appToken=${token}; ${
@@ -151,23 +152,20 @@ export const removeSpecFromBook = async (user: User, specId: string) => {
 
 export const signUp = async (command: ISignUpCommand) => {
   const { username, contribute, password, email } = command
-  const userRoleRepository = command.userRoleRepository
-  const userRepository = command.userRepository
-  const permissionRepository = command.permissionRepository
   const res = command.res
   const roleId = contribute ? USER_ROLE.Contributor : USER_ROLE.Guest
-  const user = await userRepository.create({
+  const user = await User.create({
     username,
     password,
     email,
     roleId: roleId,
   })
   try {
-    const userRole = await userRoleRepository.findOne({
+    const userRole = await UserRole.findOne({
       where: {
         id: roleId,
       },
-      include: [permissionRepository],
+      include: [Permission],
     })
     const payload = {
       username: user.username,
@@ -187,7 +185,11 @@ export const signUp = async (command: ISignUpCommand) => {
   }
 }
 
-export const login = async (username, password, res) => {
+export const login = async (
+  username: string,
+  password: string,
+  res: Response
+) => {
   const user = await User.findOne({
     where: { username: username },
     include: [{ model: UserRole, include: [Permission] }],

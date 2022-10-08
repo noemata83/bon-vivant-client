@@ -4,25 +4,19 @@ import { UserRole } from "../models/userRole.model"
 
 export default {
   Query: {
-    async users(parent, args, context: ApplicationContext) {
-      return context.all.load(context.sequelize.getRepository(User))
+    async users(_, args, context: ApplicationContext) {
+      return context.all.load(User)
     },
     async me(_, args, context: ApplicationContext) {
       if (!context.user) {
         throw new Error("You are not authenticated!")
       }
-      return context.single.load(
-        context.sequelize.getRepository(User),
-        context.user.id
-      )
+      return context.single.load(User, context.user.id)
     },
   },
   User: {
     role: (user, _args, context) => {
-      return context.single.load(
-        context.sequelize.getRepository(UserRole),
-        user.roleId
-      )
+      return context.single.load(UserRole, user.roleId)
     },
     book: (user, args, context) => {
       return context.cocktailBooks.load(user.id)

@@ -21,7 +21,6 @@ const setupCreate: (user: AuthenticatedUser) => CreateIngredientCommand = (
       name: "My ingredient",
     },
     user,
-    ingredientRepository: undefined,
   }
   return command
 }
@@ -33,7 +32,6 @@ const setupEdit: (user: AuthenticatedUser) => EditIngredientCommand = (
     id: "1-94-194",
     update: {},
     user,
-    ingredientRepository: undefined,
   }
   return command
 }
@@ -44,7 +42,6 @@ const setupDelete: (user: AuthenticatedUser) => DeleteIngredientCommand = (
   const command: DeleteIngredientCommand = {
     id: "-319-391",
     user,
-    ingredientRepository: undefined,
   }
   return command
 }

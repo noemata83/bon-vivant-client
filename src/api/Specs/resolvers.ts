@@ -4,56 +4,33 @@ import { Glassware } from "../models/glasssware.model"
 
 export default {
   Query: {
-    spec(_, args, context: ApplicationContext) {
-      if (args.id)
-        return context.single.load(
-          context.sequelize.getRepository(Spec),
-          args.id
-        )
-      if (args.slug)
-        return context.slug.load(
-          context.sequelize.getRepository(Spec),
-          args.slug
-        )
-      if (args.name)
-        return context.name.load(
-          context.sequelize.getRepository(Spec),
-          args.name
-        )
+    spec(_: any, args, context: ApplicationContext) {
+      if (args.id) return context.single.load(Spec, args.id)
+      if (args.slug) return context.slug.load(Spec, args.slug)
+      if (args.name) return context.name.load(Spec, args.name)
     },
-    specs(_, args, context) {
-      return context.all.load(context.sequelize.getRepository(Spec))
+    specs(_: any, _args, context: ApplicationContext) {
+      return context.all.load(Spec)
     },
   },
   Spec: {
-    glassware: (spec, args, context) => {
-      return context.single.load(
-        context.sequelize.getRepository(Glassware),
-        spec.glasswareId
-      )
+    glassware: (spec: Spec, _args, context: ApplicationContext) => {
+      return context.single.load(Glassware, spec.glasswareId)
     },
-    ingredients: (spec, args, context) => {
-      return context.collection.load(
-        context.sequelize.getRepository(SpecIngredient),
-        "specId",
-        spec.id
-      )
+    ingredients: (spec: Spec, _args, context: ApplicationContext) => {
+      return context.collection.load(SpecIngredient, "specId", spec.id)
     },
-    riffOn: (spec, args, context) => {
-      return spec.riffOnId
-        ? context.single.load(
-            context.sequelize.getRepository(Spec),
-            spec.riffOnId
-          )
-        : null
+    riffOn: (spec: Spec, _args, context: ApplicationContext) => {
+      return spec.riffOnId ? context.single.load(Spec, spec.riffOnId) : null
     },
   },
   SpecIngredient: {
-    ingredient: (specIngredient, args, context) => {
-      return context.single.load(
-        context.sequelize.getRepository(Ingredient),
-        specIngredient.ingredientId
-      )
+    ingredient: (
+      specIngredient: SpecIngredient,
+      _args,
+      context: ApplicationContext
+    ) => {
+      return context.single.load(Ingredient, specIngredient.ingredientId)
     },
   },
 }

@@ -27,25 +27,6 @@ export const sequelize = new Sequelize({
   logging: (sql, queryObject: any) => {
     queryObject.where ? console.info(queryObject.where) : queryObject
   },
-  repositoryMode: true,
-  models: [
-    Ingredient,
-    Review,
-    Spec,
-    SpecIngredient,
-    User,
-    IngredientShelf,
-    CocktailBook,
-    Glassware,
-    UserRole,
-    Permission,
-    UserRolePermission,
-  ],
-})
-
-export const testSequelize = new Sequelize("sqlite::memory:", {
-  repositoryMode: true,
-  logging: false,
   models: [
     Ingredient,
     Review,

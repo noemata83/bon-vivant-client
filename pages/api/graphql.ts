@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken"
 import env from "../../config/keys"
 import { ApolloServer } from "apollo-server-micro"
 import { mergeResolvers } from "@graphql-tools/merge"
@@ -25,6 +25,8 @@ import { ShelfLoader } from "../../src/api/loaders/shelf/shelf"
 import { sequelize } from "../../src/api/models"
 import { AuthenticatedUser } from "../../src/api/Users/authorization/authorization"
 import { Sequelize } from "sequelize-typescript"
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
+import { UserRole } from "../../src/api/models/userRole.model"
 
 const resolvers = mergeResolvers([
   ingredientsResolvers,
@@ -36,9 +38,19 @@ const resolvers = mergeResolvers([
   reviewMutations,
 ])
 
+interface AuthorizedRequest extends NextApiRequest {
+  user?: DecodedPayload
+}
+
+interface DecodedPayload extends JwtPayload {
+  username: string
+  id: string
+  role: UserRole
+}
+
 export interface ApplicationContext {
-  req: any
-  res: any
+  req: NextApiRequest
+  res: NextApiResponse
   user: AuthenticatedUser
   single: ByIdLoader
   slug: BySlugLoader
@@ -86,29 +98,29 @@ export const config = {
   },
 }
 
-const auth = (handler) => (req, res) => {
-  let token = ""
-  if (req.headers.authorization) {
-    token = req.headers.authorization.split(" ")[1]
-    if (token) {
-      try {
-        const decoded = jwt.verify(token, env.SECRET)
-        req.user = {
+const auth =
+  (handler: NextApiHandler) => (req: NextApiRequest, res: NextApiResponse) => {
+    let token = ""
+    if (req.headers.authorization) {
+      token = req.headers.authorization.split(" ")[1]
+      if (token) {
+        const decoded: DecodedPayload = jwt.verify(
+          token,
+          env.SECRET
+        ) as DecodedPayload
+        ;(req as AuthorizedRequest).user = {
           username: decoded.username,
           id: decoded.id,
           role: decoded.role,
         }
-      } catch (err) {
-        throw new Error(err)
       }
     }
+    return handler(req, res)
   }
-  return handler(req, res)
-}
 
 const startServer = apolloServer.start()
 export default auth(
-  syncDB(async (req, res) => {
+  syncDB(async (req: NextApiRequest, res: NextApiResponse) => {
     await startServer
     await apolloServer.createHandler({ path: "/api/graphql" })(req, res)
   })

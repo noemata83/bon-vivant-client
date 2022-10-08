@@ -1,8 +1,11 @@
 import { Some, None, Option } from "../option/option"
 import {
+  ErrMapFn,
   IResult,
   ResultFn,
+  ResultMapErr,
   ResultMapFn,
+  ResultMatcher,
   ResultTransformFn,
 } from "./result.interface"
 
@@ -38,7 +41,7 @@ export class Ok<T, E extends Error> implements IResult<T, E> {
     return new Ok<U, E>(f(this._value))
   }
 
-  mapErr<F extends Error>(f: ResultMapFn<T>): Result<T, F> {
+  mapErr<F extends Error = Error>(f: ErrMapFn<T, E, F>): Result<T, F> {
     return new Ok<T, F>(this._value)
   }
 
@@ -51,7 +54,7 @@ export class Ok<T, E extends Error> implements IResult<T, E> {
   }
 
   unwrapErr(): E {
-    throw new Error(this._value.toString())
+    throw new Error(`${this._value}`)
   }
 
   ok(): Option<T> {
@@ -62,7 +65,7 @@ export class Ok<T, E extends Error> implements IResult<T, E> {
     return new None<E>()
   }
 
-  match({ ok }) {
+  match({ ok }: ResultMatcher<T, E>) {
     return ok(this._value)
   }
 
@@ -80,7 +83,7 @@ export class Ok<T, E extends Error> implements IResult<T, E> {
 export class Err<T, E extends Error> implements IResult<T, E> {
   private _error: E
 
-  constructor(error: E) {
+  constructor(error: any) {
     this._error = error
   }
 
@@ -92,7 +95,7 @@ export class Err<T, E extends Error> implements IResult<T, E> {
     return true
   }
 
-  expect(message): T {
+  expect(message: string): T {
     throw new Error(message)
   }
 
@@ -104,11 +107,11 @@ export class Err<T, E extends Error> implements IResult<T, E> {
     return this._error
   }
 
-  map<U = unknown>(_): Result<U, E> {
+  map<U = unknown>(_: any): Result<U, E> {
     return new Err<U, E>(this._error)
   }
 
-  mapErr<F extends Error>(f): Result<T, F> {
+  mapErr<F extends Error = Error>(f: ErrMapFn<T, E, F>): Result<T, F> {
     return new Err<T, F>(f(this._error))
   }
 
@@ -120,7 +123,7 @@ export class Err<T, E extends Error> implements IResult<T, E> {
     return new Some<E>(this._error)
   }
 
-  match({ err }) {
+  match({ err }: ResultMatcher<T, E>) {
     return err(this._error)
   }
 

@@ -1,6 +1,5 @@
 import DataLoader from "dataloader"
-import { Op } from "sequelize"
-import { Model, Repository } from "sequelize-typescript"
+import { Model, ModelCtor } from "sequelize-typescript"
 import { Loaders } from "./types"
 
 interface SlugModel extends Model {
@@ -9,24 +8,29 @@ interface SlugModel extends Model {
 
 type Slug = string
 
+type SlugKeys = readonly Slug[]
+
+type SlugLookupTable = {
+  [key: string]: SlugModel
+}
+
 export class BySlugLoader {
   loaders: Loaders = {}
 
-  public load<T extends SlugModel>(repository: Repository<T>, id) {
-    return this.findLoader(repository).load(id)
+  public load(model: ModelCtor, slug: string) {
+    return this.findLoader(model).load(slug)
   }
 
-  findLoader<T extends SlugModel>(model: Repository<T>) {
+  findLoader(model: ModelCtor) {
     if (!this.loaders[model.name]) {
-      this.loaders[model.name] = new DataLoader(async (slugs: Slug[]) => {
-        const where = { slug: { [Op.in]: slugs } }
+      this.loaders[model.name] = new DataLoader(async (slugs: SlugKeys) => {
         const rows = (await model.findAll({
-          where,
+          where: { slug: { in: slugs } },
         })) as SlugModel[]
         const lookup: { [key: Slug]: Model } = rows.reduce((acc, row) => {
           acc[row.slug] = row
           return acc
-        }, {})
+        }, {} as SlugLookupTable)
 
         return slugs.map((slug) => lookup[slug] || null)
       })

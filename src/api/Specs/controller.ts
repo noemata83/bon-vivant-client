@@ -1,10 +1,7 @@
 import { ForbiddenError } from "apollo-server-core"
 import { Op } from "sequelize"
 import { Spec, Ingredient, SpecIngredient, User, Review } from "../models"
-import {
-  AuthenticatedUser,
-  hasPermission,
-} from "../Users/authorization/authorization"
+import { hasPermission } from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
 import {
   CreateSpecCommand,
@@ -12,7 +9,7 @@ import {
   EditSpecCommand,
 } from "./commands"
 
-const formatSpecIngredients = (ingredient): SpecIngredient => {
+const formatSpecIngredients = (ingredient: any): SpecIngredient => {
   return SpecIngredient.build({
     quantity: ingredient.specIngredients?.quantity,
     measure: ingredient.specIngredients?.measure,
@@ -38,27 +35,20 @@ export const formatSpec = (spec): Spec => {
 }
 
 export const createSpec = async (command: CreateSpecCommand) => {
-  const {
-    spec,
-    user,
-    specRepository,
-    userRepository,
-    specIngredientRepository,
-    ingredientRepository,
-  } = command
+  const { spec, user } = command
   if (!user || !hasPermission(user, PermissionType.CreateSpec)) {
     throw new ForbiddenError(
       "You do not have permission to create a new cocktail spec."
     )
   }
   const ingredients = spec.ingredients
-  const newSpec = await specRepository.create({
+  const newSpec = await Spec.create({
     ...spec,
     riffOnId: spec.riffOn,
     contributedById: user.id,
   })
   ingredients.forEach(async (ingredient) => {
-    const foundIngredient = await ingredientRepository.findOne({
+    const foundIngredient = await Ingredient.findOne({
       where: {
         name: {
           [Op.eq]: ingredient.name,
@@ -67,7 +57,7 @@ export const createSpec = async (command: CreateSpecCommand) => {
     })
     delete ingredient.name
     try {
-      await specIngredientRepository.create({
+      await SpecIngredient.create({
         specId: newSpec.id,
         ingredientId: foundIngredient.id,
         ...ingredient,
@@ -79,9 +69,9 @@ export const createSpec = async (command: CreateSpecCommand) => {
   return Spec.findOne({
     where: { id: newSpec.id },
     include: [
-      specIngredientRepository,
+      SpecIngredient,
       {
-        model: userRepository,
+        model: User,
         as: "contributedBy",
       },
     ],
@@ -89,23 +79,14 @@ export const createSpec = async (command: CreateSpecCommand) => {
 }
 
 export const editSpec = async (command: EditSpecCommand) => {
-  const {
-    user,
-    updates,
-    id,
-    ingredientRepository,
-    specIngredientRepository,
-    specRepository,
-    userRepository,
-    reviewRepository,
-  } = command
+  const { user, updates, id } = command
   if (!user || !hasPermission(user, PermissionType.EditSpec)) {
     throw new ForbiddenError(
       "You do not have permission to edit a cocktail spec."
     )
   }
-  const specToUpdate = await specRepository.findByPk(id, {
-    include: [specIngredientRepository],
+  const specToUpdate = await Spec.findByPk(id, {
+    include: [SpecIngredient],
   })
   const ingredients = specToUpdate.ingredients
   await ingredients.forEach(async (ingredient) => {
@@ -113,12 +94,12 @@ export const editSpec = async (command: EditSpecCommand) => {
   })
   const { spec } = updates
   spec.ingredients.forEach(async (ingredient) => {
-    const foundIngredient = await ingredientRepository.findOne({
+    const foundIngredient = await Ingredient.findOne({
       where: { name: ingredient.name },
     })
     delete ingredient.name
     try {
-      await specIngredientRepository.create({
+      await SpecIngredient.create({
         specId: specToUpdate.id,
         ingredientId: foundIngredient.id,
         ...ingredient,
@@ -127,22 +108,22 @@ export const editSpec = async (command: EditSpecCommand) => {
       console.error(err)
     }
   })
-  await specRepository.update(
+  await Spec.update(
     {
       ...spec,
     },
     { where: { id } }
   )
-  const theSpec = await specRepository.findOne({
+  const theSpec = await Spec.findOne({
     where: { id },
     include: [
-      specIngredientRepository,
+      SpecIngredient,
       {
-        model: userRepository,
+        model: User,
         as: "contributedBy",
       },
       {
-        model: reviewRepository,
+        model: Review,
         as: "reviews",
         include: [User],
       },
@@ -153,34 +134,17 @@ export const editSpec = async (command: EditSpecCommand) => {
 }
 
 export const deleteSpec = async (command: DeleteSpecCommand) => {
-  const { id, user, specRepository } = command
+  const { id, user } = command
   if (!user || !hasPermission(user, PermissionType.EditSpec)) {
     throw new ForbiddenError(
       "You do not have permission to edit a cocktail spec."
     )
   }
-  const SpecToDelete = await specRepository.findByPk(id)
+  const SpecToDelete = await Spec.findByPk(id)
   try {
     await Spec.destroy({ where: { id } })
     return SpecToDelete
   } catch (err) {
     throw Error("Could not delete that spec.")
   }
-}
-
-const formatFilter = (rawFilter) => {
-  const filter: any = {}
-  if (!rawFilter) {
-    return
-  }
-  if (rawFilter.name) {
-    filter.name = rawFilter.name
-  }
-  if (rawFilter.ingredients && rawFilter.ingredients.name) {
-    filter["$ingredients.name$"] = rawFilter.ingredients.name
-  }
-  if (rawFilter.ingredients && rawFilter.ingredients.family) {
-    filter["$ingredients.family.name$"] = rawFilter.ingredients.family
-  }
-  return filter
 }

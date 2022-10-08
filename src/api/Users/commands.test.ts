@@ -9,13 +9,7 @@ describe("makeSignupCommand", () => {
       email: "tester@test.com",
       contribute: false,
     }
-    const result = SignUpCommand.make(
-      params,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
+    const result = SignUpCommand.make(params, undefined)
     expect(result.isOk()).toBe(true)
   })
 
@@ -26,13 +20,7 @@ describe("makeSignupCommand", () => {
       email: "tester@test.com",
       contribute: false,
     }
-    const result = SignUpCommand.make(
-      params,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
+    const result = SignUpCommand.make(params, undefined)
     expect(result.isErr()).toBe(true)
     expect(result.unwrapErr()).toBeInstanceOf(InvalidPasswordError)
   })
@@ -44,13 +32,7 @@ describe("makeSignupCommand", () => {
       email: "teste@com",
       contribute: false,
     }
-    const result = SignUpCommand.make(
-      params,
-      undefined,
-      undefined,
-      undefined,
-      undefined
-    )
+    const result = SignUpCommand.make(params, undefined)
     expect(result.isErr()).toBe(true)
     expect(result.unwrapErr()).toBeInstanceOf(InvalidEmailError)
   })

@@ -1,15 +1,13 @@
 import DataLoader from "dataloader"
-import { Spec, SpecIngredient, sequelize } from "../../models"
+import { Spec, SpecIngredient } from "../../models"
 
 export class SampleCocktailsLoader {
   loader: DataLoader<unknown, unknown>
 
   public load(id) {
-    const specIngredientRepository = sequelize.getRepository(SpecIngredient)
-    const specRepository = sequelize.getRepository(Spec)
     if (!this.loader) {
       this.loader = new DataLoader(async (ids: string[]) => {
-        const specIngredients = await specIngredientRepository.findAll({
+        const specIngredients = await SpecIngredient.findAll({
           where: {
             or: {
               ingredientId: {
@@ -17,7 +15,7 @@ export class SampleCocktailsLoader {
               },
             },
           },
-          include: [specRepository],
+          include: [Spec],
         })
         const lookupSpecs = specIngredients.reduce((acc, si) => {
           if (

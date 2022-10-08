@@ -1,5 +1,4 @@
 import DataLoader from "dataloader"
-import { Op } from "sequelize"
 import { Permission } from "../models/permission.model"
 import { UserRole } from "../models/userRole.model"
 
@@ -15,7 +14,7 @@ export class UserRolePermissionLoader {
               through: {
                 where: {
                   userRoleId: {
-                    [Op.in]: roleIds,
+                    in: roleIds,
                   },
                 },
               },

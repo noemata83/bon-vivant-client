@@ -1,8 +1,5 @@
-import { Repository } from "sequelize-typescript"
+import { NextApiResponse } from "next"
 import { Result } from "../../shared/adts/result/result"
-import { User } from "../models"
-import { Permission } from "../models/permission.model"
-import { UserRole } from "../models/userRole.model"
 import { InvalidUserParameterError } from "./validation/errors"
 import { validateUserParams } from "./validation/signUpValidation"
 
@@ -19,9 +16,6 @@ export interface ISignUpCommand {
   email: string
   contribute: boolean
   res: any
-  userRoleRepository: Repository<UserRole>
-  userRepository: Repository<User>
-  permissionRepository: Repository<Permission>
 }
 
 export class SignUpCommand {
@@ -30,49 +24,21 @@ export class SignUpCommand {
   public email: string
   public contribute: boolean
   public res: any
-  public userRoleRepository: Repository<UserRole>
-  public userRepository: Repository<User>
-  public permissionRepository: Repository<Permission>
 
-  private constructor(
-    params: UserSignupParameters,
-    res: any,
-    userRoleRepository: Repository<UserRole>,
-    userRepository: Repository<User>,
-    permissionRepository: Repository<Permission>
-  ) {
+  private constructor(params: UserSignupParameters, res: NextApiResponse) {
     this.username = params.username
     this.password = params.password
     this.email = params.email
     this.contribute = params.contribute
     this.res = res
-    this.userRoleRepository = userRoleRepository
-    this.userRepository = userRepository
-    this.permissionRepository = permissionRepository
   }
 
   static make: (
     params: UserSignupParameters,
-    res: any,
-    userRoleRepo: Repository<UserRole>,
-    userRepo: Repository<User>,
-    permissionRepo: Repository<Permission>
-  ) => Result<SignUpCommand, InvalidUserParameterError> = (
-    params,
-    res,
-    userRoleRepo,
-    userRepo,
-    permissionRepo
-  ) => {
+    res: any
+  ) => Result<SignUpCommand, InvalidUserParameterError> = (params, res) => {
     return validateUserParams(params).map(
-      (validParams: UserSignupParameters) =>
-        new SignUpCommand(
-          validParams,
-          res,
-          userRoleRepo,
-          userRepo,
-          permissionRepo
-        )
+      (validParams: UserSignupParameters) => new SignUpCommand(validParams, res)
     )
   }
 }

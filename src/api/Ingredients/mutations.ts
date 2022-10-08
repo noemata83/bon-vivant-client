@@ -1,5 +1,11 @@
+import { ApplicationContext } from "../../../pages/api/graphql"
 import { hasPermission } from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
+import {
+  CreateIngredientCommand,
+  DeleteIngredientCommand,
+  EditIngredientCommand,
+} from "./commands"
 import {
   createIngredient,
   editIngredient,
@@ -8,14 +14,27 @@ import {
 
 export default {
   Mutation: {
-    addIngredient(_, args, { user }) {
-      return createIngredient(args, user)
+    addIngredient(_: any, args: any, { user }: ApplicationContext) {
+      const command: CreateIngredientCommand = {
+        ingredient: args.ingredient,
+        user,
+      }
+      return createIngredient(command)
     },
-    editIngredient(_, args, { user }) {
-      return editIngredient(args.id, args, user)
+    editIngredient(_: any, args: any, { user }: ApplicationContext) {
+      const command: EditIngredientCommand = {
+        id: args.id,
+        update: args.ingredient,
+        user,
+      }
+      return editIngredient(command)
     },
-    deleteIngredient(_, args) {
-      return deleteIngredient(args.id)
+    deleteIngredient(_: any, args: any, { user }: ApplicationContext) {
+      const command: DeleteIngredientCommand = {
+        id: args.id,
+        user,
+      }
+      return deleteIngredient(command)
     },
   },
 }

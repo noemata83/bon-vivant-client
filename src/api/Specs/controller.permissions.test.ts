@@ -11,10 +11,6 @@ function setupCreate(user: AuthenticatedUser) {
       name: "My Spec",
     },
     user,
-    userRepository: undefined,
-    specRepository: undefined,
-    specIngredientRepository: undefined,
-    ingredientRepository: undefined,
   }
   return command
 }
@@ -24,11 +20,6 @@ function setupEdit(user: AuthenticatedUser) {
     id: "1111",
     updates: {},
     user,
-    userRepository: undefined,
-    specRepository: undefined,
-    specIngredientRepository: undefined,
-    ingredientRepository: undefined,
-    reviewRepository: undefined,
   }
   return command
 }

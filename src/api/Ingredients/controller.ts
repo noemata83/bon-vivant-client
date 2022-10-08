@@ -9,38 +9,36 @@ import {
 } from "./commands"
 
 export const createIngredient = async (command: CreateIngredientCommand) => {
-  const { user, ingredient, ingredientRepository } = command
+  const { user, ingredient } = command
   if (!hasPermission(user, PermissionType.CreateIngredient)) {
     throw new ForbiddenError(
       "You do not have permission to create ingredients."
     )
   }
-  const newIngredient = await ingredientRepository.create(ingredient)
-  const createdIngredient = ingredientRepository.findOne({
+  const newIngredient = await Ingredient.create(ingredient)
+  const createdIngredient = Ingredient.findOne({
     where: { id: newIngredient.id },
-    include: [ingredientRepository],
+    include: [Ingredient],
   })
   return createdIngredient
 }
 
 export const editIngredient = async (command: EditIngredientCommand) => {
-  const { id, user, update, ingredientRepository } = command
+  const { id, user, update } = command
   if (!hasPermission(user, PermissionType.EditIngredient)) {
     throw new ForbiddenError(
       "You do not have permission to modify ingredients."
     )
   }
   const { ingredient } = update
-  await ingredientRepository.update(ingredient, {
+  await Ingredient.update(ingredient, {
     where: { id: { eq: id } },
   })
-  return (
-    await ingredientRepository.findByPk(id, { include: [ingredientRepository] })
-  ).toJSON()
+  return (await Ingredient.findByPk(id, { include: [Ingredient] }))?.toJSON()
 }
 
 export const deleteIngredient = async (command: DeleteIngredientCommand) => {
-  const { id, user, ingredientRepository } = command
+  const { id, user } = command
   if (!hasPermission(user, PermissionType.DeleteIngredient)) {
     throw new ForbiddenError(
       "You do not have permission to delete ingredients."
