@@ -9,29 +9,27 @@ import { USER_ROLE } from "./authorization/userRole"
 import { AuthenticatedUser } from "./authorization/authorization"
 import { ISignUpCommand } from "./commands"
 import { NextApiResponse } from "next"
+import { UpdateUserCollectionError, UserRepository } from "./repository"
+import { RecordNotFoundError } from "../errors"
+import { Err, Ok, Result } from "../../shared/adts/result/result"
+import { AsyncResult } from "../../shared/adts/asyncResult/asyncResult"
+import { pipeline } from "stream"
+import { UserRoleRepository } from "../UserRoles/repository"
 
-export const isDuplicate = (arr: any[], id: string | number) => {
-  const values = arr.map((item) => item.dataValues)
-  const found = values.findIndex((item) => item == id)
-  return found !== -1
-}
-
-const standardInclude = {
-  include: [
-    Ingredient,
-    {
-      model: Spec,
-      as: "book",
-      include: [
-        {
-          model: SpecIngredient,
-          as: "ingredients",
-          include: [Ingredient],
-        },
-      ],
-    },
-  ],
-}
+const standardInclude = [
+  Ingredient,
+  {
+    model: Spec,
+    as: "book",
+    include: [
+      {
+        model: SpecIngredient,
+        as: "ingredients",
+        include: [Ingredient],
+      },
+    ],
+  },
+]
 
 const setTokenCookie = (res: NextApiResponse, token: string) => {
   res.setHeader(
@@ -42,21 +40,9 @@ const setTokenCookie = (res: NextApiResponse, token: string) => {
   )
 }
 
-export const getUserById = async (id: string) => {
-  try {
-    const user = await User.findByPk(id, {
-      ...standardInclude,
-    })
-    user.book = user.book.map(formatSpec)
-    return user
-  } catch (e) {
-    throw new Error(`There was a problem: ${e}`)
-  }
-}
-
 export const getAllUsers = async () => {
   const users = await User.findAll({
-    ...standardInclude,
+    include: standardInclude,
   })
 
   return users.map((user) => {
@@ -72,123 +58,107 @@ export const deleteUser = async (id) => {
 export const addIngredientToShelf = async (
   user: AuthenticatedUser,
   ingredientId: string
-) => {
-  const userModel = await User.findOne({
-    where: {
-      id: user.id,
-    },
-    include: [Ingredient],
-  })
-  if (isDuplicate(userModel.shelf, ingredientId))
-    throw new Error("Ingredient is already on your shelf.")
-  try {
-    await userModel.$add("shelf", ingredientId)
-    const updatedUser = await User.findOne({
-      where: {
-        id: user.id,
-      },
-      ...standardInclude,
+): Promise<Result<User, UpdateUserCollectionError>> => {
+  let result = new AsyncResult<User, Error>(
+    UserRepository.getById(user.id, [Ingredient])
+  )
+    .pipe(
+      (foundUser: User) =>
+        UserRepository.addIngredientToShelf(foundUser, ingredientId),
+      (updatedUser: User) => UserRepository.getById(updatedUser.id)
+    )
+    .map<User>((updatedUser: User) => {
+      updatedUser.book = updatedUser.book.map(formatSpec)
+      return updatedUser
     })
-    updatedUser.book = updatedUser.book.map(formatSpec)
-    return updatedUser
-  } catch (e) {
-    throw new Error(`Error updating ingredient shelf: ${e}`)
-  }
+  return await result.resolve()
 }
 
-export const removeIngredientFromShelf = async (
-  userId: string,
+export const removeIngredientFromShelf: (
+  user: AuthenticatedUser,
+  ingredientId: string
+) => Promise<Result<User, UpdateUserCollectionError>> = async (
+  user: AuthenticatedUser,
   ingredientId: string
 ) => {
-  try {
-    const user = await User.findByPk(userId, { include: [Ingredient] })
-    const associatedIngredients = user.shelf
-    const filteredIngredients = associatedIngredients.filter(
-      (ingredient) => ingredient.id !== ingredientId
+  return await new AsyncResult(UserRepository.getById(user.id, [Ingredient]))
+    .pipe(
+      (foundUser: User) =>
+        UserRepository.removeIngredientFromShelf(foundUser, ingredientId),
+      (updatedUser: User) =>
+        UserRepository.getById(updatedUser.id, standardInclude)
     )
-    await user.$set("shelf", filteredIngredients)
-    const updatedUser = await User.findByPk(userId, {
-      ...standardInclude,
-    })
-    return updatedUser
-  } catch (e) {
-    throw new Error(`1Error updating ingredient shelf: ${e}`)
-  }
+    .resolve()
 }
 
-export const addSpecToBook = async (user: User, specId: string) => {
-  try {
-    const userRecord = await User.findByPk(user.id, { include: [Spec] })
-    const book = userRecord.book
-    if (isDuplicate(book, specId)) {
-      throw new Error("Spec is already in your cocktail book.")
-    }
-    await userRecord.$add("book", specId)
-    const updatedUser = await User.findByPk(user.id, {
-      ...standardInclude,
+export const addSpecToBook: (
+  user: AuthenticatedUser,
+  specId: string
+) => Promise<
+  Result<User, RecordNotFoundError | UpdateUserCollectionError>
+> = async (user: AuthenticatedUser, specId: string) => {
+  return new AsyncResult(UserRepository.getById(user.id, [Spec]))
+    .pipe(
+      (user: User) => UserRepository.addSpecToBook(user, specId),
+      (user) => UserRepository.getById(user.id, standardInclude)
+    )
+    .map((user: User) => {
+      user.book = user.book.map(formatSpec)
+      return user
     })
-    updatedUser.book = updatedUser.book.map(formatSpec)
-    return updatedUser
-  } catch (e) {
-    throw new Error(`Error updating cocktail book: ${e}`)
-  }
+    .resolve()
 }
 
-export const removeSpecFromBook = async (user: User, specId: string) => {
-  try {
-    const userRecord = await User.findByPk(user.id, { include: [Spec] })
-    const book = userRecord.book
-    const updatedBook = book.filter((spec) => spec.id !== specId)
-    await userRecord.$set("book", updatedBook)
-    const updatedUser = await User.findByPk(user.id, {
-      ...standardInclude,
+export const removeSpecFromBook = async (
+  user: AuthenticatedUser,
+  specId: string
+): Promise<Result<User, RecordNotFoundError>> => {
+  return new AsyncResult(UserRepository.getById(user.id, [Spec]))
+    .pipe(
+      (user: User) => UserRepository.removeSpecFromBook(user, specId),
+      (user: User) => UserRepository.getById(user.id, standardInclude)
+    )
+    .map((user: User) => {
+      user.book = user.book.map(formatSpec)
+      return user
     })
-    updatedUser.book = updatedUser.book.map(formatSpec)
-    return updatedUser
-  } catch (e) {
-    throw new Error(`Error updating cocktail book: ${e}`)
-  }
+    .resolve()
 }
 
 export const signUp = async (command: ISignUpCommand) => {
   const { username, contribute, password, email } = command
   const res = command.res
   const roleId = contribute ? USER_ROLE.Contributor : USER_ROLE.Guest
-  const user = await User.create({
-    username,
-    password,
-    email,
-    roleId: roleId,
-  })
-  try {
-    const userRole = await UserRole.findOne({
-      where: {
-        id: roleId,
-      },
-      include: [Permission],
-    })
-    const payload = {
-      username: user.username,
-      id: user.id,
-      role: userRole.toJSON(),
-    }
-    const options = { expiresIn: "7d" }
-    const secret = config.SECRET
-    const token = jwt.sign(payload, secret, options)
-    setTokenCookie(res, token)
-    return {
-      ...user,
-      token,
-    }
-  } catch (e) {
-    console.error(e)
+  const signUpResult: Result<User, Error> = await new AsyncResult(
+    UserRepository.createUser(username, password, email, roleId)
+  ).resolve()
+  if (signUpResult.isErr()) {
+    return signUpResult
+  }
+  const user = signUpResult.unwrap()
+  const userRoleResult = await UserRoleRepository.getById(roleId, [Permission])
+  if (userRoleResult.isErr()) {
+    return userRoleResult
+  }
+  const payload = {
+    username: user.username,
+    id: user.id,
+    role: userRoleResult.unwrap().toJSON(),
+  }
+  const options = { expiresIn: "7d" }
+  const secret = config.SECRET
+  const token = jwt.sign(payload, secret, options)
+  setTokenCookie(res, token)
+  return {
+    ...user,
+    token,
   }
 }
 
 export const login = async (
   username: string,
   password: string,
-  res: Response
+  res: NextApiResponse
 ) => {
   const user = await User.findOne({
     where: { username: username },

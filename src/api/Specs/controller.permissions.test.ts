@@ -1,4 +1,5 @@
 import { ForbiddenError } from "apollo-server-core"
+import { Ingredient, Spec } from "../models"
 import { AuthenticatedUser } from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
 import { USER_ROLE } from "../Users/authorization/userRole"
@@ -61,6 +62,9 @@ describe("Spec Controller", () => {
             ],
           },
         }
+        Spec.create = jest.fn().mockResolvedValue({ id: 8 })
+        Ingredient.findOne = jest.fn().mockResolvedValue({ id: 16 })
+        Spec.findOne = jest.fn().mockReturnValue({})
         const command = setupCreate(user)
         await expect(() => createSpec(command)).rejects.not.toThrowError(
           ForbiddenError

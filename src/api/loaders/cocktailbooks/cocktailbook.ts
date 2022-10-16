@@ -1,13 +1,14 @@
 import DataLoader from "dataloader"
 import { User } from "../../models"
 import { Spec } from "../../models/spec.model"
+import { IdList, LookupTable } from "../types"
 
 export class CocktailBookLoader {
   loader: DataLoader<unknown, unknown>
 
-  public load(requestedId) {
+  public load(requestedId: string) {
     if (!this.loader) {
-      this.loader = new DataLoader(async (userIds: string[]) => {
+      this.loader = new DataLoader(async (userIds: readonly string[]) => {
         const specs = await Spec.findAll({
           include: [
             {
@@ -30,7 +31,7 @@ export class CocktailBookLoader {
               spec.usersSaved.map((user) => user.id).includes(id)
             ),
           }),
-          {}
+          {} as LookupTable
         )
         return userIds.map((id) => lookup[id])
       })

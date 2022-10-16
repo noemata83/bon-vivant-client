@@ -33,6 +33,26 @@ export default gql`
     singular: String
   }
 
+  type BaseError {
+    message: String!
+  }
+
+  type RecordNotFoundError implements BaseError {
+    message: String!
+  }
+
+  type NotPermittedError implements BaseError {
+    message: String!
+  }
+
+  type RecordCouldNotBeUpdatedError implements BaseError {
+    message: String!
+  }
+
+  type CollectionDuplicateError implements BaseError {
+    message: String!
+  }
+
   type Ingredient {
     id: String
     name: String
@@ -44,6 +64,8 @@ export default gql`
     parentId: String
     parent: Ingredient
   }
+
+  type IngredientResult = Ingredient | RecordNotFoundError | RecordCouldNotBeUpdatedError;
 
   type IngredientDetail {
     id: String
@@ -58,6 +80,8 @@ export default gql`
     children: [Ingredient]
     cocktails: [Spec]
   }
+  
+  type IngredientDetailResult = IngredientDetail | RecordNotFoundError;
 
   input IngredientInput {
     name: String!
@@ -113,6 +137,8 @@ export default gql`
     reviews: [Review]
   }
 
+  type SpecResult = Spec | RecordNotFoundError | RecordCouldNotBeUpdatedError;
+
   input SpecIngredientInput {
     quantity: Float
     measure: Measurement
@@ -149,6 +175,8 @@ export default gql`
     book: [Spec]
     shelf: [Ingredient]
   }
+
+  type UserResult = User | RecordNotFoundError | RecordCouldNotBeUpdatedError | RecordAlreadyExistsInCollectionError;
 
   type UserRole {
     name: String
@@ -193,25 +221,25 @@ export default gql`
   }
 
   type Mutation {
-    editIngredient(id: String!, ingredient: IngredientInput): Ingredient
-    addIngredient(ingredient: IngredientInput): Ingredient
-    deleteIngredient(id: String!): Ingredient
-    createSpec(spec: SpecInput): Spec
-    editSpec(id: String!, spec: SpecInput): Spec
-    deleteSpec(id: String!): Spec
-    addIngredientToShelf(id: String!): User
-    removeIngredientFromShelf(id: String!): User
-    addSpecToBook(id: String!): User
-    removeSpecFromBook(id: String!): User
+    editIngredient(id: String!, ingredient: IngredientInput): IngredientResult
+    addIngredient(ingredient: IngredientInput): IngredientResult
+    deleteIngredient(id: String!): IngredientResult
+    createSpec(spec: SpecInput): SpecResult
+    editSpec(id: String!, spec: SpecInput): SpecResult
+    deleteSpec(id: String!): SpecResult
+    addIngredientToShelf(id: String!): UserResult
+    removeIngredientFromShelf(id: String!): UserResult
+    addSpecToBook(id: String!): UserResult
+    removeSpecFromBook(id: String!): UserResult
     signUp(
       username: String!
       password: String!
       email: String!
       contribute: Boolean
     ): User
-    updateUser(username: String!, roleId: Int): User
+    updateUser(username: String!, roleId: Int): UserResult
     login(username: String!, password: String!): UserToken
-    deleteUser(id: String!): User
+    deleteUser(id: String!): UserResult
     addReview(spec: String!, review: ReviewInput!): Review
     editReview(id: String!, review: ReviewInput!): Review
     deleteReview(id: String!): Review

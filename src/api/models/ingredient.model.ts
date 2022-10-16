@@ -21,6 +21,19 @@ import Fix from "./decorators/fix.decorator"
 import { User } from "./user.model"
 import { IngredientShelf } from "./ingredientShelf.model"
 
+export interface IIngredient {
+  id: string
+  name: string
+  slug: string
+  description: string
+  imageURL?: string
+  proof: number
+  specs?: Spec[]
+  usersSaved?: User[]
+  parent?: Ingredient
+  parentId?: number
+}
+
 @Fix
 @Table
 export class Ingredient extends Model {

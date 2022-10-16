@@ -1,7 +1,7 @@
 import { ForbiddenError } from "apollo-server-core"
+import { Ingredient } from "../models"
 import { AuthenticatedUser } from "../Users/authorization/authorization"
 import { PermissionType } from "../Users/authorization/permission.enum"
-import { USER_ROLE } from "../Users/authorization/userRole"
 import {
   CreateIngredientCommand,
   DeleteIngredientCommand,
@@ -47,6 +47,9 @@ const setupDelete: (user: AuthenticatedUser) => DeleteIngredientCommand = (
 }
 describe("Ingredient Controller - Permission Checks", () => {
   describe("createIngredient", () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
     it("should prevent a user without permissions from creating an ingredient", async () => {
       const unauthorizeduser: AuthenticatedUser = {
         id: "1223",
@@ -84,13 +87,19 @@ describe("Ingredient Controller - Permission Checks", () => {
           ],
         },
       }
+
+      Ingredient.create = jest.fn().mockResolvedValue({ id: 1 })
+      Ingredient.findOne = jest.fn().mockResolvedValue({})
       const command = setupCreate(authorizedUser)
-      await expect(createIngredient(command)).rejects.not.toThrowError(
-        ForbiddenError
-      )
+      await expect(
+        async () => await createIngredient(command)
+      ).not.toThrowError(ForbiddenError)
     })
   })
   describe("editIngredient", () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
     it("should not prevent an authorized user from editing an ingredient", async () => {
       const authorizedUser: AuthenticatedUser = {
         id: "1223",
@@ -108,7 +117,9 @@ describe("Ingredient Controller - Permission Checks", () => {
         },
       }
       const command = setupEdit(authorizedUser)
-      await expect(editIngredient(command)).rejects.not.toThrowError(
+      Ingredient.update = jest.fn().mockResolvedValue({})
+      Ingredient.findByPk = jest.fn().mockResolvedValue({ toJSON: () => {} })
+      await expect(editIngredient(command)).resolves.not.toThrowError(
         ForbiddenError
       )
     })
@@ -133,6 +144,9 @@ describe("Ingredient Controller - Permission Checks", () => {
     })
   })
   describe("deleteIngredient", () => {
+    beforeEach(() => {
+      jest.resetAllMocks()
+    })
     it("should not prevent an authorized user from deleting an ingredient", async () => {
       const authorizedUser: AuthenticatedUser = {
         id: "1223",
@@ -150,7 +164,8 @@ describe("Ingredient Controller - Permission Checks", () => {
         },
       }
       const command = setupDelete(authorizedUser)
-      await expect(deleteIngredient(command)).rejects.not.toThrowError(
+      Ingredient.destroy = jest.fn().mockResolvedValue({})
+      await expect(deleteIngredient(command)).resolves.not.toThrowError(
         ForbiddenError
       )
     })

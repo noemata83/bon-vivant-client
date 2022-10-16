@@ -1,12 +1,13 @@
 import DataLoader from "dataloader"
 import { Ingredient, User } from "../../models"
+import { LookupTable } from "../types"
 
 export class ShelfLoader {
   private loader: DataLoader<unknown, unknown>
 
   load(requestedUserId: string) {
     if (!this.loader) {
-      this.loader = new DataLoader(async (userIds: string[]) => {
+      this.loader = new DataLoader(async (userIds: readonly string[]) => {
         const ingredientRows = await Ingredient.findAll({
           include: [
             {
@@ -29,7 +30,7 @@ export class ShelfLoader {
               row.usersSaved.map((user) => user.id).includes(id)
             ),
           }),
-          {}
+          {} as LookupTable
         )
         return userIds.map((id) => lookup[id])
       })

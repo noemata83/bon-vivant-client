@@ -3,7 +3,7 @@ import { Option } from "../option/option"
 
 type Result<T, E extends Error> = Ok<T, E> | Err<T, E>
 
-type ResultFnInput<T, E extends Error = Error, F extends Error = E> =
+export type ResultFnInput<T, E extends Error = Error, F extends Error = E> =
   | any
   | any[]
   | E
@@ -24,7 +24,7 @@ export interface IResult<T, E extends Error> {
   unwrap: ResultUnwrap<T>
   unwrapErr: ResultUnwrapErr<E>
   map: ResultMap<T, E>
-  mapErr: ResultMapErr<T>
+  mapErr: ResultMapErr<T, E>
   isOk: () => boolean
   isErr: () => boolean
   ok: () => Option<T>
@@ -78,6 +78,14 @@ export interface ResultTransform<
   F extends Error = E
 > {
   (f: ResultTransformFn<T, E, U, F>): Result<U, F>
+}
+
+export interface ResultAsyncPipeOperator {
+  (x: any): Promise<Result<any, any>>
+}
+
+export interface ResultAsyncPipe {
+  (...args: ResultAsyncPipeOperator[]): Promise<Result<any, any>>
 }
 
 export interface ResultMapFn<T, U = unknown> {

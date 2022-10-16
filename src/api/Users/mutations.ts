@@ -15,11 +15,18 @@ import {
 
 export default {
   Mutation: {
-    addIngredientToShelf(_, args, { user }: ApplicationContext) {
+    addIngredientToShelf: async (_, args, { user }: ApplicationContext) => {
       if (!user) {
         throw new Error("You are not logged in.")
       }
-      return addIngredientToShelf(user, args.id)
+      return await (
+        await addIngredientToShelf(user, args.id)
+      ).match({
+        ok: (result) => result,
+        err: (err) => {
+          throw err
+        },
+      })
     },
     removeIngredientFromShelf(_, args, { user }: ApplicationContext) {
       if (!user) {

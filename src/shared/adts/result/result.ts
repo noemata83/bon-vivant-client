@@ -3,7 +3,6 @@ import {
   ErrMapFn,
   IResult,
   ResultFn,
-  ResultMapErr,
   ResultMapFn,
   ResultMatcher,
   ResultTransformFn,
@@ -69,7 +68,7 @@ export class Ok<T, E extends Error> implements IResult<T, E> {
     return ok(this._value)
   }
 
-  andThen<U = T, F extends Error = Error>(
+  andThen<U = T, F extends Error = E>(
     fn: ResultTransformFn<T, E, U, F>
   ): Result<U, F> {
     return fn(this._value)

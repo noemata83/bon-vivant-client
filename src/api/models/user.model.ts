@@ -17,11 +17,21 @@ import {
 import { v4 as uuid } from "uuid"
 import { CocktailBook } from "./cocktailBook.model"
 import Fix from "./decorators/fix.decorator"
-import { Ingredient } from "./ingredient.model"
+import { IIngredient, Ingredient } from "./ingredient.model"
 import { IngredientShelf } from "./ingredientShelf.model"
 import { Permission } from "./permission.model"
 import { Spec } from "./spec.model"
 import { UserRole } from "./userRole.model"
+
+export interface IUser {
+  id: string
+  username: string
+  email: string
+  shelf?: IIngredient[]
+  book?: Spec[]
+  userRole?: UserRole
+  roleId: number
+}
 
 @Fix
 @Table
