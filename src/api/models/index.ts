@@ -38,8 +38,8 @@ export const sequelize = new Sequelize({
   username: process.env.PSQL_USERNAME,
   password: process.env.PSQL_PASSWORD,
   dialect: "postgres",
-  host: "localhost",
-  port: 54320,
+  host: process.env.DB_HOST,
+  port: +process.env.DB_PORT,
   logging: (sql, queryObject: any) => {
     queryObject.where ? console.info(queryObject.where) : queryObject
   },
