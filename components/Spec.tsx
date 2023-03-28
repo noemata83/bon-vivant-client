@@ -60,7 +60,7 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
               href={`/cocktails/[slug]/edit`}
               as={`/cocktails/${spec.slug}/edit`}
             >
-              <a>Edit</a>
+              Edit
             </Link>
             <a
               onClick={() => {
@@ -80,14 +80,14 @@ const Spec: (props: ISpec) => JSX.Element = ({ slug, isLoggedIn }) => {
               specIngredient.measure ? specIngredient.measure.toLowerCase() : ""
             } `}
             <Link href={`/ingredients/${specIngredient.ingredient?.slug}`}>
-              <a>{specIngredient.ingredient?.name}</a>
+              {specIngredient.ingredient?.name}
             </Link>
           </li>
         ))}
       </ul>
       <p>{spec.directions}</p>
     </div>
-  )
+  );
 }
 
 const SpecHeader = styled.div`

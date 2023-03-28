@@ -11,7 +11,7 @@ const SpecCard = ({ spec }) => {
         <CardImageContainer>
           <CardImage src={image} />
         </CardImageContainer>
-        <Link href="/cocktails/[slug]" as={`/cocktails/${slug}`}>
+        <Link href="/cocktails/[slug]" as={`/cocktails/${slug}`} legacyBehavior>
           <SpecLink>
             <CardTitle>{name}</CardTitle>
             <IngredientList>
@@ -25,7 +25,7 @@ const SpecCard = ({ spec }) => {
         </Link>
       </Card>
     </CardContainer>
-  )
+  );
 };
 
 export default SpecCard;

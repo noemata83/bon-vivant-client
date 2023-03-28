@@ -15,11 +15,11 @@ export default connect(mapStateToProps)(({ isLoggedIn }) => (
     <Container>
       <TitleBox>
         <Link href="/">
-          <a>
-            <Logo />
-          </a>
+
+          <Logo />
+
         </Link>
-        <Link href="/">
+        <Link href="/" legacyBehavior>
           <Title>Bon Vivant Cocktails</Title>
         </Link>
         {isLoggedIn && <UserMenu />}

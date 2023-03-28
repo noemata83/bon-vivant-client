@@ -34,13 +34,13 @@ const myCocktailBook = (props) => {
         {book.map((spec) => (
           <li key={spec.id}>
             <Link href={`/cocktails/[slug]`} as={`/cocktails/${spec.slug}`}>
-              <a>{spec.name}</a>
+              {spec.name}
             </Link>
           </li>
         ))}
       </ul>
     </div>
-  )
+  );
 }
 
 export default myCocktailBook

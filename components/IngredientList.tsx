@@ -38,17 +38,17 @@ const IngredientList = ({ query }) => {
                       href="/ingredients/[slug]"
                       as={`/ingredients/${ingredient.slug}`}
                     >
-                      <a>{ingredient.name}</a>
+                      {ingredient.name}
                     </Link>
                   </IndividualIngredient>
                 ))}
               </ListOfIngredientsByType>
             </li>
-          )
+          );
         })}
       </ul>
     </div>
-  )
+  );
 }
 
 export default IngredientList
