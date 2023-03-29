@@ -33,7 +33,7 @@ export default gql`
     singular: String
   }
 
-  type BaseError {
+  interface BaseError {
     message: String!
   }
 
@@ -46,6 +46,10 @@ export default gql`
   }
 
   type RecordCouldNotBeUpdatedError implements BaseError {
+    message: String!
+  }
+
+  type RecordAlreadyExistsInCollectionError implements BaseError {
     message: String!
   }
 
@@ -65,7 +69,7 @@ export default gql`
     parent: Ingredient
   }
 
-  type IngredientResult = Ingredient | RecordNotFoundError | RecordCouldNotBeUpdatedError;
+  union IngredientResult = Ingredient | RecordNotFoundError | RecordCouldNotBeUpdatedError
 
   type IngredientDetail {
     id: String
@@ -81,7 +85,7 @@ export default gql`
     cocktails: [Spec]
   }
   
-  type IngredientDetailResult = IngredientDetail | RecordNotFoundError;
+  union IngredientDetailResult = IngredientDetail | RecordNotFoundError
 
   input IngredientInput {
     name: String!
@@ -137,7 +141,7 @@ export default gql`
     reviews: [Review]
   }
 
-  type SpecResult = Spec | RecordNotFoundError | RecordCouldNotBeUpdatedError;
+  union SpecResult = Spec | RecordNotFoundError | RecordCouldNotBeUpdatedError
 
   input SpecIngredientInput {
     quantity: Float
@@ -176,7 +180,7 @@ export default gql`
     shelf: [Ingredient]
   }
 
-  type UserResult = User | RecordNotFoundError | RecordCouldNotBeUpdatedError | RecordAlreadyExistsInCollectionError;
+  union UserResult = User | RecordNotFoundError | RecordCouldNotBeUpdatedError | RecordAlreadyExistsInCollectionError
 
   type UserRole {
     name: String

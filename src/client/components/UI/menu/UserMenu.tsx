@@ -16,7 +16,7 @@ const UserMenu = () => {
         <MenuList>
           <MenuItem>
             <Link href="/my-cocktail-book">
-              <a>Profile</a>
+              Profile
             </Link>
           </MenuItem>
           <MenuItem>
@@ -25,7 +25,7 @@ const UserMenu = () => {
         </MenuList>
       </Menu>
     </UserMenuContainer>
-  )
+  );
 }
 
 const UserMenuContainer = styled.div`

@@ -17,13 +17,13 @@ const UserSummary = (props) => {
           {book.slice(0, 4).map((spec) => (
             <li key={spec.id}>
               <Link href="cocktails/[slug]" as={`/cocktails/${spec.slug}`}>
-                <a>{spec.name}</a>
+                {spec.name}
               </Link>
             </li>
           ))}
           <li>
             <Link href="/my-cocktail-book">
-              <a>View all saved cocktails</a>
+              View all saved cocktails
             </Link>
           </li>
         </ul>
@@ -35,7 +35,7 @@ const UserSummary = (props) => {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
 export default UserSummary
