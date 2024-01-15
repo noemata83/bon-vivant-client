@@ -35,7 +35,7 @@
     "dotenv": "^16.0.2",
     "final-form": "^4.20.7",
     "final-form-arrays": "^3.0.2",
-    "graphql": "^16.6.0",
+    "graphql": "^16.8.1",
     "graphql-tag": "^2.11.0",
     "isomorphic-unfetch": "^4.0.2",
     "js-cookie": "^3.0.1",
