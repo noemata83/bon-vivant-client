@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "dev": "rm -rf ./node_modules/.cache/babel-loader && next",
     "build": "next build",

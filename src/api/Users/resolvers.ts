@@ -18,7 +18,7 @@ export default {
     role: (user, _args, context) => {
       return context.single.load(UserRole, user.roleId)
     },
-    book: (user, args, context) => {
+    book: (user, _args, context) => {
       return context.cocktailBooks.load(user.id)
     },
     shelf: (user, _args, context) => {

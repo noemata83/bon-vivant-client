@@ -3,3 +3,4 @@ config/dev.ts
 src/api/config
 .next
 .env
+coverage
